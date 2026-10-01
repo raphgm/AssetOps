@@ -19,15 +19,15 @@ export async function assetGraph(s: Session, assetId?: string) {
   const nodes = new Map<string, GNode>(); const edges: GEdge[] = [];
   const add = (n: GNode) => nodes.set(n.id, n);
   const link = (source: string, target: string, label: string) => { const id = `${source}>${label}>${target}`; if (!edges.find((e) => e.id === id)) edges.push({ id, source, target, label }); };
-  const addAsset = (a: typeof self, kind: GNode["type"] = "asset") => {
+  const addAsset = (a: typeof self, kind: GNode["type"] = "asset", withVendor = true) => {
     add({ id: a.id, type: kind, label: a.tag, sub: `${a.make} ${a.model}`, href: `/app/assets/${a.id}` });
     add({ id: `d:${a.departmentId}`, type: "department", label: a.department.name, href: `/app/departments/${a.departmentId}` }); link(a.id, `d:${a.departmentId}`, "assigned to");
     add({ id: `l:${a.locationId}`, type: "location", label: a.location.name, href: `/app/locations/${a.locationId}` }); link(a.id, `l:${a.locationId}`, "located at");
-    if (a.vendor) { add({ id: `v:${a.vendorId}`, type: "vendor", label: a.vendor.name, href: `/app/vendors/${a.vendorId}` }); link(a.id, `v:${a.vendorId}`, "serviced by"); }
+    if (withVendor && a.vendor) { add({ id: `v:${a.vendorId}`, type: "vendor", label: a.vendor.name, href: `/app/vendors/${a.vendorId}` }); link(a.id, `v:${a.vendorId}`, "serviced by"); }
   };
   addAsset(self, "network");
   if (parent) { add({ id: parent.id, type: "network", label: parent.tag, sub: `${parent.make} ${parent.model}`, href: `/app/assets/${parent.id}` }); link(self.id, parent.id, "connected to"); }
-  kids.forEach((k) => { addAsset(k); link(k.id, self.id, "connected to"); });
+  kids.forEach((k) => { addAsset(k, "asset", false); link(k.id, self.id, "connected to"); }); // vendor shown for the hub only, to keep the graph legible
   const ids = [self.id, ...kids.map((k) => k.id)];
   const events = await db.maintenanceRecord.groupBy({ by: ["assetId", "categoryId"], where: { orgId: s.orgId, assetId: { in: ids }, performedAt: { gte: new Date(Date.now() - 180 * 864e5) } }, _count: true, having: { assetId: { _count: { gte: 2 } } }, orderBy: { _count: { assetId: "desc" } }, take: 20 });
   const cats = new Map((await db.maintenanceCategory.findMany({ where: { orgId: s.orgId } })).map((c) => [c.id, c.name]));
