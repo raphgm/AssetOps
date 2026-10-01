@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html { background: #0a0b0d; }
+body { @apply bg-bg text-fg antialiased font-sans text-[13.5px] leading-relaxed; font-feature-settings: "cv11", "ss01"; }
+* { @apply border-line; }
+::selection { background: rgba(94, 234, 212, .25); }
+:focus-visible { @apply outline outline-2 outline-offset-2 outline-accent/70; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { @apply bg-line2 rounded-full; border: 2px solid #0a0b0d; }
+
+@layer components {
+  .card { @apply bg-surface border border-line rounded-lg; }
+  .btn { @apply inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-[13px] font-medium border border-line2 bg-raised text-fg hover:bg-[#1b1f26] hover:border-[#3a404b] transition disabled:opacity-50 disabled:pointer-events-none; }
+  .btn-primary { @apply bg-fg text-bg border-fg hover:bg-white hover:border-white; }
+  .btn-accent { @apply bg-accent text-bg border-accent hover:bg-accent2 hover:border-accent2; }
+  .btn-ghost { @apply bg-transparent border-transparent hover:bg-raised; }
+  .btn-lg { @apply h-10 px-5 text-sm; }
+  .input { @apply h-8 w-full rounded-md bg-bg border border-line2 px-2.5 text-[13px] placeholder:text-dim hover:border-[#3a404b] focus:border-accent/60 focus:outline-none; }
+  textarea.input { @apply h-auto py-2; }
+  .label { @apply block text-[11px] uppercase tracking-wider text-dim mb-1; }
+  .th { @apply text-left text-[11px] uppercase tracking-wider text-dim font-medium px-3 py-2 border-b border-line whitespace-nowrap; }
+  .td { @apply px-3 py-2 border-b border-line/60 whitespace-nowrap; }
+  .eyebrow { @apply text-[11px] uppercase tracking-[0.14em] text-accent font-medium; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+.react-flow__controls-button { background: #15181d !important; color: #e8eaed !important; border-bottom: 1px solid #2e333c !important; fill: #e8eaed; }
+.react-flow__controls { box-shadow: none !important; border: 1px solid #2e333c; border-radius: 6px; overflow: hidden; }
+.react-flow__controls-button svg { fill: #e8eaed; }
+.react-flow__edge-textbg { fill: #0a0b0d; }

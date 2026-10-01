@@ -1,0 +1,465 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ICT_DIRECTOR
+  ICT_MANAGER
+  TECHNICIAN
+  DEPARTMENT_USER
+  AUDITOR
+}
+
+enum AssetStatus {
+  OPERATIONAL
+  UNDER_MAINTENANCE
+  AT_RISK
+  RETIRED
+}
+
+enum WorkOrderStatus {
+  OPEN
+  ASSIGNED
+  IN_PROGRESS
+  AWAITING_PARTS
+  RESOLVED
+  VERIFIED
+  CLOSED
+  CANCELLED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum Plan {
+  FREE
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  plan      Plan     @default(FREE)
+  isDemo    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  users        User[]
+  departments  Department[]
+  locations    Location[]
+  assetTypes   AssetType[]
+  assets       Asset[]
+  categories   MaintenanceCategory[]
+  records      MaintenanceRecord[]
+  workOrders   WorkOrder[]
+  vendors      Vendor[]
+  parts        Part[]
+  audit        AuditLog[]
+  notifications Notification[]
+  investigations AIInvestigation[]
+  importJobs   ImportJob[]
+  attachments  Attachment[]
+}
+
+model User {
+  id           String   @id @default(cuid())
+  orgId        String
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         Role
+  departmentId String?
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  org          Organization @relation(fields: [orgId], references: [id])
+  department   Department?  @relation(fields: [departmentId], references: [id])
+  assignedWork WorkOrder[]  @relation("assignee")
+  reportedWork WorkOrder[]  @relation("reporter")
+  records      MaintenanceRecord[]
+  resetTokens  PasswordReset[]
+
+  @@index([orgId])
+}
+
+model PasswordReset {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Department {
+  id    String @id @default(cuid())
+  orgId String
+  name  String
+
+  org    Organization @relation(fields: [orgId], references: [id])
+  assets Asset[]
+  users  User[]
+
+  @@unique([orgId, name])
+}
+
+model Location {
+  id    String @id @default(cuid())
+  orgId String
+  name  String
+  city  String
+  code  String
+  lat   Float?
+  lng   Float?
+
+  org    Organization @relation(fields: [orgId], references: [id])
+  assets Asset[]
+
+  @@unique([orgId, name])
+}
+
+model AssetType {
+  id     String @id @default(cuid())
+  orgId  String
+  name   String
+  code   String
+  lifespanYears Int @default(5)
+  replacementCost Int @default(0)
+
+  org    Organization @relation(fields: [orgId], references: [id])
+  assets Asset[]
+
+  @@unique([orgId, code])
+}
+
+model Vendor {
+  id        String @id @default(cuid())
+  orgId     String
+  name      String
+  slaHours  Int    @default(24)
+  email     String?
+
+  org        Organization @relation(fields: [orgId], references: [id])
+  assets     Asset[]
+  records    MaintenanceRecord[]
+  workOrders WorkOrder[]
+  contracts  VendorContract[]
+
+  @@unique([orgId, name])
+}
+
+model VendorContract {
+  id        String   @id @default(cuid())
+  vendorId  String
+  startsAt  DateTime
+  endsAt    DateTime
+  slaHours  Int
+  value     Int
+  vendor    Vendor   @relation(fields: [vendorId], references: [id])
+}
+
+model Asset {
+  id            String      @id @default(cuid())
+  orgId         String
+  tag           String      // e.g. ICT-LAG-004821
+  qrToken       String      @unique
+  serial        String?
+  make          String
+  model         String
+  typeId        String
+  departmentId  String
+  locationId    String
+  vendorId      String?
+  status        AssetStatus @default(OPERATIONAL)
+  acquiredAt    DateTime
+  acquisitionValue Int      @default(0)
+  warrantyEndsAt DateTime?
+  networkParentId String?   // shared infrastructure (e.g. switch)
+  // denormalised counters, recomputed by services
+  maintenanceCount Int     @default(0)
+  downtimeHours    Float   @default(0)
+  lifetimeCost     Int     @default(0)
+  lastMaintenanceAt DateTime?
+  healthScore      Int     @default(100)
+  riskScore        Int     @default(0)
+  riskLevel        String  @default("healthy")
+  deletedAt     DateTime?
+  createdAt     DateTime    @default(now())
+
+  org         Organization @relation(fields: [orgId], references: [id])
+  type        AssetType    @relation(fields: [typeId], references: [id])
+  department  Department   @relation(fields: [departmentId], references: [id])
+  location    Location     @relation(fields: [locationId], references: [id])
+  vendor      Vendor?      @relation(fields: [vendorId], references: [id])
+  networkParent Asset?     @relation("network", fields: [networkParentId], references: [id])
+  networkChildren Asset[]  @relation("network")
+  records     MaintenanceRecord[]
+  workOrders  WorkOrder[]
+  assignments AssetAssignment[]
+  statusHistory AssetStatusHistory[]
+  warranties  Warranty[]
+  riskHistory RiskScore[]
+
+  @@unique([orgId, tag])
+  @@index([orgId, serial])
+  @@index([orgId, departmentId])
+  @@index([orgId, locationId])
+  @@index([orgId, status])
+  @@index([orgId, vendorId])
+  @@index([orgId, riskLevel])
+}
+
+model AssetAssignment {
+  id         String   @id @default(cuid())
+  assetId    String
+  assignee   String
+  fromDate   DateTime @default(now())
+  toDate     DateTime?
+  asset      Asset    @relation(fields: [assetId], references: [id])
+  @@index([assetId])
+}
+
+model AssetStatusHistory {
+  id        String      @id @default(cuid())
+  assetId   String
+  from      AssetStatus?
+  to        AssetStatus
+  at        DateTime    @default(now())
+  asset     Asset       @relation(fields: [assetId], references: [id])
+  @@index([assetId])
+}
+
+model Warranty {
+  id       String   @id @default(cuid())
+  assetId  String
+  provider String
+  endsAt   DateTime
+  asset    Asset    @relation(fields: [assetId], references: [id])
+  @@index([assetId])
+}
+
+model RiskScore {
+  id        String   @id @default(cuid())
+  assetId   String
+  score     Int
+  level     String
+  factors   Json
+  at        DateTime @default(now())
+  asset     Asset    @relation(fields: [assetId], references: [id])
+  @@index([assetId, at])
+}
+
+model MaintenanceCategory {
+  id    String @id @default(cuid())
+  orgId String
+  name  String
+  org   Organization @relation(fields: [orgId], references: [id])
+  records MaintenanceRecord[]
+  workOrders WorkOrder[]
+  @@unique([orgId, name])
+}
+
+// Maintenance records are immutable: services never update or delete them.
+model MaintenanceRecord {
+  id          String   @id @default(cuid())
+  orgId       String
+  assetId     String
+  categoryId  String
+  description String
+  resolution  String   @default("")
+  notes       String   @default("")
+  performedAt DateTime
+  technicianId String?
+  vendorId    String?
+  workOrderId String?
+  laborCost   Int      @default(0)
+  partsCost   Int      @default(0)
+  downtimeHours Float  @default(0)
+  createdAt   DateTime @default(now())
+
+  org        Organization @relation(fields: [orgId], references: [id])
+  asset      Asset        @relation(fields: [assetId], references: [id])
+  category   MaintenanceCategory @relation(fields: [categoryId], references: [id])
+  technician User?        @relation(fields: [technicianId], references: [id])
+  vendor     Vendor?      @relation(fields: [vendorId], references: [id])
+  workOrder  WorkOrder?   @relation(fields: [workOrderId], references: [id])
+  partUsages PartUsage[]
+  attachments Attachment[]
+
+  @@index([orgId, performedAt])
+  @@index([assetId, performedAt])
+  @@index([orgId, categoryId])
+  @@index([orgId, vendorId])
+}
+
+model WorkOrder {
+  id          String          @id @default(cuid())
+  orgId       String
+  number      Int
+  title       String
+  description String          @default("")
+  status      WorkOrderStatus @default(OPEN)
+  priority    Priority        @default(MEDIUM)
+  assetId     String
+  categoryId  String?
+  assigneeId  String?
+  reporterId  String?
+  vendorId    String?
+  slaHours    Int             @default(24)
+  createdAt   DateTime        @default(now())
+  dueAt       DateTime
+  resolvedAt  DateTime?
+  closedAt    DateTime?
+  fleetKey    String?         // groups work orders created from one investigation
+
+  org      Organization @relation(fields: [orgId], references: [id])
+  asset    Asset        @relation(fields: [assetId], references: [id])
+  category MaintenanceCategory? @relation(fields: [categoryId], references: [id])
+  assignee User?        @relation("assignee", fields: [assigneeId], references: [id])
+  reporter User?        @relation("reporter", fields: [reporterId], references: [id])
+  vendor   Vendor?      @relation(fields: [vendorId], references: [id])
+  events   WorkOrderEvent[]
+  records  MaintenanceRecord[]
+
+  @@unique([orgId, number])
+  @@index([orgId, status])
+  @@index([assetId])
+  @@index([orgId, vendorId])
+  @@index([orgId, createdAt])
+}
+
+model WorkOrderEvent {
+  id          String   @id @default(cuid())
+  workOrderId String
+  type        String
+  actor       String
+  note        String   @default("")
+  at          DateTime @default(now())
+  workOrder   WorkOrder @relation(fields: [workOrderId], references: [id])
+  @@index([workOrderId, at])
+}
+
+model Part {
+  id       String @id @default(cuid())
+  orgId    String
+  name     String
+  unitCost Int
+  org      Organization @relation(fields: [orgId], references: [id])
+  usages   PartUsage[]
+  @@unique([orgId, name])
+}
+
+model PartUsage {
+  id       String @id @default(cuid())
+  recordId String
+  partId   String
+  quantity Int    @default(1)
+  record   MaintenanceRecord @relation(fields: [recordId], references: [id])
+  part     Part   @relation(fields: [partId], references: [id])
+  @@index([recordId])
+}
+
+model Attachment {
+  id         String   @id @default(cuid())
+  orgId      String
+  recordId   String?
+  filename   String   // safe generated name
+  originalName String
+  mime       String
+  size       Int
+  createdAt  DateTime @default(now())
+  org        Organization @relation(fields: [orgId], references: [id])
+  record     MaintenanceRecord? @relation(fields: [recordId], references: [id])
+  @@index([recordId])
+}
+
+model AIInvestigation {
+  id        String   @id @default(cuid())
+  orgId     String
+  userId    String
+  question  String
+  status    String   @default("pending")
+  evidence  Json?
+  result    Json?
+  error     String?
+  createdAt DateTime @default(now())
+  org       Organization @relation(fields: [orgId], references: [id])
+  messages  AIMessage[]
+  @@index([orgId, createdAt])
+}
+
+model AIMessage {
+  id        String   @id @default(cuid())
+  investigationId String
+  role      String
+  content   String
+  at        DateTime @default(now())
+  investigation AIInvestigation @relation(fields: [investigationId], references: [id])
+}
+
+// Append-only. Application code only ever creates rows.
+model AuditLog {
+  id        String   @id @default(cuid())
+  orgId     String
+  actorId   String?
+  actorName String
+  action    String
+  entity    String
+  entityId  String
+  before    Json?
+  after     Json?
+  ip        String?
+  at        DateTime @default(now())
+  org       Organization @relation(fields: [orgId], references: [id])
+  @@index([orgId, at])
+  @@index([orgId, entity, entityId])
+}
+
+model Notification {
+  id      String   @id @default(cuid())
+  orgId   String
+  kind    String
+  title   String
+  body    String   @default("")
+  href    String?
+  readAt  DateTime?
+  at      DateTime @default(now())
+  org     Organization @relation(fields: [orgId], references: [id])
+  @@index([orgId, at])
+}
+
+model ImportJob {
+  id        String   @id @default(cuid())
+  orgId     String
+  kind      String
+  filename  String
+  total     Int
+  valid     Int
+  imported  Int      @default(0)
+  status    String
+  createdAt DateTime @default(now())
+  org       Organization @relation(fields: [orgId], references: [id])
+  errors    ImportError[]
+}
+
+model ImportError {
+  id     String @id @default(cuid())
+  jobId  String
+  row    Int
+  field  String
+  code   String
+  message String
+  job    ImportJob @relation(fields: [jobId], references: [id])
+  @@index([jobId])
+}
