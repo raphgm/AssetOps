@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import AssetPicker from "./AssetPicker";
 
 export async function api(url: string, method: string, body?: unknown) {
   const res = await fetch(url, { method, headers: { "content-type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
@@ -15,10 +16,10 @@ const Sel = ({ name, label, opts, required, def, empty }: { name: string; label:
 );
 
 export function NewAssetForm({ types, depts, locs, vendors }: { types: Opt[]; depts: Opt[]; locs: Opt[]; vendors: Opt[] }) {
-  const r = useRouter(); const [err, setErr] = useState(""); const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState(""); const [busy, setBusy] = useState(false);
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault(); setBusy(true); setErr("");
-    try { const a = await api("/api/assets", "POST", Object.fromEntries(new FormData(e.currentTarget))); r.push(`/app/assets/${a.id}`); r.refresh(); } catch (x) { setErr((x as Error).message); setBusy(false); }
+    try { const a = await api("/api/assets", "POST", Object.fromEntries(new FormData(e.currentTarget))); window.location.assign(`/app/assets/${a.id}`); } catch (x) { setErr((x as Error).message); setBusy(false); }
   }
   return (
     <form onSubmit={submit} className="card p-4 grid gap-3 sm:grid-cols-2 max-w-3xl">
@@ -41,7 +42,7 @@ interface PartRow { name: string; quantity: number; unitCost: number }
 export function MaintenanceForm({ assets, cats, techs, vendors, fixed, workOrderId, defaultCategory, onDoneHref, resolve }: {
   assets?: { id: string; name: string }[]; cats: Opt[]; techs: Opt[]; vendors: Opt[]; fixed?: { id: string; label: string }; workOrderId?: string; defaultCategory?: string; onDoneHref?: string; resolve?: boolean;
 }) {
-  const r = useRouter(); const [err, setErr] = useState(""); const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState(""); const [busy, setBusy] = useState(false);
   const [parts, setParts] = useState<PartRow[]>([]); const [files, setFiles] = useState<File[]>([]);
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault(); setBusy(true); setErr("");
@@ -59,12 +60,12 @@ export function MaintenanceForm({ assets, cats, techs, vendors, fixed, workOrder
         const fd = new FormData(); fd.append("file", file); fd.append("recordId", recordId);
         const up = await fetch("/api/uploads", { method: "POST", body: fd }); if (!up.ok) throw new Error((await up.json()).error ?? "Upload failed");
       }
-      r.push(onDoneHref ?? "/app/maintenance"); r.refresh();
+      window.location.assign(onDoneHref ?? "/app/maintenance");   // full navigation: always shows fresh server state
     } catch (x) { setErr((x as Error).message); setBusy(false); }
   }
   return (
     <form onSubmit={submit} className="card p-4 grid gap-3 sm:grid-cols-2 max-w-3xl">
-      {fixed ? <div className="sm:col-span-2"><div className="label">Asset</div><div className="font-mono">{fixed.label}</div></div> : <div className="sm:col-span-2"><Sel name="assetId" label="Asset" opts={assets ?? []} required /></div>}
+      {fixed ? <div className="sm:col-span-2"><div className="label">Asset</div><div className="font-mono">{fixed.label}</div></div> : <div className="sm:col-span-2"><AssetPicker /></div>}
       <Sel name="categoryId" label="Issue category" opts={cats} required def={defaultCategory} />
       {!resolve && <div><label className="label" htmlFor="performedAt">Date</label><input id="performedAt" name="performedAt" type="date" className="input" defaultValue={new Date().toISOString().slice(0, 10)} max={new Date().toISOString().slice(0, 10)} /></div>}
       {!resolve && <Sel name="technicianId" label="Technician" opts={techs} />}{!resolve && <Sel name="vendorId" label="Vendor" opts={vendors} />}
@@ -92,20 +93,20 @@ export function MaintenanceForm({ assets, cats, techs, vendors, fixed, workOrder
   );
 }
 
-export function WorkOrderForm({ assets, cats, techs, vendors, fixedAsset, report, fleet }: { assets?: { id: string; name: string }[]; cats: Opt[]; techs: Opt[]; vendors: Opt[]; fixedAsset?: { id: string; label: string }; report?: boolean; fleet?: { assetIds: string[]; key: string; title: string } }) {
-  const r = useRouter(); const [err, setErr] = useState(""); const [busy, setBusy] = useState(false);
+export function WorkOrderForm({ assets, cats, techs, vendors, fixedAsset, report, fleet }: { assets?: { id: string; name: string }[]; cats: Opt[]; techs: Opt[]; vendors: Opt[]; fixedAsset?: { id: string; label: string }; report?: boolean; fleet?: { assetIds: string[]; key: string; title: string; categoryId?: string } }) {
+  const [err, setErr] = useState(""); const [busy, setBusy] = useState(false);
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault(); setBusy(true); setErr("");
     const f = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
     try {
-      if (fleet) { const d = await api("/api/work-orders", "POST", { fleet: true, assetIds: fleet.assetIds, title: f.title, fleetKey: fleet.key }); r.push(`/app/work-orders?fleet=${fleet.key}`); return void d; }
-      const d = await api("/api/work-orders", "POST", { ...f, assetId: fixedAsset?.id ?? f.assetId, report }); r.push(`/app/work-orders/${d.id}`); r.refresh();
+      if (fleet) { const d = await api("/api/work-orders", "POST", { fleet: true, assetIds: fleet.assetIds, title: f.title, fleetKey: fleet.key, categoryId: fleet.categoryId }); window.location.assign(`/app/work-orders?fleet=${fleet.key}`); return void d; }
+      const d = await api("/api/work-orders", "POST", { ...f, assetId: fixedAsset?.id ?? f.assetId, report }); window.location.assign(`/app/work-orders/${d.id}`);
     } catch (x) { setErr((x as Error).message); setBusy(false); }
   }
   return (
     <form onSubmit={submit} className="card p-4 grid gap-3 sm:grid-cols-2 max-w-3xl">
       {fleet ? <div className="sm:col-span-2 text-mute">This creates <b className="text-fg">{fleet.assetIds.length}</b> HIGH-priority inspection work orders, one per affected asset. Nothing is created until you confirm.</div>
-        : fixedAsset ? <div className="sm:col-span-2"><div className="label">Asset</div><div className="font-mono">{fixedAsset.label}</div></div> : <div className="sm:col-span-2"><Sel name="assetId" label="Asset" opts={assets ?? []} required /></div>}
+        : fixedAsset ? <div className="sm:col-span-2"><div className="label">Asset</div><div className="font-mono">{fixedAsset.label}</div></div> : <div className="sm:col-span-2"><AssetPicker /></div>}
       <div className="sm:col-span-2"><label className="label" htmlFor="title">Title</label><input id="title" name="title" className="input" required minLength={3} defaultValue={fleet?.title} /></div>
       {!fleet && <>
         <div className="sm:col-span-2"><label className="label" htmlFor="description">Describe the issue</label><textarea id="description" name="description" rows={3} className="input" /></div>
@@ -119,10 +120,17 @@ export function WorkOrderForm({ assets, cats, techs, vendors, fixedAsset, report
 }
 
 export function WorkOrderActions({ id, status, canAssign, canUpdate, canVerify, techs, resolveHref }: { id: string; status: string; canAssign: boolean; canUpdate: boolean; canVerify: boolean; techs: Opt[]; resolveHref: string }) {
-  const r = useRouter(); const [err, setErr] = useState(""); const [busy, setBusy] = useState(""); const [tech, setTech] = useState("");
+  const r = useRouter(); const [err, setErr] = useState(""); const [busy, setBusy] = useState(""); const [tech, setTech] = useState(""); const [expect, setExpect] = useState("");
+  // Safety net: if the soft refresh doesn't surface the new status shortly, fall back to a full reload.
+  useEffect(() => {
+    if (!expect) return;
+    if (status === expect) { setExpect(""); return; }
+    const t = setTimeout(() => window.location.reload(), 2500);
+    return () => clearTimeout(t);
+  }, [expect, status]);
   async function go(to: string, extra: object = {}) {
     setBusy(to); setErr("");
-    try { await api(`/api/work-orders/${id}`, "PATCH", { to, ...extra }); r.refresh(); } catch (x) { setErr((x as Error).message); } finally { setBusy(""); }
+    try { await api(`/api/work-orders/${id}`, "PATCH", { to, ...extra }); setExpect(to); r.refresh(); } catch (x) { setErr((x as Error).message); } finally { setBusy(""); }
   }
   const B = ({ to, label, primary }: { to: string; label: string; primary?: boolean }) => <button className={primary ? "btn btn-accent" : "btn"} disabled={!!busy} onClick={() => go(to)}>{busy === to ? "…" : label}</button>;
   return (

@@ -12,7 +12,7 @@ const COPY: Record<Mode, { title: string; sub: string; cta: string }> = {
   reset: { title: "Choose a new password", sub: "Use at least 8 characters.", cta: "Update password" },
 };
 
-export default function AuthForm({ mode, token }: { mode: Mode; token?: string }) {
+export default function AuthForm({ mode, token, showDemo }: { mode: Mode; token?: string; showDemo?: boolean }) {
   const r = useRouter();
   const [err, setErr] = useState(""); const [busy, setBusy] = useState(false); const [msg, setMsg] = useState<{ text: string; link?: string } | null>(null);
   const c = COPY[mode];
@@ -27,7 +27,7 @@ export default function AuthForm({ mode, token }: { mode: Mode; token?: string }
       if (!res.ok) throw new Error(d.error ?? "Request failed");
       if (mode === "forgot") setMsg({ text: "If that email has an account, a reset link has been generated.", link: d.devLink });
       else if (mode === "reset") r.push("/sign-in");
-      else { r.push(mode === "sign-up" ? "/app/onboarding" : "/app"); r.refresh(); }
+      else { r.push(mode === "sign-up" ? "/app/onboarding" : "/app"); }
     } catch (e) { setErr(e instanceof Error ? e.message : "Something went wrong"); } finally { setBusy(false); }
   }
 
@@ -53,7 +53,7 @@ export default function AuthForm({ mode, token }: { mode: Mode; token?: string }
           {mode === "sign-up" && <Link href="/sign-in" className="hover:text-fg">Already have an account? Sign in</Link>}
           {(mode === "forgot" || mode === "reset") && <Link href="/sign-in" className="hover:text-fg">Back to sign in</Link>}
         </div>
-        {mode === "sign-in" && (
+        {mode === "sign-in" && showDemo && (
           <div className="mt-8 card p-3 text-xs text-mute">
             <div className="text-fg font-medium mb-1">Synthetic demo organisation</div>
             <code className="font-mono">demo@assetops.local</code> / <code className="font-mono">demo1234!</code>
