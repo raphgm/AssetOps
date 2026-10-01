@@ -9,7 +9,8 @@ const write = (j: Job[]) => { try { localStorage.setItem(KEY, JSON.stringify(j))
 
 /** One-tap status changes. If the network is down the action is queued locally and replayed when back online. */
 export default function TechQuick({ id, status }: { id: string; status: string }) {
-  const r = useRouter(); const [msg, setMsg] = useState(""); const [busy, setBusy] = useState(false);
+  const r = useRouter(); const [msg, setMsg] = useState(""); const [busy, setBusy] = useState(false); const [expect, setExpect] = useState("");
+  useEffect(() => { if (!expect) return; if (status === expect) { setExpect(""); return; } const t = setTimeout(() => window.location.reload(), 2500); return () => clearTimeout(t); }, [expect, status]);
   useEffect(() => {
     async function flush() {
       const q = read(); if (!q.length) return; const rest: Job[] = [];
@@ -23,7 +24,7 @@ export default function TechQuick({ id, status }: { id: string; status: string }
     try {
       const res = await fetch(`/api/work-orders/${id}`, { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ to }) });
       if (!res.ok) throw new Error((await res.json()).error ?? "Failed");
-      r.refresh();
+      r.refresh(); setExpect(to);
     } catch (e) {
       if (e instanceof TypeError) { write([...read(), { id, to }]); setMsg("Offline — queued. Will sync when you're back online."); }
       else setMsg((e as Error).message);

@@ -101,7 +101,7 @@ export async function transitionWorkOrder(s: Session, id: string, t: TransitionI
       assetId: wo.assetId, categoryId: r.categoryId, description: r.description || wo.title, resolution: r.resolution, notes: r.notes ?? "",
       technicianId: wo.assigneeId ?? s.userId, vendorId: wo.vendorId ?? "", workOrderId: wo.id, laborCost: r.laborCost, downtimeHours: r.downtimeHours, parts: r.parts,
     });
-    await db.workOrderEvent.create({ data: { workOrderId: id, type: "Parts & cost recorded", actor: s.name, note: `Maintenance record ${rec.id}` } });
+    await db.workOrderEvent.create({ data: { workOrderId: id, type: "Parts & cost recorded", actor: s.name, note: "Immutable maintenance record created" } });
     return { workOrder: updated, recordId: rec.id };
   }
   await recomputeAsset(wo.assetId);
@@ -109,8 +109,8 @@ export async function transitionWorkOrder(s: Session, id: string, t: TransitionI
 }
 
 /** Create one work order per affected asset for a fleet inspection (human-confirmed action). */
-export async function createFleetInspection(s: Session, assetIds: string[], title: string, fleetKey: string) {
+export async function createFleetInspection(s: Session, assetIds: string[], title: string, fleetKey: string, categoryId?: string) {
   const out = [];
-  for (const assetId of assetIds.slice(0, 200)) out.push(await createWorkOrder(s, { title, assetId, priority: "HIGH", fleetKey, description: `Fleet inspection: ${title}` }));
+  for (const assetId of assetIds.slice(0, 200)) out.push(await createWorkOrder(s, { title, assetId, priority: "HIGH", fleetKey, categoryId, description: "Created from an AI investigation after review. Inspect this asset for the shared failure pattern." }));
   return out;
 }

@@ -37,7 +37,7 @@ export default function Shell({ user, unread, children }: { user: { name: string
   }, []);
   const toggle = () => setCollapsed((c) => { try { localStorage.setItem("sb", c ? "0" : "1"); } catch {} return !c; });
   const active = (h: string) => (h === "/app" ? path === "/app" : path.startsWith(h));
-  async function signOut() { await fetch("/api/auth/sign-out", { method: "POST" }); router.push("/sign-in"); router.refresh(); }
+  async function signOut() { await fetch("/api/auth/sign-out", { method: "POST" }); router.push("/sign-in"); }
 
   const nav = (
     <nav aria-label="Primary" className="flex-1 overflow-y-auto px-2 py-2 space-y-0.5">
