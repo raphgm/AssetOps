@@ -2,15 +2,18 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Activity, BarChart3, Bell, Building2, ChevronsLeft, ClipboardList, Cpu, Database, FileText, Gauge, LayoutDashboard, MapPin, Menu, Network, ScanLine, ScrollText, Search, Settings, Sparkles, Truck, Wrench, X, Boxes } from "lucide-react";
+import { Activity, BarChart3, Bell, Building2, ChevronsLeft, ClipboardList, Coins, Cpu, Database, FileCheck, FileText, Gauge, LayoutDashboard, MapPin, Menu, Network, ScanLine, ScrollText, Search, Settings, ShieldCheck, Sparkles, Truck, Wrench, X, Boxes } from "lucide-react";
 import { Logo } from "./ui";
 import { cn } from "@/lib/utils";
 
 const NAV = [
   { href: "/app", label: "Overview", icon: LayoutDashboard },
+  { href: "/app/finops", label: "FinOps", icon: Coins },
   { href: "/app/assets", label: "Assets", icon: Cpu },
   { href: "/app/maintenance", label: "Maintenance", icon: Wrench },
+  { href: "/app/preventative", label: "Preventative", icon: ShieldCheck },
   { href: "/app/work-orders", label: "Work Orders", icon: ClipboardList },
+  { href: "/app/decommission", label: "Decommission", icon: FileCheck },
   { href: "/app/departments", label: "Departments", icon: Building2 },
   { href: "/app/vendors", label: "Vendors", icon: Truck },
   { href: "/app/locations", label: "Locations", icon: MapPin },

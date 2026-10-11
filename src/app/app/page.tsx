@@ -92,8 +92,8 @@ export default async function Dashboard({ searchParams }: { searchParams: SP }) 
             <ul className="space-y-1.5 text-[13px]">
               <li>Maintenance spend over the last 30 days: <b>{naira(o.spend30d)}</b>; trailing 12-month spend: <b>{naira(o.spend12m)}</b>.</li>
               {an ? <li>{an.category} failures are {an.ratio.toFixed(1)}× baseline ({an.recent} in 30 days) across {an.departments} departments{an.vendors[0] ? `, led by ${an.vendors[0]}` : ""}.</li> : <li>No maintenance anomalies detected against the 90-day baseline.</li>}
-              <li>{o.attention.workOrdersPastSla} open work orders are past SLA; SLA compliance is {pct(o.slaCompliance)}.</li>
               <li>Estimated maintenance debt: <b>{naira(o.debt)}</b> <Badge tone="warn">estimate</Badge></li>
+              <li>Hardware FinOps: <Link href="/app/finops" className="text-accent hover:underline font-medium">Explore CapEx forecast & balance sheet depreciation &rarr;</Link></li>
             </ul>
             <div className="mt-3 flex gap-2">{an ? <InvestigateButton question={`Why did ${an.category.toLowerCase()} maintenance increase?`} categoryId={an.categoryId} /> : <InvestigateButton question="What changed this week?" />}<Link className="btn" href="/app/analytics">View evidence</Link></div>
           </Card>
