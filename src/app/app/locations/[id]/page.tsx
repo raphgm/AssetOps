@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { requireSession } from "@/lib/auth";
@@ -56,6 +57,7 @@ export default async function Loc({ params }: { params: Promise<{ id: string }> 
       <PageHeader
         title={l.name}
         subtitle={`${l.city ? l.city + " • " : ""}Location detail`}
+        actions={can(s.role, "location:write") ? <Link href={`/app/locations/${id}/edit`} className="btn">Edit location</Link> : null}
       />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3">

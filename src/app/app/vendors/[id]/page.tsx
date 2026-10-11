@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Prisma } from "@prisma/client";
 import { requireSession } from "@/lib/auth";
@@ -20,7 +21,12 @@ export default async function Vendor({ params }: { params: Promise<{ id: string 
   const m = all.find((x) => x.id === id)!;
   const slaSeries = sla.map((r) => ({ label: r.b.toLocaleDateString("en-GB", { month: "short", year: "2-digit" }), sla: Math.round((Number(r.ok) / Number(r.total)) * 100) }));
   return (
-    <div><PageHeader title={v.name} subtitle={`Contract SLA ${v.slaHours} hours`} />
+    <div>
+      <PageHeader
+        title={v.name}
+        subtitle={`Contract SLA ${v.slaHours} hours`}
+        actions={can(s.role, "vendor:write") ? <Link href={`/app/vendors/${id}/edit`} className="btn">Edit vendor</Link> : null}
+      />
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-3"><Stat label="Work orders" value={m.workOrders} /><Stat label="SLA compliance" value={pct(m.slaCompliance)} tone={m.slaCompliance < 80 ? "bad" : undefined} /><Stat label="Avg resolution" value={`${m.avgResolutionHours.toFixed(0)}h`} /><Stat label="Repeat repairs" value={m.repeatRepairs} /><Stat label="Total spend (12m)" value={naira(m.spend12m)} /></div>
       <div className="grid lg:grid-cols-2 gap-3"><Card title="SLA compliance by month (%)"><MiniLine data={slaSeries} y="sla" name="SLA %" /></Card><Card title="Events handled by month"><MiniLine data={series} y="events" name="Events" /></Card></div></div>
   );

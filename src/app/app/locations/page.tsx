@@ -47,6 +47,7 @@ export default async function Locations() {
       <PageHeader
         title="Locations"
         subtitle="Where assets live and where maintenance load is highest."
+        actions={can(s.role, "location:write") ? <Link href="/app/locations/new" className="btn btn-primary">+ Add location</Link> : null}
       />
 
       <div className="grid lg:grid-cols-5 gap-3">
