@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Calculator, ArrowRight, TrendingUp, ShieldAlert, Sparkles, CheckCircle2 } from "lucide-react";
+import { Calculator, ArrowRight, TrendingUp, Sparkles, CheckCircle2 } from "lucide-react";
 
 export default function RoiCalculator() {
   const [fleetSize, setFleetSize] = useState(2500);
@@ -25,7 +25,7 @@ export default function RoiCalculator() {
   // 3-Year Compounded Financial Return
   const threeYearValue = totalAnnualSavings * 3;
 
-  // Format currency in Nigerian Naira or standard
+  // Format currency
   const fmt = (n: number) => {
     if (n >= 1000000) {
       return `₦${(n / 1000000).toFixed(1)}M`;
@@ -34,27 +34,30 @@ export default function RoiCalculator() {
   };
 
   return (
-    <div className="card border-accent/30 bg-surface/80 backdrop-blur p-6 sm:p-8 relative overflow-hidden shadow-2xl">
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-10 shadow-xl shadow-slate-200/60 relative overflow-hidden">
+      {/* Decorative ambient color glow */}
+      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-teal-100/60 via-cyan-100/40 to-indigo-100/30 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start relative">
         {/* Sliders Form */}
         <div className="w-full lg:w-1/2 space-y-6">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-md bg-accent/10 text-accent">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2.5 rounded-xl bg-teal-50 text-teal-700 border border-teal-200/60 shadow-sm">
               <Calculator className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-fg">Hardware FinOps ROI Calculator</h3>
-              <p className="text-xs text-mute">Simulate cost recovery based on deterministic fleet economics</p>
+              <h3 className="text-xl font-bold text-slate-900">Hardware FinOps Calculator</h3>
+              <p className="text-xs text-slate-500">Estimate immediate cost recovery on physical hardware</p>
             </div>
           </div>
 
           {/* Slider 1: Fleet Size */}
           <div className="space-y-2">
             <div className="flex justify-between items-center text-xs">
-              <span className="font-medium text-mute uppercase tracking-wider">ICT Hardware Fleet Size</span>
-              <span className="font-mono text-sm font-semibold text-accent">{fleetSize.toLocaleString()} units</span>
+              <span className="font-semibold text-slate-700 uppercase tracking-wider">ICT Fleet Size</span>
+              <span className="font-mono text-sm font-bold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200">
+                {fleetSize.toLocaleString()} units
+              </span>
             </div>
             <input
               type="range"
@@ -63,12 +66,12 @@ export default function RoiCalculator() {
               step={100}
               value={fleetSize}
               onChange={(e) => setFleetSize(Number(e.target.value))}
-              className="w-full h-2 bg-raised rounded-lg appearance-none cursor-pointer accent-[#5eead4]"
+              className="w-full h-2.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-teal-600 border border-slate-200"
               aria-label="Hardware fleet size slider"
             />
-            <div className="flex justify-between text-[10px] text-dim font-mono">
-              <span>200 (Single branch)</span>
-              <span>5,000 (Medium campus)</span>
+            <div className="flex justify-between text-[11px] text-slate-500 font-medium">
+              <span>200 (Single Site)</span>
+              <span>5,000 (Campus)</span>
               <span>15,000+ (Bank / Ministry)</span>
             </div>
           </div>
@@ -76,8 +79,10 @@ export default function RoiCalculator() {
           {/* Slider 2: Annual Maintenance Budget */}
           <div className="space-y-2">
             <div className="flex justify-between items-center text-xs">
-              <span className="font-medium text-mute uppercase tracking-wider">Annual ICT Maintenance & Repair Spend</span>
-              <span className="font-mono text-sm font-semibold text-accent">{fmt(annualBudget)}</span>
+              <span className="font-semibold text-slate-700 uppercase tracking-wider">Annual Repair & Maintenance Spend</span>
+              <span className="font-mono text-sm font-bold text-cyan-700 bg-cyan-50 px-2.5 py-0.5 rounded-full border border-cyan-200">
+                {fmt(annualBudget)}
+              </span>
             </div>
             <input
               type="range"
@@ -86,10 +91,10 @@ export default function RoiCalculator() {
               step={2500000}
               value={annualBudget}
               onChange={(e) => setAnnualBudget(Number(e.target.value))}
-              className="w-full h-2 bg-raised rounded-lg appearance-none cursor-pointer accent-[#5eead4]"
+              className="w-full h-2.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-cyan-600 border border-slate-200"
               aria-label="Annual repair budget slider"
             />
-            <div className="flex justify-between text-[10px] text-dim font-mono">
+            <div className="flex justify-between text-[11px] text-slate-500 font-medium">
               <span>₦5M</span>
               <span>₦50M</span>
               <span>₦150M+</span>
@@ -99,8 +104,10 @@ export default function RoiCalculator() {
           {/* Slider 3: Fleet Average Age */}
           <div className="space-y-2">
             <div className="flex justify-between items-center text-xs">
-              <span className="font-medium text-mute uppercase tracking-wider">Average Fleet Age (Depreciation Horizon)</span>
-              <span className="font-mono text-sm font-semibold text-accent">{avgAgeYears} Years</span>
+              <span className="font-semibold text-slate-700 uppercase tracking-wider">Average Hardware Age</span>
+              <span className="font-mono text-sm font-bold text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">
+                {avgAgeYears} Years
+              </span>
             </div>
             <input
               type="range"
@@ -109,82 +116,87 @@ export default function RoiCalculator() {
               step={1}
               value={avgAgeYears}
               onChange={(e) => setAvgAgeYears(Number(e.target.value))}
-              className="w-full h-2 bg-raised rounded-lg appearance-none cursor-pointer accent-[#5eead4]"
+              className="w-full h-2.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-indigo-600 border border-slate-200"
               aria-label="Average fleet age slider"
             />
-            <div className="flex justify-between text-[10px] text-dim font-mono">
-              <span>1 Year (Fresh fleet)</span>
-              <span>4 Years (Mid-cycle)</span>
-              <span>8 Years (High-debt legacy)</span>
+            <div className="flex justify-between text-[11px] text-slate-500 font-medium">
+              <span>1 Year (Fresh Fleet)</span>
+              <span>4 Years (Mid-Cycle)</span>
+              <span>8 Years (Aging Legacy)</span>
             </div>
           </div>
 
-          {/* Methodology Callout */}
-          <div className="p-3.5 rounded-lg border border-line bg-bg/50 text-[11.5px] text-mute space-y-1">
-            <div className="flex items-center gap-1.5 text-fg font-medium">
-              <Sparkles className="h-3.5 w-3.5 text-accent" />
-              <span>Deterministic Financial Model</span>
-            </div>
-            <p>
-              Calculated using the 70% Net Book Value replacement threshold, proactive PM cycle downtime suppression, and NIST 800-88 residual asset salvage recovery.
+          {/* Micro explanation */}
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 flex items-start gap-2.5">
+            <Sparkles className="h-4 w-4 text-teal-600 shrink-0 mt-0.5" />
+            <p className="leading-snug">
+              Powered by the <strong className="text-slate-800">70% Net Book Value rule</strong>, proactive PM cycle downtime suppression, and NIST 800-88 salvage credit recovery.
             </p>
           </div>
         </div>
 
         {/* Live Results Panel */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-between bg-raised/70 border border-line2 rounded-xl p-6 relative">
+        <div className="w-full lg:w-1/2 flex flex-col justify-between bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-teal-500/20 rounded-full blur-2xl" />
+
           <div>
-            <div className="flex items-center justify-between border-b border-line pb-3">
-              <span className="text-[11px] uppercase tracking-wider text-dim">Projected Annual Savings</span>
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-ok bg-ok/10 px-2 py-0.5 rounded-full">
-                <TrendingUp className="h-3 w-3" /> 42% Cost Leakage Recovery
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <span className="text-xs uppercase tracking-wider text-slate-400 font-mono">Projected Annual Savings</span>
+              <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+                <TrendingUp className="h-3 w-3" /> 42% Recovery
               </span>
             </div>
 
-            <div className="my-5">
-              <div className="text-4xl sm:text-5xl font-bold tracking-tight text-accent font-mono">
+            <div className="my-6">
+              <div className="text-4xl sm:text-5xl font-black tracking-tight text-teal-400 font-mono">
                 {fmt(totalAnnualSavings)}
-                <span className="text-base text-mute font-normal font-sans ml-2">/ year</span>
+                <span className="text-base text-slate-400 font-normal font-sans ml-2">/ year</span>
               </div>
-              <p className="text-xs text-mute mt-1.5">
-                Estimated 3-Year Compounded Impact: <strong className="text-fg">{fmt(threeYearValue)}</strong> across CapEx & OpEx.
+              <p className="text-xs text-slate-300 mt-2">
+                Estimated 3-Year Value: <strong className="text-white font-mono text-sm">{fmt(threeYearValue)}</strong> across CapEx & OpEx.
               </p>
             </div>
 
-            {/* Breakdown item rows */}
-            <div className="space-y-3 border-t border-line pt-4">
+            {/* Breakdown rows */}
+            <div className="space-y-3 border-t border-slate-800/80 pt-4">
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-accent" />
-                  <span className="text-fg">Eliminated Negative-ROI Repairs (70% Rule)</span>
+                  <div className="h-2 w-2 rounded-full bg-teal-400" />
+                  <span className="text-slate-300">Eliminated Negative-ROI Repairs (70% Rule)</span>
                 </div>
-                <span className="font-mono font-medium text-fg">{fmt(repairSavings)}</span>
+                <span className="font-mono font-bold text-teal-300">{fmt(repairSavings)}</span>
               </div>
 
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-ok" />
-                  <span className="text-fg">Preventative PM Downtime & SLA Defense</span>
+                  <div className="h-2 w-2 rounded-full bg-emerald-400" />
+                  <span className="text-slate-300">PM Downtime & SLA Breach Defense</span>
                 </div>
-                <span className="font-mono font-medium text-fg">{fmt(downtimeSavings)}</span>
+                <span className="font-mono font-bold text-emerald-300">{fmt(downtimeSavings)}</span>
               </div>
 
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-info" />
-                  <span className="text-fg">Ghost Asset Recovery & NIST Salvage Resale</span>
+                  <div className="h-2 w-2 rounded-full bg-cyan-400" />
+                  <span className="text-slate-300">Ghost Asset Recovery & Salvage Resale</span>
                 </div>
-                <span className="font-mono font-medium text-fg">{fmt(salvageAndAuditSavings)}</span>
+                <span className="font-mono font-bold text-cyan-300">{fmt(salvageAndAuditSavings)}</span>
               </div>
             </div>
           </div>
 
-          <div className="mt-8 pt-4 border-t border-line flex flex-col sm:flex-row items-center gap-3">
-            <Link href="/sign-up" className="btn btn-accent btn-lg w-full sm:w-auto flex-1 font-medium">
+          <div className="mt-8 pt-5 border-t border-slate-800 flex flex-col sm:flex-row items-center gap-3">
+            <Link
+              href="/sign-up"
+              className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl font-bold text-xs bg-gradient-to-r from-teal-400 via-cyan-400 to-indigo-400 text-slate-950 shadow-md hover:brightness-105 transition"
+            >
               Start Free Assessment <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/sign-in" className="btn btn-lg w-full sm:w-auto">
-              Simulate in Live Demo
+            <Link
+              href="/sign-in"
+              className="w-full sm:w-auto inline-flex items-center justify-center py-3 px-4 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700 transition"
+            >
+              Simulate in Demo
             </Link>
           </div>
         </div>

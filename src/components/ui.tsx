@@ -3,14 +3,14 @@ import type { ReactNode } from "react";
 import { AlertTriangle, Inbox, Lock } from "lucide-react";
 import { cn, STATUS_LABEL } from "@/lib/utils";
 
-export function Logo({ className, text = true }: { className?: string; text?: boolean }) {
+export function Logo({ className, text = true, light = false }: { className?: string; text?: boolean; light?: boolean }) {
   return (
-    <span className={cn("inline-flex items-center gap-2 font-semibold tracking-tight", className)}>
+    <span className={cn("inline-flex items-center gap-2 font-semibold tracking-tight", light ? "text-slate-900" : "text-fg", className)}>
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path d="M6 17.5 12 6l6 11.5M8.2 13.5h7.6" stroke="#5eead4" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="12" cy="6" r="2.2" fill="#0a0b0d" stroke="#5eead4" strokeWidth="1.6" />
-        <circle cx="6" cy="17.5" r="2.2" fill="#0a0b0d" stroke="#e8eaed" strokeWidth="1.6" />
-        <circle cx="18" cy="17.5" r="2.2" fill="#0a0b0d" stroke="#e8eaed" strokeWidth="1.6" />
+        <path d="M6 17.5 12 6l6 11.5M8.2 13.5h7.6" stroke={light ? "#0d9488" : "#5eead4"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="12" cy="6" r="2.2" fill={light ? "#ffffff" : "#0a0b0d"} stroke={light ? "#0d9488" : "#5eead4"} strokeWidth="1.8" />
+        <circle cx="6" cy="17.5" r="2.2" fill={light ? "#ffffff" : "#0a0b0d"} stroke={light ? "#0f172a" : "#e8eaed"} strokeWidth="1.8" />
+        <circle cx="18" cy="17.5" r="2.2" fill={light ? "#ffffff" : "#0a0b0d"} stroke={light ? "#0f172a" : "#e8eaed"} strokeWidth="1.8" />
       </svg>
       {text && <span>AssetOps</span>}
     </span>
