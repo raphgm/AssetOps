@@ -39,8 +39,8 @@ await t.fill("#description", "Paper-feed failure, roller worn"); await t.fill("#
 await t.fill("#laborCost", "15000"); await t.fill("#downtimeHours", "2");
 await t.click("button:has-text('+ Add part')"); await t.fill("input[aria-label='Part name']", "Feed roller kit"); await t.fill("input[aria-label='Unit cost']", "22000");
 // 1x1 PNG photo
-writeFileSync("/tmp/claude-0/evidence.png", Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==", "base64"));
-await t.setInputFiles("#files", "/tmp/claude-0/evidence.png");
+writeFileSync("/tmp/evidence.png", Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==", "base64"));
+await t.setInputFiles("#files", "/tmp/evidence.png");
 await t.click("button:has-text('Resolve work order')");
 await t.waitForSelector("text=Parts & cost recorded", { timeout: 45000 }).catch(async () => { throw new Error("resolve failed: " + (await t.locator("[role=alert]").allInnerTexts()).join(" | ")); }); step("technician resolved with part, cost and photo evidence");
 await t.waitForSelector("a:has-text('evidence.png')"); step("photo attached to the record");
