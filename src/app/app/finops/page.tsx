@@ -190,17 +190,23 @@ export default async function FinOpsPage({
                         </Link>
                       </td>
                       <td className="td">
-                        <span
-                          className={`text-[9px] font-bold px-1.5 py-0.5 rounded border uppercase ${
-                            loc.type === "PROJECT"
-                              ? "bg-warn/15 text-warn border-warn/30"
-                              : loc.type === "DATA_CENTER"
-                              ? "bg-accent/15 text-accent border-accent/30"
-                              : "bg-surface border-line text-dim"
-                          }`}
-                        >
-                          {loc.type === "PROJECT" ? "Project Site" : loc.type.replace("_", " ")}
-                        </span>
+                        {loc.type ? (
+                          <span
+                            className={`text-[9px] font-bold px-1.5 py-0.5 rounded border uppercase ${
+                              loc.type === "PROJECT"
+                                ? "bg-warn/15 text-warn border-warn/30"
+                                : loc.type === "DATA_CENTER"
+                                ? "bg-accent/15 text-accent border-accent/30"
+                                : "bg-surface border-line text-dim"
+                            }`}
+                          >
+                            {loc.type === "PROJECT" ? "Project Site" : loc.type.replace("_", " ")}
+                          </span>
+                        ) : (
+                          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded border uppercase bg-surface border-line text-dim">
+                            Office
+                          </span>
+                        )}
                       </td>
                       <td className="td text-dim text-xs">{loc.address ?? loc.city}</td>
                       <td className="td tabular-nums">{num(loc.assetCount)}</td>

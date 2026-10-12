@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Coins,
@@ -13,14 +14,30 @@ import {
   Server,
   ShieldCheck,
   Check,
+  Smartphone,
 } from "lucide-react";
 
 export default function BentoGrid() {
+  // Live ticking countdown for the SLA Card
+  const [secondsRemaining, setSecondsRemaining] = useState(15142); // ~4h 12m 22s
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSecondsRemaining((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const hours = Math.floor(secondsRemaining / 3600);
+  const minutes = Math.floor((secondsRemaining % 3600) / 60);
+  const seconds = secondsRemaining % 60;
+  const formattedTime = `${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m ${String(seconds).padStart(2, "0")}s`;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-5 font-sans">
       {/* 1. FinOps 70% Crossover Rule (Span 7) */}
-      <div className="lg:col-span-7 bg-white border border-slate-200/90 hover:border-cyan-400 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl shadow-slate-200/50 hover:shadow-2xl transition-all group relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-cyan-100/70 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="lg:col-span-7 bg-white border border-slate-200/90 hover:border-cyan-400 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl shadow-slate-200/40 hover:shadow-2xl transition-all group relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-cyan-100/60 via-teal-50/30 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-mono font-bold mb-4">
             <Coins className="w-3.5 h-3.5 text-cyan-600" />
@@ -62,7 +79,7 @@ export default function BentoGrid() {
             href="/app/finops"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-700 hover:text-cyan-800 group"
           >
-            Explore FinOps Engine <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
+            Explore FinOps Engine <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>
@@ -101,7 +118,7 @@ export default function BentoGrid() {
             href="/app/scan"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-white hover:text-teal-100 group"
           >
-            Launch Camera Scanner <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
+            Launch Camera Scanner <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>
@@ -123,7 +140,7 @@ export default function BentoGrid() {
           <div className="mt-4 p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-1.5 font-mono text-xs">
             <div className="flex items-center justify-between text-[11px] font-bold text-amber-900">
               <span>Vendor: Schneider Power TAC</span>
-              <span className="text-rose-600 animate-pulse">4h 12m REMAINING</span>
+              <span className="text-rose-600 animate-pulse font-mono">{formattedTime} REMAINING</span>
             </div>
             <div className="text-[10.5px] text-slate-600 font-sans">
               Contract Rebate: ₦25,000 / hour breached
@@ -137,7 +154,7 @@ export default function BentoGrid() {
             href="/app/work-orders"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 hover:text-amber-800 group"
           >
-            Review Orders <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
+            Review Orders <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>
@@ -173,7 +190,7 @@ export default function BentoGrid() {
             href="/app/telemetry"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 group"
           >
-            View Telemetry <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
+            View Telemetry <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>
@@ -209,7 +226,7 @@ export default function BentoGrid() {
             href="/app/locations"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-700 hover:text-cyan-800 group"
           >
-            Inspect Fleet Map <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
+            Inspect Fleet Map <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>

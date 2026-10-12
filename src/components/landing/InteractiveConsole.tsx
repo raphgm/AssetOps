@@ -14,6 +14,7 @@ import {
   Radio,
   Sliders,
   CheckCircle2,
+  Sparkles,
 } from "lucide-react";
 
 type TabId = "finops" | "discovery" | "telemetry" | "gis";
@@ -26,28 +27,28 @@ export default function InteractiveConsole() {
   const isCrossoverBreached = thresholdRatio >= 70;
 
   return (
-    <div className="bg-white border border-slate-200/90 rounded-3xl shadow-2xl shadow-indigo-100/70 overflow-hidden font-sans text-slate-900 ring-1 ring-slate-100 relative group">
-      {/* Top Window Chrome */}
-      <div className="bg-slate-50/90 px-4 py-3 border-b border-slate-200/90 flex flex-wrap items-center justify-between gap-3">
+    <div className="bg-white/95 backdrop-blur-2xl border border-slate-200/90 rounded-3xl shadow-[0_25px_60px_-15px_rgba(15,23,42,0.08)] overflow-hidden font-sans text-slate-900 ring-1 ring-slate-100 relative group">
+      {/* Top Window Header Chrome */}
+      <div className="bg-slate-50/80 px-4 sm:px-6 py-3.5 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] shadow-sm" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] shadow-sm" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f] shadow-sm" />
           </div>
           <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-slate-500 font-semibold">
             <span>assetops-kernel</span>
             <span className="text-slate-400">/</span>
             <span className="text-cyan-700">telemetry-cluster</span>
           </div>
-          <span className="inline-flex items-center gap-1.5 text-[10.5px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">
+          <span className="inline-flex items-center gap-1.5 text-[10.5px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 font-bold shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             LIVE TELEMETRY · 24ms
           </span>
         </div>
 
-        {/* Tab Controls */}
-        <div className="flex items-center gap-1 bg-slate-200/70 p-1 rounded-xl border border-slate-200">
+        {/* Tab Switcher */}
+        <div className="flex items-center gap-1 bg-slate-200/60 p-1 rounded-xl border border-slate-200/80">
           {[
             { id: "finops" as TabId, label: "FinOps Crossover", icon: Coins },
             { id: "discovery" as TabId, label: "Network Scanner", icon: Wifi },
@@ -59,8 +60,8 @@ export default function InteractiveConsole() {
               onClick={() => setActiveTab(id)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 activeTab === id
-                  ? "bg-white text-cyan-800 shadow-sm border border-slate-200"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
+                  ? "bg-white text-cyan-800 shadow-sm border border-slate-200/80"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-white/50"
               }`}
             >
               <Icon className="w-3.5 h-3.5 text-cyan-600" />
@@ -70,52 +71,56 @@ export default function InteractiveConsole() {
         </div>
       </div>
 
-      {/* Console Display Viewport */}
-      <div className="p-5 sm:p-7 min-h-[400px]">
+      {/* Main Console Viewport */}
+      <div className="p-5 sm:p-7 min-h-[410px]">
         {/* 1. FINOPS CROSSOVER ENGINE */}
         {activeTab === "finops" && (
           <div className="space-y-5 animate-fadeIn">
-            {/* KPI Ticker */}
+            {/* KPI Ticker Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono">
-              <div className="bg-slate-50/80 border border-slate-200 p-3.5 rounded-2xl">
-                <div className="text-[10px] text-slate-500 uppercase font-bold">Estate Total TCO</div>
-                <div className="text-xl font-black text-cyan-800 mt-1">₦428,500,000</div>
-                <div className="text-[10.5px] text-emerald-700 mt-0.5 font-bold">FOCUS™ v1.0 Audited</div>
+              <div className="bg-gradient-to-b from-white to-slate-50/70 border border-slate-200/80 p-3.5 rounded-2xl shadow-sm hover:border-cyan-300 transition-colors">
+                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Estate Total TCO</div>
+                <div className="text-xl sm:text-2xl font-black text-cyan-800 mt-1">₦428,500,000</div>
+                <div className="text-[10.5px] text-emerald-700 mt-0.5 font-bold flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-600" /> FOCUS™ v1.0 Audited
+                </div>
               </div>
-              <div className="bg-slate-50/80 border border-slate-200 p-3.5 rounded-2xl">
-                <div className="text-[10px] text-slate-500 uppercase font-bold">Net Book Value</div>
-                <div className="text-xl font-black text-slate-900 mt-1">₦312,800,000</div>
+              <div className="bg-gradient-to-b from-white to-slate-50/70 border border-slate-200/80 p-3.5 rounded-2xl shadow-sm hover:border-slate-300 transition-colors">
+                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Net Book Value</div>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 mt-1">₦312,800,000</div>
                 <div className="text-[10.5px] text-slate-500 mt-0.5 font-bold">10% Residual Line</div>
               </div>
-              <div className="bg-slate-50/80 border border-slate-200 p-3.5 rounded-2xl">
-                <div className="text-[10px] text-slate-500 uppercase font-bold">Money Pit Halts</div>
-                <div className="text-xl font-black text-amber-700 mt-1">₦18,400,000</div>
+              <div className="bg-gradient-to-b from-white to-slate-50/70 border border-slate-200/80 p-3.5 rounded-2xl shadow-sm hover:border-amber-300 transition-colors">
+                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Money Pit Halts</div>
+                <div className="text-xl sm:text-2xl font-black text-amber-700 mt-1">₦18,400,000</div>
                 <div className="text-[10.5px] text-amber-700 mt-0.5 font-bold">Diverted to CapEx</div>
               </div>
-              <div className="bg-slate-50/80 border border-slate-200 p-3.5 rounded-2xl">
-                <div className="text-[10px] text-slate-500 uppercase font-bold">SLA Rebate Credits</div>
-                <div className="text-xl font-black text-emerald-700 mt-1">₦3,200,000</div>
+              <div className="bg-gradient-to-b from-white to-slate-50/70 border border-slate-200/80 p-3.5 rounded-2xl shadow-sm hover:border-emerald-300 transition-colors">
+                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">SLA Rebate Credits</div>
+                <div className="text-xl sm:text-2xl font-black text-emerald-700 mt-1">₦3,200,000</div>
                 <div className="text-[10.5px] text-emerald-700 mt-0.5 font-bold">Automated Recovery</div>
               </div>
             </div>
 
             {/* Interactive Threshold Simulator */}
-            <div className="bg-white border-2 border-slate-200 rounded-2xl p-5 space-y-4 shadow-sm">
+            <div className="bg-white border-2 border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-cyan-600" />
+                  <div className="p-1.5 rounded-lg bg-cyan-50 border border-cyan-200 text-cyan-700">
+                    <Sliders className="w-4 h-4" />
+                  </div>
                   <span className="text-xs font-bold text-slate-900">
                     Interactive 70% Crossover Simulator: Dell PowerEdge R740 (SRV-DC-00281)
                   </span>
                 </div>
                 <span
-                  className={`text-[10.5px] font-mono px-2.5 py-0.5 rounded-full font-bold border ${
+                  className={`text-[10.5px] font-mono px-3 py-1 rounded-full font-bold border transition-colors shadow-sm ${
                     isCrossoverBreached
                       ? "bg-rose-50 text-rose-800 border-rose-200"
                       : "bg-emerald-50 text-emerald-800 border-emerald-200"
                   }`}
                 >
-                  {isCrossoverBreached ? "STOP REPAIR: HALTED BY FINOPS RULE" : "APPROVED WITHIN SAFE BUDGET"}
+                  {isCrossoverBreached ? "STOP REPAIR: HALTED BY FINOPS RULE" : "APPROVED: WITHIN SAFE BUDGET"}
                 </span>
               </div>
 
@@ -123,7 +128,7 @@ export default function InteractiveConsole() {
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs font-mono">
                   <span className="text-slate-600 font-semibold">Simulate Repair Quote:</span>
-                  <span className="text-cyan-700 font-black">₦{repairQuote.toLocaleString()}</span>
+                  <span className="text-cyan-800 font-black text-sm">₦{repairQuote.toLocaleString()}</span>
                 </div>
                 <input
                   type="range"
@@ -138,7 +143,7 @@ export default function InteractiveConsole() {
 
               {/* Visual Meter Bar */}
               <div className="space-y-2">
-                <div className="w-full bg-slate-100 h-3 rounded-full overflow-hidden flex relative border border-slate-200">
+                <div className="w-full bg-slate-100 h-3.5 rounded-full overflow-hidden flex relative border border-slate-200">
                   <div
                     className="bg-cyan-500 h-full transition-all duration-300"
                     style={{ width: `${Math.min(thresholdRatio, 70)}%` }}
@@ -152,7 +157,7 @@ export default function InteractiveConsole() {
                     />
                   )}
                 </div>
-                <div className="flex justify-between text-[11px] font-mono text-slate-500">
+                <div className="flex justify-between text-[11px] font-mono text-slate-500 font-medium">
                   <span>Safe Threshold (70%): ₦1,155,000</span>
                   <span className={isCrossoverBreached ? "text-rose-700 font-bold" : "text-emerald-700 font-bold"}>
                     Current Ratio: {thresholdRatio}% of Net Book Value
@@ -161,7 +166,7 @@ export default function InteractiveConsole() {
               </div>
 
               {/* Outcome Resolution */}
-              <div className="text-xs text-slate-700 pt-2 border-t border-slate-100 flex items-center justify-between font-medium">
+              <div className="text-xs text-slate-700 pt-2.5 border-t border-slate-100 flex items-center justify-between font-medium">
                 <span>
                   {isCrossoverBreached
                     ? "Financial Action: Repair PO blocked. ₦1,450,000 diverted to replacement procurement queue."
@@ -179,7 +184,7 @@ export default function InteractiveConsole() {
                 href="/app/finops"
                 className="inline-flex items-center gap-1.5 text-xs text-cyan-700 hover:text-cyan-800 font-bold group"
               >
-                Inspect Live FinOps Hub <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
+                Inspect Live FinOps Hub <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
           </div>
@@ -206,7 +211,7 @@ export default function InteractiveConsole() {
                 { ip: "192.168.1.15", name: "Dell PowerEdge R740 iDRAC", type: "Server", mac: "B8:2A:72:C1:90:33", ports: "HTTPS 443 · IPMI 623", desc: "Dual Xeon Gold, 128GB ECC RAM" },
                 { ip: "192.168.1.42", name: "Zebra ZT411 Industrial Labeler", type: "Barcode Printer", mac: "00:07:4D:2A:9F:10", ports: "JetDirect 9100", desc: "Thermal Barcode Sticker Station" },
               ].map((d, i) => (
-                <div key={i} className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-slate-200 text-xs shadow-sm">
+                <div key={i} className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-slate-200 text-xs shadow-sm hover:border-cyan-300 transition">
                   <div className="flex items-center gap-3.5">
                     <div className="w-8 h-8 rounded-xl bg-cyan-50 border border-cyan-200 grid place-items-center text-cyan-700">
                       <Server className="w-4 h-4" />
@@ -243,7 +248,7 @@ export default function InteractiveConsole() {
                 href="/app/discovery"
                 className="inline-flex items-center gap-1.5 text-xs text-cyan-700 hover:text-cyan-800 font-bold group"
               >
-                Open Discovery Studio <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
+                Open Discovery Studio <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
           </div>
@@ -298,7 +303,7 @@ export default function InteractiveConsole() {
                 href="/app/telemetry"
                 className="inline-flex items-center gap-1.5 text-xs text-cyan-700 hover:text-cyan-800 font-bold group"
               >
-                Inspect Telemetry Engine <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
+                Inspect Telemetry Engine <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
           </div>
@@ -343,7 +348,7 @@ export default function InteractiveConsole() {
                 href="/app/locations"
                 className="inline-flex items-center gap-1.5 text-xs text-teal-700 hover:text-teal-800 font-bold group"
               >
-                Inspect Nationwide Map <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
+                Inspect Nationwide Map <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
           </div>
