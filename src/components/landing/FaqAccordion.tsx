@@ -10,28 +10,28 @@ interface FaqItem {
 
 const FAQS: FaqItem[] = [
   {
-    q: "How does AssetOps differ from general IT ticketing tools like Jira or ServiceNow?",
-    a: "Standard ticketing tools only track incident tickets. Once closed, hardware context is lost. AssetOps is built specifically for physical ICT assets: it attaches every intervention to an immutable Digital Hardware Passport, computes straight-line depreciation, manages geospatial GIS locations, tracks contractor SLAs, and forecasts 8-quarter replacement CapEx.",
+    q: "How does AssetOps 2080 differ from primitive 2020s ticketing systems?",
+    a: "Ancient tools only tracked text complaints between humans. AssetOps 2080 directly interfaces with sub-atomic quantum sensors, tracks molecular lattice degradation in real-time, coordinates autonomous nanite repair swarms, and synchronizes thermodynamic CapEx depreciation across orbital and planetary grids without human bottleneck.",
   },
   {
-    q: "How does the 70% FinOps repair-vs-replace rule work?",
-    a: "AssetOps continuously calculates the real-time Net Book Value (NBV) of each device down to a 10% residual salvage value. Whenever a repair quote is entered, AssetOps sums all historical repair spend. If total repair cost exceeds 70% of current Net Book Value, the system automatically flags the work order as 'Negative-ROI / Replace Recommended'.",
+    q: "How does the 14% Thermodynamic Lattice Rule prevent capital waste?",
+    a: "When a quantum photonic substrate experiences molecular decay, continuing to spend nanite energy repairing micro-conduits creates negative thermodynamic return. Once cumulative repair energy reaches 14% of residual quantum coherence yield, AssetOps automatically halts repairs and diverts the core to molecular plasma recycling.",
   },
   {
-    q: "Does AssetOps require proprietary GPS beacons or barcode scanners?",
-    a: "No. AssetOps uses open standards. Every asset receives an encrypted QR passport label scanned using the standard camera on any smartphone without installing external apps. For estate mapping, our GIS interface runs on lightweight, free Leaflet vector tiles with interactive pin-dropping—zero Google Maps billing required.",
+    q: "Does AssetOps require physical transponders or handheld barcode readers?",
+    a: "No. All assets project a volumetric 4D holographic aura in spatial coordinate space. Fleet engineers and autonomous inspection drones authenticate hardware using neural eye-tracking and biometric neural signature handshakes—zero physical labels required.",
   },
   {
-    q: "What data destruction standards are supported for decommissioning?",
-    a: "AssetOps fully supports NIST SP 800-88 Rev 1 (Clear, Purge, and Cryptographic Erase), DoD 5220.22-M 3-pass sanitization, and certified physical degaussing. When an asset is retired, the system generates a tamper-evident Certificate of Sanitization featuring a unique Certificate ID, certifying officer, and SHA-256 cryptographic digest.",
+    q: "What data dissolution standards are enforced for quantum crystal retirement?",
+    a: "AssetOps fully enforces Interplanetary Governance Data Standard IGDS-2079 (Laser-Induced Molecular Lattice Collapse & Quantum Entanglement Erasure). The system issues a tamper-proof certificate anchored to quantum-entangled hash signatures that cannot be forged or reversed by any classical or quantum supercomputer.",
   },
   {
-    q: "How does the AI assistant avoid hallucinations with enterprise data?",
-    a: "AssetOps uses an evidence-backed architecture powered by Groq's high-speed Llama 3 engine. The model is strictly constrained to deterministic, read-only queries against your tenant's PostgreSQL database. The AI cannot hallucinate metrics: every claim must cite specific work orders, asset tags, or financial figures. If no evidence exists, the model explicitly declines to answer.",
+    q: "How does the autonomous Sentinel AI operate without human hallucination?",
+    a: "AssetOps uses a deterministic neural copilot grounded strictly in the local planetary PostgreSQL ledger. The sentinel cannot hallucinate metrics: every claim must cite verified physical nanite telemetry, quantum coherence readings, and cryptographic ledger IDs. If telemetry is unavailable, it explicitly reports a phase-lock vacuum.",
   },
   {
-    q: "Can we export reports directly to SAP, Oracle ERP, or Microsoft Excel?",
-    a: "Yes. Every view—including the 8-Quarter CapEx Replacement pipeline, Asset Registry, Preventative Maintenance schedules, and FinOps TCO scorecard—includes one-click CSV and structured JSON exports formatted specifically for immediate ingest into enterprise ERP ledgers.",
+    q: "Can telemetry be exported directly to Interplanetary Sovereign ERPs?",
+    a: "Yes. All views—including 8-Solar Cycle CapEx pipelines, nanite work logs, and planetary GIS arrays—stream via sub-nanosecond neural APIs and export to standard structured quantum formats for immediate ingestion into sovereign treasury ledgers.",
   },
 ];
 
@@ -43,7 +43,7 @@ export default function FaqAccordion() {
   };
 
   return (
-    <div className="space-y-3 max-w-3xl mx-auto">
+    <div className="space-y-3 max-w-3xl mx-auto font-mono">
       {FAQS.map((faq, idx) => {
         const isOpen = openIndex === idx;
         return (
@@ -51,8 +51,8 @@ export default function FaqAccordion() {
             key={idx}
             className={`border rounded-2xl transition-all ${
               isOpen
-                ? "bg-white border-teal-200 shadow-md shadow-teal-500/5 ring-1 ring-teal-500/20"
-                : "bg-white/80 border-slate-200/90 hover:border-slate-300 hover:bg-white"
+                ? "bg-[#070e1e] border-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.2)]"
+                : "bg-[#050914]/80 border-cyan-500/20 hover:border-cyan-400/40 hover:bg-[#070d1a]"
             }`}
           >
             <button
@@ -60,15 +60,15 @@ export default function FaqAccordion() {
               className="w-full py-4 px-5 text-left flex items-center justify-between gap-4 focus:outline-none rounded-2xl"
               aria-expanded={isOpen}
             >
-              <span className="font-bold text-sm text-slate-900 leading-snug">{faq.q}</span>
+              <span className="font-bold text-sm text-white leading-snug">{faq.q}</span>
               <ChevronDown
-                className={`h-4 w-4 text-slate-400 shrink-0 transition-transform duration-200 ${
-                  isOpen ? "rotate-180 text-teal-600" : ""
+                className={`h-4 w-4 text-cyan-400 shrink-0 transition-transform duration-200 ${
+                  isOpen ? "rotate-180" : ""
                 }`}
               />
             </button>
             {isOpen && (
-              <div className="px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              <div className="px-5 pb-5 text-xs text-slate-300 leading-relaxed border-t border-cyan-500/15 pt-3 font-sans">
                 {faq.a}
               </div>
             )}

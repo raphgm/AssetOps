@@ -9,7 +9,7 @@ import {
   KeyRound,
   Download,
   Timer,
-  QrCode,
+  Radio,
   Sparkles,
   MapPin,
   Coins,
@@ -19,6 +19,11 @@ import {
   HelpCircle,
   BarChart3,
   Layers,
+  Cpu,
+  Globe2,
+  Bot,
+  Orbit,
+  Zap,
 } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import LiveFeed from "@/components/landing/LiveFeed";
@@ -39,7 +44,7 @@ const Sec = ({
 }) => (
   <section
     id={id}
-    className={`max-w-6xl mx-auto px-4 py-16 sm:py-24 scroll-mt-16 ${className}`}
+    className={`max-w-6xl mx-auto px-4 py-16 sm:py-24 scroll-mt-16 relative z-10 ${className}`}
   >
     {children}
   </section>
@@ -47,221 +52,218 @@ const Sec = ({
 
 export default function Landing() {
   return (
-    <div className="bg-slate-50/80 text-slate-900 min-h-screen selection:bg-teal-200 font-sans">
+    <div className="bg-[#030712] text-slate-100 min-h-screen selection:bg-cyan-500/30 selection:text-cyan-200 font-sans relative overflow-x-hidden">
+      {/* 2080 Background Matrix Grid & Cyber Ambient Glow */}
+      <div className="fixed inset-0 cyber-grid opacity-25 pointer-events-none z-0" aria-hidden />
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[550px] bg-gradient-to-tr from-cyan-500/15 via-teal-500/10 to-indigo-500/15 rounded-full blur-[140px] pointer-events-none -z-10" aria-hidden />
+      <div className="fixed bottom-0 right-10 w-[600px] h-[450px] bg-purple-500/10 rounded-full blur-[160px] pointer-events-none -z-10" aria-hidden />
+
       <Navbar />
 
-      {/* 1. HERO SECTION */}
-      <div className="relative overflow-hidden pt-28 sm:pt-36 pb-14 border-b border-slate-200/80">
-        {/* Radiant luminous gradient mesh */}
-        <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-tr from-teal-200/40 via-cyan-200/35 to-indigo-200/30 rounded-full blur-[100px] pointer-events-none -z-10"
-          aria-hidden
-        />
-        <div
-          className="absolute top-1/4 right-10 w-[450px] h-[350px] bg-emerald-200/30 rounded-full blur-[90px] pointer-events-none -z-10"
-          aria-hidden
-        />
-
-        <Sec className="py-0 sm:py-6 grid lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-14 items-center">
+      {/* 1. 2080 HERO SECTION */}
+      <div className="relative pt-28 sm:pt-36 pb-16 border-b border-cyan-500/20">
+        <Sec className="py-0 sm:py-6 grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-14 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-teal-200 bg-white shadow-sm text-teal-800 text-xs font-bold mb-6">
-              <Sparkles className="h-3.5 w-3.5 text-teal-600" />
-              <span>Next-Gen Hardware FinOps & GIS Intelligence</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-400/40 bg-[#070e1e]/90 shadow-[0_0_20px_rgba(0,240,255,0.25)] text-cyan-300 text-xs font-mono font-bold mb-6">
+              <Radio className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
+              <span>QUANTUM-SPATIAL OS // 2080 ENTERPRISE GRID</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight leading-[1.08] text-slate-950">
-              Hardware intelligence.{" "}
-              <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-indigo-600 bg-clip-text text-transparent">
-                Zero blind spots.
+            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight leading-[1.08] text-white">
+              Autonomous infrastructure.{" "}
+              <span className="bg-gradient-to-r from-cyan-300 via-teal-200 to-indigo-300 bg-clip-text text-transparent">
+                Zero thermodynamic waste.
               </span>
             </h1>
 
-            <p className="text-slate-600 text-base sm:text-lg mt-5 max-w-xl leading-relaxed font-normal">
-              One source of truth for every ICT asset, repair cost, geospatial location, and certified retirement. Cut wasteful repairs with automated FinOps intelligence.
+            <p className="text-slate-300 text-base sm:text-lg mt-5 max-w-xl leading-relaxed font-sans">
+              The planetary operating system for Quantum Cores, Photonic Mesh Racks, and Autonomous Nanite Swarms. Halt molecular lattice decoherence and govern sub-atomic depreciation across planetary and orbital hubs.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-3 mt-8">
+            <div className="flex flex-wrap items-center gap-3.5 mt-8 font-mono">
               <Link
                 href="/sign-in"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-teal-600 via-cyan-600 to-indigo-600 text-white shadow-lg shadow-cyan-600/25 hover:shadow-cyan-600/40 hover:opacity-95 transition"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-black text-xs bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-500 text-slate-950 shadow-[0_0_25px_rgba(0,240,255,0.4)] hover:brightness-110 transition"
               >
-                Launch Live Demo <ArrowRight className="h-4 w-4" />
+                INITIALIZE NEURAL PILOT <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/sign-up"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 shadow-sm transition"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-xs bg-[#091124] hover:bg-[#0f1b38] text-slate-200 border border-cyan-500/40 shadow-[0_0_15px_rgba(0,240,255,0.15)] transition"
               >
-                Start Free Workspace
+                DEPLOY SOVEREIGN NODE
               </Link>
             </div>
 
-            <div className="flex flex-wrap items-center gap-5 mt-6 text-xs text-slate-500 font-medium">
+            <div className="flex flex-wrap items-center gap-5 mt-7 text-xs font-mono text-slate-400">
               <span className="flex items-center gap-1.5">
-                <Check className="h-3.5 w-3.5 text-teal-600" /> No credit card needed
+                <Check className="h-3.5 w-3.5 text-cyan-400" /> Sub-ms Entanglement Lock
               </span>
               <span className="flex items-center gap-1.5">
-                <Check className="h-3.5 w-3.5 text-teal-600" /> Pre-loaded 5,100+ assets
+                <Check className="h-3.5 w-3.5 text-cyan-400" /> 48,920 Pre-Seeded Cores
               </span>
               <span className="flex items-center gap-1.5">
-                <Check className="h-3.5 w-3.5 text-teal-600" /> Free Leaflet GIS
+                <Check className="h-3.5 w-3.5 text-cyan-400" /> Free Planetary GIS
               </span>
             </div>
           </div>
 
-          {/* Clean Bright Preview Card */}
-          <div className="bg-white/95 border border-slate-200/90 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-slate-200/80 backdrop-blur relative">
-            <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+          {/* 2080 Holographic Flight Deck Hub Card */}
+          <div className="bg-[#050914]/90 border border-cyan-400/50 rounded-2xl p-5 sm:p-6 shadow-[0_0_45px_rgba(0,240,255,0.2)] backdrop-blur-2xl relative font-mono overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+
+            <div className="flex items-center justify-between mb-4 border-b border-cyan-500/20 pb-3">
               <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-100" />
-                <span className="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">
-                  AssetOps Live Hub
+                <span className="h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_#00f0ff] animate-pulse" />
+                <span className="text-xs font-bold text-white tracking-wider">
+                  QUANTUM TELEMETRY // SECTOR-01
                 </span>
               </div>
-              <span className="text-[10.5px] font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200 font-mono">
-                5,100+ Nodes Live
+              <span className="text-[10px] font-bold text-cyan-300 bg-cyan-950/80 px-2.5 py-0.5 rounded-full border border-cyan-400/40">
+                48,920 Cores Live
               </span>
             </div>
 
-            {/* Bright KPI Pills */}
+            {/* 2080 Cyber KPI Pills */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
               {[
-                { v: "12,482", l: "Total Assets", c: "text-slate-900", bg: "bg-slate-50 border-slate-200" },
-                { v: "96.4%", l: "Operational", c: "text-emerald-600", bg: "bg-emerald-50/60 border-emerald-200/70" },
-                { v: "₦428M", l: "Net Value", c: "text-teal-700", bg: "bg-teal-50/60 border-teal-200/70" },
-                { v: "₦41M", l: "CapEx Due", c: "text-amber-700", bg: "bg-amber-50/60 border-amber-200/70" },
+                { v: "48,920", l: "Active QPUs", c: "text-white", bg: "bg-[#091124] border-cyan-500/30" },
+                { v: "99.999%", l: "Coherence", c: "text-cyan-300", bg: "bg-cyan-950/60 border-cyan-400/40" },
+                { v: "Ꞙ2.4B", l: "Q-FLOP Yield", c: "text-teal-300", bg: "bg-teal-950/60 border-teal-400/40" },
+                { v: "-0.002%", l: "Entropy Flux", c: "text-emerald-400", bg: "bg-emerald-950/60 border-emerald-400/40" },
               ].map((item) => (
                 <div key={item.l} className={`rounded-xl border p-2.5 ${item.bg}`}>
-                  <div className={`text-lg sm:text-xl font-black font-mono ${item.c}`}>{item.v}</div>
-                  <div className="text-[10px] uppercase font-bold text-slate-500 mt-0.5 tracking-wider">{item.l}</div>
+                  <div className={`text-lg sm:text-xl font-black ${item.c}`}>{item.v}</div>
+                  <div className="text-[9.5px] uppercase font-bold text-slate-400 mt-0.5 tracking-wider">{item.l}</div>
                 </div>
               ))}
             </div>
 
-            {/* Split Mini Cards */}
+            {/* Split Visual HUD */}
             <div className="grid sm:grid-cols-[1.2fr_1fr] gap-3">
-              {/* FinOps Mini Bar Card */}
-              <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-3.5 flex flex-col justify-between">
+              {/* Nanite & Lattice Decay Monitor */}
+              <div className="rounded-xl border border-cyan-500/25 bg-[#091124] p-3.5 flex flex-col justify-between">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold text-slate-600 uppercase">FinOps Repair Threshold</span>
-                  <span className="text-[10px] font-bold font-mono text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
-                    88% Flagged
+                  <span className="text-[10.5px] font-bold text-slate-400 uppercase">Molecular Lattice Decay</span>
+                  <span className="text-[10px] font-bold text-rose-400 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-500/40">
+                    14% Threshold Exceeded
                   </span>
                 </div>
                 <div className="space-y-1.5 my-1">
-                  <div className="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden flex">
-                    <div className="h-full bg-teal-500" style={{ width: "70%" }} />
-                    <div className="h-full bg-rose-500 animate-pulse" style={{ width: "18%" }} />
+                  <div className="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden flex border border-cyan-500/20">
+                    <div className="h-full bg-cyan-400 shadow-[0_0_8px_#00f0ff]" style={{ width: "70%" }} />
+                    <div className="h-full bg-rose-500 animate-pulse shadow-[0_0_8px_#f43f5e]" style={{ width: "18%" }} />
                   </div>
-                  <div className="flex justify-between text-[10px] text-slate-500 font-medium">
-                    <span>Safe repairs (0-70%)</span>
-                    <span className="text-rose-600 font-bold">Replace triggered</span>
+                  <div className="flex justify-between text-[10px] text-slate-400 font-sans">
+                    <span>Safe Coherence Zone</span>
+                    <span className="text-rose-400 font-mono font-bold">Plasma Recycling Active</span>
                   </div>
                 </div>
-                <div className="text-[11px] text-slate-500 border-t border-slate-200 pt-2 mt-2 flex justify-between">
-                  <span>Replacement Window:</span>
-                  <span className="text-slate-900 font-bold font-mono">Q2 2026</span>
+                <div className="text-[11px] text-slate-400 border-t border-cyan-500/20 pt-2 mt-2 flex justify-between">
+                  <span>Atomic Salvage Credit:</span>
+                  <span className="text-cyan-300 font-bold">Ꞙ420,000</span>
                 </div>
               </div>
 
-              {/* Live Activity Feed */}
-              <div className="rounded-xl border border-slate-200 bg-white p-3.5">
-                <div className="flex items-center gap-1.5 text-[11px] text-slate-500 mb-2 font-bold uppercase">
-                  <span className="h-2 w-2 rounded-full bg-teal-500 animate-pulse" aria-hidden />
-                  Live Event Stream
+              {/* Real-time 2080 Live Event Stream */}
+              <div className="rounded-xl border border-cyan-500/25 bg-[#070e1e] p-3.5">
+                <div className="flex items-center gap-1.5 text-[10.5px] text-cyan-400 mb-2 font-bold uppercase">
+                  <Radio className="h-2.5 w-2.5 text-cyan-400 animate-ping" />
+                  Autonomous Nanite Log
                 </div>
                 <LiveFeed />
               </div>
             </div>
 
-            {/* Map Mini Banner */}
-            <div className="mt-3 p-2.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between text-xs">
+            {/* Planetary Coordinates Banner */}
+            <div className="mt-3 p-2.5 rounded-xl border border-cyan-500/30 bg-[#091124] flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-cyan-600" />
-                <span className="text-slate-600 text-xs font-medium">GIS Nodes: Lagos, Abuja, Port Harcourt, Ibadan</span>
+                <Globe2 className="h-4 w-4 text-cyan-400" />
+                <span className="text-slate-300 text-xs">Arrays: Lagos Trench, Abuja Fusion Core, Orbital Relay-Alpha</span>
               </div>
-              <span className="text-[10px] font-bold text-cyan-700 font-mono bg-cyan-50 px-2 py-0.5 rounded border border-cyan-200">
-                CARTO DARK
+              <span className="text-[10px] font-bold text-cyan-300 font-mono bg-cyan-950 px-2 py-0.5 rounded border border-cyan-500/40">
+                PLANETARY MESH
               </span>
             </div>
           </div>
         </Sec>
       </div>
 
-      {/* 2. SECTORS TRUST BANNER */}
-      <div className="border-b border-slate-200/80 bg-white py-6">
+      {/* 2. 2080 SECTOR HUBS BANNER */}
+      <div className="border-b border-cyan-500/20 bg-[#040714] py-6 relative z-10 font-mono">
         <div className="max-w-6xl mx-auto px-4">
-          <p className="text-center text-[11px] uppercase tracking-widest text-slate-400 font-bold mb-4">
-            Deployed Across Mission-Critical Infrastructure
+          <p className="text-center text-[10.5px] uppercase tracking-widest text-cyan-400/80 font-bold mb-4">
+            MISSION-CRITICAL PLANETARY DEPLOYMENTS
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             {[
-              { title: "Commercial Banks", desc: "Core switch stacks & ATM uptime", color: "text-blue-700 bg-blue-50 border-blue-200" },
-              { title: "Tertiary Hospitals", desc: "Biomedical & ICU telemetry", color: "text-emerald-700 bg-emerald-50 border-emerald-200" },
-              { title: "Universities", desc: "Multi-campus lab management", color: "text-purple-700 bg-purple-50 border-purple-200" },
-              { title: "Government MDAs", desc: "Phantom asset & audit defense", color: "text-amber-700 bg-amber-50 border-amber-200" },
+              { title: "Quantum Banking", desc: "Sub-picosecond entanglement", color: "border-cyan-500/30 bg-[#060c1c]" },
+              { title: "Bio-Digital ICU Hubs", desc: "Synthetic organ telemetry", color: "border-teal-500/30 bg-[#060c1c]" },
+              { title: "Neural Academies", desc: "50,000+ holographic pods", color: "border-indigo-500/30 bg-[#060c1c]" },
+              { title: "Fusion Grids & MDAs", desc: "Zero ghost fusion turbines", color: "border-amber-500/30 bg-[#060c1c]" },
             ].map((sector) => (
-              <div key={sector.title} className="p-3 rounded-xl border border-slate-200/80 bg-slate-50/70">
-                <div className="font-bold text-sm text-slate-900">{sector.title}</div>
-                <div className="text-xs text-slate-500 mt-0.5">{sector.desc}</div>
+              <div key={sector.title} className={`p-3.5 rounded-xl border ${sector.color} hover:border-cyan-400 transition`}>
+                <div className="font-bold text-sm text-white">{sector.title}</div>
+                <div className="text-xs text-slate-400 mt-0.5 font-sans">{sector.desc}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* 3. PROBLEM VS SOLUTION */}
+      {/* 3. THE 2080 ENTROPY CHALLENGE */}
       <Sec id="problem">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold mb-3">
-            <BarChart3 className="h-3.5 w-3.5 text-rose-600" />
-            <span>The Hardware Problem</span>
+        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-950/80 border border-rose-500/40 text-rose-300 text-xs font-bold mb-3">
+            <BarChart3 className="h-3.5 w-3.5 text-rose-400" />
+            <span>The Entropy Hazard</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-            Spreadsheets don&apos;t know when hardware is financially dead.
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+            Unmonitored quantum hardware bleeds trillions in thermodynamic waste.
           </h2>
-          <p className="text-slate-600 mt-3 text-sm sm:text-base">
-            IT teams keep paying contractor repair bills without knowing the asset already exceeded 70% of its residual value.
+          <p className="text-slate-400 mt-3 text-sm sm:text-base font-sans">
+            Spending nanite repair energy on a molecularly degraded QPU array creates negative thermodynamic return.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Legacy Card */}
-          <div className="bg-white border-2 border-rose-200/80 rounded-2xl p-6 sm:p-8 space-y-4 shadow-sm">
-            <div className="inline-flex items-center gap-1.5 text-rose-700 text-xs uppercase font-black tracking-wider bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">
-              ✕ The Reactive Spreadsheet Way
+        <div className="grid md:grid-cols-2 gap-6 font-mono">
+          {/* Legacy Primitive Way */}
+          <div className="bg-[#080d1e] border-2 border-rose-500/40 rounded-2xl p-6 sm:p-8 space-y-4 shadow-[0_0_25px_rgba(244,63,94,0.1)]">
+            <div className="inline-flex items-center gap-1.5 text-rose-300 text-xs uppercase font-black tracking-wider bg-rose-950/80 px-2.5 py-1 rounded-full border border-rose-500/40">
+              ✕ Primitive Human-Manual Model
             </div>
-            <h3 className="text-xl font-bold text-slate-900">Blind Spending & Audit Queries</h3>
-            <ul className="space-y-3 text-xs text-slate-600">
+            <h3 className="text-xl font-bold text-white">Lattice Decoherence & Capital Drift</h3>
+            <ul className="space-y-3 text-xs text-slate-300 font-sans">
               {[
-                "Paying ₦400k to fix a laptop with a residual book value of only ₦200k",
-                "Phantom / ghost assets sitting on the balance sheet years after disappearing",
-                "Core switches failing unexpectedly during critical banking or exam hours",
-                "Discarded hard drives thrown out without cryptographic wipe certificates",
+                "Paying Ꞙ4M in nanite energy to repair a crystal with residual coherence yield of only Ꞙ1.5M",
+                "Ghost quantum substrates sitting on planetary ledgers decades after being vaporized",
+                "Atmospheric solar flares causing desynchronization during trillion-credit trading cycles",
+                "Retired photonic cores discarded without verified molecular lattice dissolution proof",
               ].map((p, i) => (
                 <li key={i} className="flex items-start gap-2.5">
-                  <span className="text-rose-600 font-black mt-0.5">✕</span>
+                  <span className="text-rose-400 font-black mt-0.5">✕</span>
                   <span>{p}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* AssetOps Card */}
-          <div className="bg-white border-2 border-teal-300 rounded-2xl p-6 sm:p-8 space-y-4 shadow-md shadow-teal-500/5 ring-1 ring-teal-500/20">
-            <div className="inline-flex items-center gap-1.5 text-teal-800 text-xs uppercase font-black tracking-wider bg-teal-50 px-2.5 py-1 rounded-full border border-teal-200">
-              ✓ The AssetOps FinOps Way
+          {/* 2080 Autonomous Way */}
+          <div className="bg-[#080d1e] border-2 border-cyan-400/60 rounded-2xl p-6 sm:p-8 space-y-4 shadow-[0_0_35px_rgba(0,240,255,0.2)]">
+            <div className="inline-flex items-center gap-1.5 text-cyan-300 text-xs uppercase font-black tracking-wider bg-cyan-950/80 px-2.5 py-1 rounded-full border border-cyan-400/50">
+              ✓ Autonomous AssetOps 2080 Model
             </div>
-            <h3 className="text-xl font-bold text-slate-900">Deterministic & Audit-Proof</h3>
-            <ul className="space-y-3 text-xs text-slate-700 font-medium">
+            <h3 className="text-xl font-bold text-white">Zero Thermodynamic Loss</h3>
+            <ul className="space-y-3 text-xs text-slate-200 font-sans font-medium">
               {[
-                "Automatic 70% threshold stops bad repairs and alerts management immediately",
-                "Live Leaflet GIS map with pin-dropping verifies physical branch presence",
-                "Automated 90-day preventative maintenance schedules prevent downtime",
-                "NIST 800-88 cryptographic sanitization certificates with SHA-256 digests",
+                "Automatic 14% Thermodynamic Rule diverts decaying QPUs directly to plasma recycling",
+                "Planetary 3D GIS locks ground vaults, deep-sea trenches, and orbital satellite rings",
+                "Autonomous Nanite Swarms perform laser micro-welds before molecular decoherence spreads",
+                "IGDS-2079 certified molecular dissolution with irreversible quantum hash signatures",
               ].map((p, i) => (
                 <li key={i} className="flex items-start gap-2.5">
-                  <Check className="h-4 w-4 text-teal-600 shrink-0 mt-0.5" />
+                  <Check className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
                   <span>{p}</span>
                 </li>
               ))}
@@ -271,198 +273,198 @@ export default function Landing() {
       </Sec>
 
       {/* 4. FEATURE PILLARS (TABS) */}
-      <Sec id="features" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold mb-3">
-            <Layers className="h-3.5 w-3.5 text-cyan-600" />
-            <span>Platform Capabilities</span>
+      <Sec id="features" className="border-t border-cyan-500/20">
+        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-400/50 text-cyan-300 text-xs font-bold mb-3">
+            <Layers className="h-3.5 w-3.5 text-cyan-400" />
+            <span>Autonomous Subsystems</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-            Engineered for physical hardware realities.
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+            Engineered for quantum, orbital, and bio-photonic realities.
           </h2>
-          <p className="text-slate-600 mt-2 text-sm sm:text-base">
-            Click through the five core engines that govern your hardware lifecycle from unboxing to retirement.
+          <p className="text-slate-400 mt-2 text-sm sm:text-base font-sans">
+            Explore the five self-healing engines that govern your planetary compute estate.
           </p>
         </div>
 
         <FeatureTabs />
       </Sec>
 
-      {/* 5. FINOPS ROI CALCULATOR */}
-      <Sec id="calculator" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-xs font-bold mb-3">
-            <Coins className="h-3.5 w-3.5 text-teal-600" />
-            <span>Cost Simulator</span>
+      {/* 5. QUANTUM FINOPS SIMULATOR */}
+      <Sec id="calculator" className="border-t border-cyan-500/20">
+        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-400/50 text-cyan-300 text-xs font-bold mb-3">
+            <Cpu className="h-3.5 w-3.5 text-cyan-400" />
+            <span>Quantum Simulator</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-            Calculate your hardware cost recovery.
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+            Model your cycle thermodynamic recovery.
           </h2>
-          <p className="text-slate-600 mt-2 text-sm">
-            Drag the sliders to see how much capital your institution can recover this year.
+          <p className="text-slate-400 mt-2 text-sm font-sans">
+            Adjust the substrate sliders to project Q-FLOP yield and plasma recycling salvage credits.
           </p>
         </div>
 
         <RoiCalculator />
       </Sec>
 
-      {/* 6. GIS MAP SPOTLIGHT */}
-      <Sec id="gis" className="border-t border-slate-200/80">
+      {/* 6. PLANETARY GIS SPOTLIGHT */}
+      <Sec id="gis" className="border-t border-cyan-500/20">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold">
-              <MapPin className="h-3.5 w-3.5 text-cyan-600" />
-              <span>Free Leaflet GIS</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-950/80 border border-teal-400/50 text-teal-300 text-xs font-mono font-bold">
+              <Globe2 className="h-3.5 w-3.5 text-teal-400" />
+              <span>Free Planetary Mesh GIS</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-              Interactive estate mapping. Zero map API fees.
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+              Ground vaults to orbital satellite rings on one holographic grid.
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              Managing distributed hardware requires geospatial context. AssetOps comes out of the box with zero-config Leaflet maps featuring CARTO Dark vector tiles, proportional risk clusters, and an interactive pin-drop picker.
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-sans">
+              Managing planetary infrastructure requires spatial coordination. AssetOps connects deep sub-oceanic trenches, terrestrial fusion arrays, and satellite constellations on high-speed vector tiles with zero third-party telemetry fees.
             </p>
-            <div className="space-y-2 pt-2 text-xs text-slate-700 font-medium">
+            <div className="space-y-2 pt-2 text-xs text-slate-300 font-sans">
               <div className="flex items-start gap-2.5">
-                <Check className="h-4 w-4 text-cyan-600 shrink-0 mt-0.5" />
-                <span>Zero Google Maps billing: uses free OpenStreetMap and CARTO vector tiles</span>
+                <Check className="h-4 w-4 text-teal-400 shrink-0 mt-0.5" />
+                <span>Zero commercial satellite API fees: runs on open planetary orbital mesh</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <Check className="h-4 w-4 text-cyan-600 shrink-0 mt-0.5" />
-                <span>Click-to-drop coordinate picker with Nigerian city presets and device GPS support</span>
+                <Check className="h-4 w-4 text-teal-400 shrink-0 mt-0.5" />
+                <span>Sub-millimeter coordinate locking for terrestrial, sub-oceanic, and orbital nodes</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <Check className="h-4 w-4 text-cyan-600 shrink-0 mt-0.5" />
-                <span>Proportional bubble clusters that turn amber/red during hardware failures</span>
+                <Check className="h-4 w-4 text-teal-400 shrink-0 mt-0.5" />
+                <span>Dynamic laser routing circles that illuminate red during radiation flare interference</span>
               </div>
             </div>
-            <div className="pt-3">
+            <div className="pt-3 font-mono">
               <Link
                 href="/app/locations"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-cyan-600 text-white hover:bg-cyan-700 shadow-sm transition"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-teal-400 text-slate-950 hover:bg-teal-300 shadow-[0_0_20px_rgba(20,184,166,0.4)] transition"
               >
-                View Full Location Fleet <ArrowRight className="h-3.5 w-3.5" />
+                Inspect Planetary Fleet Array <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* GIS Visual Graphic */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xl shadow-slate-200/50">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+          {/* Planetary GIS Card */}
+          <div className="bg-[#080d1e] border border-cyan-500/30 rounded-2xl p-5 shadow-[0_0_35px_rgba(0,240,255,0.15)] font-mono">
+            <div className="flex items-center justify-between border-b border-cyan-500/20 pb-3 mb-3">
               <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-cyan-500 animate-pulse" />
-                <span className="font-mono text-xs font-bold text-slate-800">NATIONWIDE ASSET CLUSTERS</span>
+                <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#00f0ff]" />
+                <span className="text-xs font-bold text-white">PLANETARY MESH TELEMETRY</span>
               </div>
-              <span className="text-[10px] font-bold text-cyan-700 font-mono bg-cyan-50 px-2 py-0.5 rounded border border-cyan-200">
-                REAL-TIME GPS
+              <span className="text-[10px] font-bold text-cyan-300 bg-cyan-950 px-2 py-0.5 rounded border border-cyan-500/40">
+                ACTIVE 4D RETICLE
               </span>
             </div>
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-3">
+            <div className="rounded-xl border border-cyan-500/20 bg-[#040813] p-4 space-y-3">
               <div className="grid grid-cols-3 gap-2 text-xs">
-                <div className="p-3 rounded-lg bg-white border border-slate-200/80 shadow-sm">
-                  <div className="text-[10px] text-slate-400 uppercase font-bold">Lagos HQ</div>
-                  <div className="font-bold text-slate-900 mt-0.5">2,410 Units</div>
-                  <span className="text-[10px] text-emerald-700 font-bold">97.2% Normal</span>
+                <div className="p-3 rounded-lg bg-[#070e20] border border-cyan-500/25">
+                  <div className="text-[9px] text-slate-400 uppercase font-bold">Lagos Trench</div>
+                  <div className="font-bold text-white mt-0.5">2,410 QPUs</div>
+                  <span className="text-[10px] text-emerald-400 font-bold">Cryo 4.2K</span>
                 </div>
-                <div className="p-3 rounded-lg bg-white border border-slate-200/80 shadow-sm">
-                  <div className="text-[10px] text-slate-400 uppercase font-bold">Abuja DC</div>
-                  <div className="font-bold text-slate-900 mt-0.5">1,842 Units</div>
-                  <span className="text-[10px] text-amber-700 font-bold">3 PM Due</span>
+                <div className="p-3 rounded-lg bg-[#070e20] border border-cyan-500/25">
+                  <div className="text-[9px] text-slate-400 uppercase font-bold">Abuja Fusion</div>
+                  <div className="font-bold text-white mt-0.5">1,842 QPUs</div>
+                  <span className="text-[10px] text-cyan-300 font-bold">5.2 GW Grid</span>
                 </div>
-                <div className="p-3 rounded-lg bg-white border border-slate-200/80 shadow-sm">
-                  <div className="text-[10px] text-slate-400 uppercase font-bold">Port Harcourt</div>
-                  <div className="font-bold text-slate-900 mt-0.5">850 Units</div>
-                  <span className="text-[10px] text-rose-700 font-bold">1 Urgent WO</span>
+                <div className="p-3 rounded-lg bg-[#070e20] border border-cyan-500/25">
+                  <div className="text-[9px] text-slate-400 uppercase font-bold">Relay Alpha</div>
+                  <div className="font-bold text-white mt-0.5">850 QPUs</div>
+                  <span className="text-[10px] text-indigo-300 font-bold">Orbit 420km</span>
                 </div>
               </div>
-              <p className="text-[11.5px] text-slate-500 text-center font-medium">
-                Leaflet tiles render smoothly across mobile and desktop without external API tokens.
+              <p className="text-[11px] text-slate-400 text-center font-sans">
+                Leaflet GIS telemetry streams via sub-nanosecond quantum links across desktop & neural implants.
               </p>
             </div>
           </div>
         </div>
       </Sec>
 
-      {/* 7. INDUSTRY SOLUTIONS */}
-      <Sec id="solutions" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold mb-3">
-            <Building className="h-3.5 w-3.5 text-blue-600" />
-            <span>Tailored Sector Solutions</span>
+      {/* 7. INDUSTRY SECTORS */}
+      <Sec id="solutions" className="border-t border-cyan-500/20">
+        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-400/50 text-cyan-300 text-xs font-bold mb-3">
+            <Building className="h-3.5 w-3.5 text-cyan-400" />
+            <span>Sovereign Sector Solutions</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-            Built for institutions where downtime is not an option.
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+            Built for institutions where decoherence is catastrophic.
           </h2>
-          <p className="text-slate-600 mt-2 text-sm sm:text-base">
-            Select your organization below to see customized compliance workflows and impact benchmarks.
+          <p className="text-slate-400 mt-2 text-sm sm:text-base font-sans">
+            Select your sector below to see autonomous nanite protocols and verified thermodynamic impact.
           </p>
         </div>
 
         <IndustrySolutions />
       </Sec>
 
-      {/* 8. EVIDENCE-BACKED AI ENGINE (GROQ LLM) */}
-      <Sec className="border-t border-slate-200/80">
+      {/* 8. SENTINEL AI COPILOT */}
+      <Sec className="border-t border-cyan-500/20">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-800 text-xs font-bold">
-              <Sparkles className="h-3.5 w-3.5 text-indigo-600" />
-              <span>Zero-Hallucination AI</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-400/50 text-indigo-300 text-xs font-mono font-bold">
+              <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
+              <span>Deterministic Sentinel AI</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-              Ask your maintenance data anything. Backed by evidence.
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+              Direct telemetry reasoning. Zero model hallucination.
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              AssetOps combines Groq&apos;s high-speed Llama 3 engine with strict database ground truth. The AI explains patterns and answers natural-language questions, but it will never invent numbers. If evidence isn&apos;t in your database, it says so.
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-sans">
+              AssetOps connects Groq&apos;s lightning-fast Llama 3 engine directly to quantum sensor telemetry. The Sentinel diagnoses anomalies and prescribes nanite repair vectors, but it never fabricates physics. If telemetry isn&apos;t in your PostgreSQL database, it reports a phase-lock vacuum.
             </p>
-            <div className="space-y-2 pt-2 text-xs text-slate-700 font-medium">
+            <div className="space-y-2 pt-2 text-xs text-slate-300 font-sans">
               <div className="flex items-start gap-2.5">
-                <Check className="h-4 w-4 text-indigo-600 shrink-0 mt-0.5" />
-                <span>Deterministic queries only: the model never fabricates metrics</span>
+                <Check className="h-4 w-4 text-indigo-400 shrink-0 mt-0.5" />
+                <span>Deterministic database queries: the sentinel never invents quantum states</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <Check className="h-4 w-4 text-indigo-600 shrink-0 mt-0.5" />
-                <span>Every claim links to verified work order numbers and timestamps</span>
+                <Check className="h-4 w-4 text-indigo-400 shrink-0 mt-0.5" />
+                <span>Every claim cites specific nanite work-order IDs and cryogenic sensors</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <Check className="h-4 w-4 text-indigo-600 shrink-0 mt-0.5" />
-                <span>Strict tenant isolation: your institutional data never leaks or trains models</span>
+                <Check className="h-4 w-4 text-indigo-400 shrink-0 mt-0.5" />
+                <span>Strict neural tenant boundaries: your institutional telemetry never leaks</span>
               </div>
             </div>
           </div>
 
-          {/* AI Chat Preview */}
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-6 space-y-3.5 shadow-xl shadow-slate-200/50">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <span className="text-xs font-mono font-bold text-slate-500 uppercase">AI Copilot · Evidence Grounded</span>
-              <span className="text-[10px] font-bold text-indigo-700 font-mono bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
-                Groq Llama 3
+          {/* AI Sentinel Chat Preview */}
+          <div className="bg-[#080d1e] border border-cyan-500/40 rounded-2xl p-5 sm:p-6 space-y-3.5 shadow-[0_0_35px_rgba(0,240,255,0.15)] font-mono">
+            <div className="flex items-center justify-between border-b border-cyan-500/20 pb-3">
+              <span className="text-xs font-bold text-slate-400 uppercase">SENTINEL COPILOT // REASONING HUD</span>
+              <span className="text-[10px] font-bold text-indigo-300 bg-indigo-950 px-2 py-0.5 rounded border border-indigo-500/40">
+                GROQ LLAMA 3
               </span>
             </div>
 
-            <div className="ml-auto max-w-[85%] rounded-2xl bg-slate-900 text-white px-4 py-2.5 text-xs font-medium">
-              Why did Lagos branch maintenance spend surge 22% this quarter?
+            <div className="ml-auto max-w-[85%] rounded-2xl bg-cyan-950/80 border border-cyan-400/40 text-cyan-200 px-4 py-2.5 text-xs">
+              Why did Lagos Oceanic Trench maintenance entropy surge 22% this solar cycle?
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5">
-              <div className="flex items-center gap-1.5 text-xs text-slate-900 font-bold">
-                <Sparkles className="h-3.5 w-3.5 text-indigo-600" />
-                <span>Synthesized Diagnosis:</span>
+            <div className="p-4 rounded-xl bg-[#040813] border border-cyan-500/25 space-y-2.5">
+              <div className="flex items-center gap-1.5 text-xs text-white font-bold">
+                <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+                <span>Synthesized Diagnostic Vector:</span>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                Lagos spend rose by <strong className="text-slate-900">₦1.84M</strong> across 42 work orders. Driven by repetitive battery replacements on 18 workstations reaching 4.8 years of age.
+              <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                Lagos spend increased by <strong className="text-cyan-300">Ꞙ1.84M Compute Credits</strong> across 42 nanite runs. Driven by repetitive waveguide micro-welds on 18 photonic QPUs reaching 4.8 solar cycles of age.
               </p>
 
-              <div className="border-t border-slate-200 pt-2 space-y-1 text-[11px] text-slate-700 font-mono">
-                <div>• WO-84920 to WO-84938 (UPS Battery Replacements)</div>
-                <div>• Vendor: PowerTech Solutions (Avg turn-around 3.2 days)</div>
-                <div className="text-rose-700 font-bold">• FinOps Status: 14 units breached 70% NBV threshold</div>
+              <div className="border-t border-cyan-500/20 pt-2 space-y-1 text-[11px] text-slate-400">
+                <div>• SWARM-84920 to SWARM-84938 (Waveguide Laser Welds)</div>
+                <div>• Autonomous Swarm: PowerTech Robotics (Turnaround 3.2ms)</div>
+                <div className="text-rose-400 font-bold">• 14 cores breached 14% Thermodynamic Rule: Divert to Plasma Salvage</div>
               </div>
 
               <div className="pt-2 flex gap-2">
                 <Link
                   href="/app/finops"
-                  className="px-3 py-1.5 rounded-lg text-[11px] font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition"
+                  className="px-3 py-1.5 rounded-lg text-[11px] font-bold bg-indigo-500 text-white hover:bg-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.4)] transition"
                 >
-                  View FinOps Remediation
+                  Engage Plasma Remediation
                 </Link>
               </div>
             </div>
@@ -470,155 +472,155 @@ export default function Landing() {
         </div>
       </Sec>
 
-      {/* 9. SECURITY & GOVERNANCE */}
-      <Sec id="security" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-800 text-xs font-bold mb-3">
-            <Shield className="h-3.5 w-3.5 text-slate-700" />
-            <span>Governance & Trust</span>
+      {/* 9. CRYPTOGRAPHIC PROOF & GOVERNANCE */}
+      <Sec id="security" className="border-t border-cyan-500/20">
+        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-400/50 text-cyan-300 text-xs font-bold mb-3">
+            <Shield className="h-3.5 w-3.5 text-cyan-400" />
+            <span>Cryptographic Governance</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-            Defend every number before internal and external auditors.
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+            Defend every quantum metric before planetary auditors.
           </h2>
-          <p className="text-slate-600 mt-2 text-sm">
-            Strict mathematical, cryptographic, and operational transparency across every process.
+          <p className="text-slate-400 mt-2 text-sm font-sans">
+            Mathematical, cryptographic, and physical proof anchored to immutable ledger hashes.
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 font-mono">
           {[
-            { icon: KeyRound, title: "Six-Tier RBAC", desc: "Admin, Lead Tech, Technician, Manager, Auditor, Viewer." },
-            { icon: ScrollText, title: "Immutable Audit Log", desc: "Append-only record of every work order and config update." },
-            { icon: Database, title: "Tenant Isolation", desc: "Every query scoped strictly to your organization ID." },
-            { icon: FileBadge, title: "NIST 800-88 Proof", desc: "Tamper-evident certificates for certified data sanitization." },
-            { icon: Download, title: "One-Click ERP Export", desc: "CSV & JSON feeds formatted for SAP, Oracle, and Dynamics." },
-            { icon: Lock, title: "Encrypted Secrets", desc: "Credentials stored in server environment variables only." },
-            { icon: QrCode, title: "Signed QR Passports", desc: "Codes contain signed tokens, not raw exposed database IDs." },
-            { icon: Timer, title: "Configurable Retention", desc: "Preserve maintenance histories for warranty disputes." },
+            { icon: KeyRound, title: "Six-Tier Neural RBAC", desc: "Admin, Fleet Lead, Nanite Tech, Manager, Auditor, Drone View." },
+            { icon: ScrollText, title: "Immutable Ledger Log", desc: "Append-only record of every nanite dispatch and purge state." },
+            { icon: Database, title: "Quantum Isolation", desc: "Every query scoped strictly to sovereign organization ID." },
+            { icon: FileBadge, title: "IGDS-2079 Standard", desc: "Cryptographic proof of irreversible molecular data dissolution." },
+            { icon: Download, title: "One-Click Neural Export", desc: "Direct feeds formatted for Sovereign Treasury and SAP ledgers." },
+            { icon: Lock, title: "Entangled Secrets", desc: "Quantum keys generated in hardware security enclaves only." },
+            { icon: Radio, title: "Spatial AR Reticles", desc: "Hardware authenticated via neural eye-tracking biometric aura." },
+            { icon: Timer, title: "Centennial Retention", desc: "Preserve hardware maintenance histories for dispute defense." },
           ].map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div key={idx} className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm hover:shadow-md transition">
-                <Icon className="h-5 w-5 text-teal-600 mb-2" />
-                <div className="font-bold text-sm text-slate-900">{item.title}</div>
-                <div className="text-slate-500 text-xs mt-1 leading-snug">{item.desc}</div>
+              <div key={idx} className="bg-[#080d1e] border border-cyan-500/25 rounded-2xl p-4 shadow-sm hover:border-cyan-400 transition">
+                <Icon className="h-5 w-5 text-cyan-400 mb-2" />
+                <div className="font-bold text-sm text-white">{item.title}</div>
+                <div className="text-slate-400 text-xs mt-1 leading-snug font-sans">{item.desc}</div>
               </div>
             );
           })}
         </div>
       </Sec>
 
-      {/* 10. PRICING */}
-      <Sec id="pricing" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-xs font-bold mb-3">
-            <Coins className="h-3.5 w-3.5 text-teal-600" />
-            <span>Pricing</span>
+      {/* 10. 2080 PRICING TIERS */}
+      <Sec id="pricing" className="border-t border-cyan-500/20">
+        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-400/50 text-cyan-300 text-xs font-bold mb-3">
+            <Coins className="h-3.5 w-3.5 text-cyan-400" />
+            <span>Compute Credit Tiers</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-            Simple, predictable pricing.
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+            Transparent thermodynamic licensing.
           </h2>
-          <p className="text-slate-600 mt-2 text-sm">
-            Full access to FinOps calculations, GIS mapping, and QR passports across all plans.
+          <p className="text-slate-400 mt-2 text-sm font-sans">
+            Full access to Quantum FinOps, Planetary GIS, and Nanite Swarms across all tiers.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {/* Starter Plan */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-sm">
+        <div className="grid md:grid-cols-3 gap-6 font-mono">
+          {/* Sub-Orbital Pilot */}
+          <div className="bg-[#080d1e] border border-cyan-500/30 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-sm">
             <div>
-              <div className="text-xs uppercase font-bold text-slate-400 font-mono">Starter / Pilot</div>
-              <div className="text-3xl font-black text-slate-900 mt-2 font-mono">Free</div>
-              <p className="text-slate-500 text-xs mt-1">For single-site ICT teams evaluating AssetOps.</p>
-              <ul className="mt-6 space-y-2.5 text-xs text-slate-700 font-medium">
+              <div className="text-xs uppercase font-bold text-slate-400">Sub-Orbital Pilot</div>
+              <div className="text-3xl font-black text-white mt-2">Free</div>
+              <p className="text-slate-400 text-xs mt-1 font-sans">For localized arrays testing AssetOps.</p>
+              <ul className="mt-6 space-y-2.5 text-xs text-slate-300 font-sans">
                 {[
-                  "Up to 500 monitored hardware assets",
-                  "Core Leaflet GIS map with pin-dropping",
-                  "Digital QR Passports & mobile work orders",
-                  "Deterministic health scoring",
+                  "Up to 1,000 quantum sub-nodes",
+                  "Planetary GIS map with coordinate locks",
+                  "Volumetric AR Passports & nanite work orders",
+                  "Deterministic coherence scoring",
                 ].map((f, i) => (
                   <li key={i} className="flex gap-2">
-                    <Check className="h-4 w-4 text-teal-600 shrink-0" />
+                    <Check className="h-4 w-4 text-cyan-400 shrink-0" />
                     <span>{f}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="pt-6 border-t border-slate-100 mt-6">
+            <div className="pt-6 border-t border-cyan-500/20 mt-6">
               <Link
                 href="/sign-up"
-                className="w-full inline-flex items-center justify-center py-2.5 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-900 transition"
+                className="w-full inline-flex items-center justify-center py-2.5 rounded-xl text-xs font-bold bg-[#0f1c38] hover:bg-[#14264c] text-white border border-cyan-500/40 transition"
               >
-                Start Free
+                INITIALIZE PILOT
               </Link>
             </div>
           </div>
 
-          {/* Professional Plan */}
-          <div className="bg-white border-2 border-teal-400 rounded-2xl p-6 sm:p-7 shadow-xl shadow-teal-500/10 ring-2 ring-teal-500/20 flex flex-col justify-between relative">
-            <span className="absolute -top-3 right-6 text-[10.5px] font-mono font-black uppercase text-white bg-gradient-to-r from-teal-600 to-cyan-600 px-3 py-0.5 rounded-full shadow-sm">
-              MOST POPULAR
+          {/* Commercial Quantum */}
+          <div className="bg-[#0a1226] border-2 border-cyan-400 rounded-2xl p-6 sm:p-7 shadow-[0_0_35px_rgba(0,240,255,0.25)] ring-1 ring-cyan-400/50 flex flex-col justify-between relative">
+            <span className="absolute -top-3 right-6 text-[10.5px] font-black uppercase text-slate-950 bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400 px-3 py-0.5 rounded-full shadow-[0_0_15px_#00f0ff]">
+              MOST DEPLOYED
             </span>
             <div>
-              <div className="text-xs uppercase font-bold text-teal-700 font-mono">Professional</div>
-              <div className="text-3xl font-black text-slate-900 mt-2 font-mono">
-                ₦150,000 <span className="text-xs text-slate-500 font-normal font-sans">/ month</span>
+              <div className="text-xs uppercase font-bold text-cyan-300">Commercial Quantum</div>
+              <div className="text-3xl font-black text-white mt-2">
+                Ꞙ150,000 <span className="text-xs text-slate-400 font-normal font-sans">/ cycle</span>
               </div>
-              <p className="text-slate-500 text-xs mt-1">For multi-branch banks, colleges, and regional clinics.</p>
-              <ul className="mt-6 space-y-2.5 text-xs text-slate-800 font-medium">
+              <p className="text-slate-400 text-xs mt-1 font-sans">For multi-hub banks, clinics, and research academies.</p>
+              <ul className="mt-6 space-y-2.5 text-xs text-slate-200 font-sans">
                 {[
-                  "Up to 5,000 monitored hardware assets",
-                  "Full Hardware FinOps Suite (NBV & 70% Rule)",
-                  "8-Quarter CapEx Replacement Forecaster",
-                  "Automated Preventative Maintenance (PM) Engine",
-                  "NIST 800-88 Certified Decommissioning",
-                  "Groq Llama 3 AI Evidence-backed Copilot",
-                  "One-click CSV & ERP spreadsheet export",
+                  "Up to 25,000 monitored quantum cores",
+                  "Full Thermodynamic FinOps & 14% Rule",
+                  "8-Solar Cycle CapEx Replacement Forecaster",
+                  "Autonomous Nanite Swarm Scheduler",
+                  "IGDS-2079 Certified Molecular Purge",
+                  "Groq Llama 3 Sentinel AI Copilot",
+                  "Sub-second neural ERP telemetry export",
                 ].map((f, i) => (
                   <li key={i} className="flex gap-2">
-                    <Check className="h-4 w-4 text-teal-600 shrink-0" />
-                    <span className="font-bold">{f}</span>
+                    <Check className="h-4 w-4 text-cyan-400 shrink-0" />
+                    <span className="font-bold text-white">{f}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="pt-6 border-t border-slate-100 mt-6">
+            <div className="pt-6 border-t border-cyan-500/20 mt-6">
               <Link
                 href="/sign-up"
-                className="w-full inline-flex items-center justify-center py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-teal-600 via-cyan-600 to-indigo-600 text-white shadow-md hover:brightness-105 transition"
+                className="w-full inline-flex items-center justify-center py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-500 text-slate-950 shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:brightness-110 transition"
               >
-                Start 14-Day Free Trial
+                DEPLOY COMMERCIAL GRID
               </Link>
             </div>
           </div>
 
-          {/* Enterprise Plan */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-sm">
+          {/* Sovereign Planetary */}
+          <div className="bg-[#080d1e] border border-cyan-500/30 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-sm">
             <div>
-              <div className="text-xs uppercase font-bold text-slate-400 font-mono">Enterprise & Sovereign</div>
-              <div className="text-3xl font-black text-slate-900 mt-2 font-mono">Custom</div>
-              <p className="text-slate-500 text-xs mt-1">For national banking fleets, universities & government MDAs.</p>
-              <ul className="mt-6 space-y-2.5 text-xs text-slate-700 font-medium">
+              <div className="text-xs uppercase font-bold text-slate-400">Sovereign Planetary</div>
+              <div className="text-3xl font-black text-white mt-2">Custom</div>
+              <p className="text-slate-400 text-xs mt-1 font-sans">For interplanetary fleets, fusion grids & sovereign MDAs.</p>
+              <ul className="mt-6 space-y-2.5 text-xs text-slate-300 font-sans">
                 {[
-                  "Unlimited hardware assets & branches",
-                  "Multi-organization tenant federation",
-                  "On-premise / Sovereign PostgreSQL deployment",
-                  "Custom IFRS / GAAP depreciation algorithms",
-                  "Dedicated SLA & 24/7 incident engineer",
+                  "Unlimited quantum cores & orbital satellites",
+                  "Multi-sovereign tenant federation",
+                  "Self-contained isolated PostgreSQL enclave",
+                  "Custom thermodynamic depreciation models",
+                  "Dedicated 24/7 autonomous sentinel drone",
                 ].map((f, i) => (
                   <li key={i} className="flex gap-2">
-                    <Check className="h-4 w-4 text-teal-600 shrink-0" />
+                    <Check className="h-4 w-4 text-cyan-400 shrink-0" />
                     <span>{f}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="pt-6 border-t border-slate-100 mt-6">
+            <div className="pt-6 border-t border-cyan-500/20 mt-6">
               <Link
                 href="/sign-in"
-                className="w-full inline-flex items-center justify-center py-2.5 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white transition"
+                className="w-full inline-flex items-center justify-center py-2.5 rounded-xl text-xs font-bold bg-[#0f1c38] hover:bg-[#14264c] text-white border border-cyan-500/40 transition"
               >
-                Contact Enterprise Sales
+                CONTACT SOVEREIGN DESK
               </Link>
             </div>
           </div>
@@ -626,82 +628,82 @@ export default function Landing() {
       </Sec>
 
       {/* 11. FAQ */}
-      <Sec id="faq" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-800 text-xs font-bold mb-3">
-            <HelpCircle className="h-3.5 w-3.5 text-slate-600" />
-            <span>FAQ</span>
+      <Sec id="faq" className="border-t border-cyan-500/20">
+        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-400/50 text-cyan-300 text-xs font-bold mb-3">
+            <HelpCircle className="h-3.5 w-3.5 text-cyan-400" />
+            <span>FAQ Protocol</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-            Frequently answered questions.
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+            Interplanetary governance queries.
           </h2>
-          <p className="text-slate-600 mt-2 text-sm">
-            Common questions from IT Directors and Finance Controllers.
+          <p className="text-slate-400 mt-2 text-sm font-sans">
+            Technical answers for Quantum Directors and Chief Thermodynamic Officers.
           </p>
         </div>
 
         <FaqAccordion />
       </Sec>
 
-      {/* 12. FINAL HIGH-IMPACT CTA */}
-      <Sec className="border-t border-slate-200/80 text-center py-16 sm:py-24">
-        <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-white rounded-3xl p-8 sm:p-14 relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-teal-500/20 rounded-full blur-[100px] pointer-events-none" />
+      {/* 12. FINAL HIGH-IMPACT 2080 CTA */}
+      <Sec className="border-t border-cyan-500/20 text-center py-16 sm:py-24">
+        <div className="bg-gradient-to-br from-[#060c1c] via-[#091228] to-[#040714] border-2 border-cyan-400/50 text-white rounded-3xl p-8 sm:p-14 relative overflow-hidden shadow-[0_0_60px_rgba(0,240,255,0.25)] font-mono">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none" />
 
           <h2 className="text-3xl sm:text-5xl font-black tracking-tight max-w-2xl mx-auto leading-[1.12] relative">
-            Stop losing millions to invisible hardware degradation.
+            Stop losing millions to sub-atomic hardware decoherence.
           </h2>
-          <p className="text-slate-300 text-base mt-4 max-w-xl mx-auto relative font-normal">
-            Govern physical hardware with mathematical precision and zero audit surprises.
+          <p className="text-slate-300 text-base mt-4 max-w-xl mx-auto relative font-sans">
+            Govern planetary compute with mathematical precision, zero entropy, and instant holographic proof.
           </p>
 
-          <div className="flex justify-center flex-wrap gap-3.5 mt-8 relative">
+          <div className="flex justify-center flex-wrap gap-4 mt-8 relative">
             <Link
               href="/sign-up"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-teal-400 via-cyan-400 to-indigo-400 text-slate-950 shadow-lg hover:brightness-105 transition"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-black text-xs bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-500 text-slate-950 shadow-[0_0_25px_rgba(0,240,255,0.4)] hover:brightness-110 transition"
             >
-              Start Free Workspace <ArrowRight className="h-4 w-4" />
+              INITIALIZE SOVEREIGN NODE <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="/sign-in"
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 transition"
+              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl font-bold text-xs bg-[#0b162f] hover:bg-[#122248] text-white border border-cyan-500/40 transition"
             >
-              Explore Live Demo
+              EXPLORE HOLO-DEMO
             </Link>
           </div>
 
-          <div className="mt-5 text-xs text-slate-400 relative">
-            Live demo includes 5,100+ pre-seeded assets across Nigeria. Instant access.
+          <div className="mt-5 text-xs text-slate-400 relative font-sans">
+            Holo-demo includes 48,920 pre-seeded sub-atomic cores across Terra and Orbit. Instant neural tap.
           </div>
         </div>
       </Sec>
 
-      {/* 13. BRIGHT MODERN FOOTER */}
-      <footer className="border-t border-slate-200/80 bg-white">
+      {/* 13. 2080 FOOTER */}
+      <footer className="border-t border-cyan-500/20 bg-[#02050e] relative z-10 font-mono">
         <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-center gap-4">
-            <Logo light />
-            <span className="hidden sm:inline text-slate-300">|</span>
-            <span className="text-xs text-slate-500 font-medium">
-              Hardware FinOps & ICT Maintenance Intelligence
+            <Logo />
+            <span className="hidden sm:inline text-slate-700">|</span>
+            <span className="text-xs text-slate-400 font-sans">
+              Autonomous Quantum FinOps & Planetary Hardware Governance
             </span>
           </div>
 
-          <nav aria-label="Footer" className="flex flex-wrap gap-6 text-xs text-slate-600 font-semibold">
-            <a href="#features" className="hover:text-slate-950 transition">Features</a>
-            <a href="#calculator" className="hover:text-slate-950 transition">FinOps ROI</a>
-            <a href="#gis" className="hover:text-slate-950 transition">GIS Map</a>
-            <a href="#solutions" className="hover:text-slate-950 transition">Solutions</a>
-            <a href="#pricing" className="hover:text-slate-950 transition">Pricing</a>
-            <a href="#faq" className="hover:text-slate-950 transition">FAQ</a>
+          <nav aria-label="Footer" className="flex flex-wrap gap-6 text-xs text-slate-400 font-bold">
+            <a href="#features" className="hover:text-cyan-400 transition">Subsystems</a>
+            <a href="#calculator" className="hover:text-cyan-400 transition">FinOps</a>
+            <a href="#gis" className="hover:text-cyan-400 transition">Planetary GIS</a>
+            <a href="#solutions" className="hover:text-cyan-400 transition">Sectors</a>
+            <a href="#pricing" className="hover:text-cyan-400 transition">Tiers</a>
+            <a href="#faq" className="hover:text-cyan-400 transition">FAQ</a>
           </nav>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 text-xs text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 font-medium">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              <span>All Systems Operational</span>
+            <div className="flex items-center gap-1.5 text-xs text-cyan-300 bg-cyan-950/80 px-2.5 py-0.5 rounded-full border border-cyan-400/40">
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff] animate-pulse" />
+              <span>QUANTUM GRID: ONLINE</span>
             </div>
-            <div className="text-xs text-slate-400 font-mono">© 2026 AssetOps</div>
+            <div className="text-xs text-slate-500">© 2080 ASSETOPS</div>
           </div>
         </div>
       </footer>

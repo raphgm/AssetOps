@@ -3,16 +3,30 @@ import type { ReactNode } from "react";
 import { AlertTriangle, Inbox, Lock } from "lucide-react";
 import { cn, STATUS_LABEL } from "@/lib/utils";
 
-export function Logo({ className, text = true, light = false }: { className?: string; text?: boolean; light?: boolean }) {
+export function Logo({ className, text = true }: { className?: string; text?: boolean; light?: boolean }) {
   return (
-    <span className={cn("inline-flex items-center gap-2 font-semibold tracking-tight", light ? "text-slate-900" : "text-fg", className)}>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path d="M6 17.5 12 6l6 11.5M8.2 13.5h7.6" stroke={light ? "#0d9488" : "#5eead4"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="12" cy="6" r="2.2" fill={light ? "#ffffff" : "#0a0b0d"} stroke={light ? "#0d9488" : "#5eead4"} strokeWidth="1.8" />
-        <circle cx="6" cy="17.5" r="2.2" fill={light ? "#ffffff" : "#0a0b0d"} stroke={light ? "#0f172a" : "#e8eaed"} strokeWidth="1.8" />
-        <circle cx="18" cy="17.5" r="2.2" fill={light ? "#ffffff" : "#0a0b0d"} stroke={light ? "#0f172a" : "#e8eaed"} strokeWidth="1.8" />
-      </svg>
-      {text && <span>AssetOps</span>}
+    <span className={cn("inline-flex items-center gap-2.5 font-bold tracking-tight text-white group", className)}>
+      <div className="relative flex items-center justify-center">
+        <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-lg blur-sm opacity-70 group-hover:opacity-100 transition duration-300" />
+        <div className="relative p-1.5 rounded-lg bg-[#050914] border border-cyan-400/60 shadow-[0_0_15px_rgba(0,240,255,0.4)]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M6 17.5 12 6l6 11.5M8.2 13.5h7.6" stroke="#00f0ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="12" cy="6" r="2.2" fill="#030712" stroke="#00f0ff" strokeWidth="2" />
+            <circle cx="6" cy="17.5" r="2.2" fill="#030712" stroke="#a855f7" strokeWidth="2" />
+            <circle cx="18" cy="17.5" r="2.2" fill="#030712" stroke="#a855f7" strokeWidth="2" />
+          </svg>
+        </div>
+      </div>
+      {text && (
+        <span className="font-mono font-black tracking-wider text-base">
+          <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">
+            ASSETOPS
+          </span>
+          <span className="text-[10px] text-cyan-400 ml-1.5 px-1.5 py-0.5 rounded bg-cyan-950/80 border border-cyan-400/40 font-mono">
+            2080
+          </span>
+        </span>
+      )}
     </span>
   );
 }
