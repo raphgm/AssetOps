@@ -4,6 +4,7 @@ import { can } from "@/lib/rbac";
 import { getFinOpsMetrics } from "@/lib/engines/finops";
 import { Card, Forbidden, PageHeader, Stat, Source, Badge } from "@/components/ui";
 import { naira, num } from "@/lib/utils";
+import ClawbackTable from "@/components/finops/ClawbackTable";
 
 export const dynamic = "force-dynamic";
 
@@ -414,74 +415,7 @@ export default async function FinOpsPage({
             <div className="p-4 border-b border-line text-xs text-dim">
               Algorithmic audit of maintenance response times. Generates contract penalty credits due to your enterprise when vendors fail guaranteed repair SLAs.
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <caption className="sr-only">Vendor SLA Clawbacks</caption>
-                <thead>
-                  <tr>
-                    <th className="th">Vendor Partner</th>
-                    <th className="th">Total Work Orders</th>
-                    <th className="th">Breached WOs</th>
-                    <th className="th">Overdue Time</th>
-                    <th className="th">SLA Compliance</th>
-                    <th className="th">Calculated Rebate Credit Due</th>
-                    <th className="th">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {vendorClawbacks.length === 0 ? (
-                    <tr>
-                      <td colSpan={7} className="td text-center text-mute py-8">
-                        No vendor SLA breaches recorded. All partners compliant.
-                      </td>
-                    </tr>
-                  ) : (
-                    vendorClawbacks.map((v) => (
-                      <tr key={v.vendorId} className="hover:bg-raised/50">
-                        <td className="td font-medium">
-                          <Link href={`/app/vendors/${v.vendorId}`} className="hover:text-accent text-fg">
-                            {v.vendorName}
-                          </Link>
-                        </td>
-                        <td className="td tabular-nums">{v.totalWorkOrders}</td>
-                        <td className="td tabular-nums">
-                          {v.breachedWorkOrders > 0 ? (
-                            <span className="text-bad font-semibold">{v.breachedWorkOrders}</span>
-                          ) : (
-                            <span className="text-ok">0</span>
-                          )}
-                        </td>
-                        <td className="td tabular-nums text-dim font-mono text-xs">{v.totalBreachHours}h overdue</td>
-                        <td className="td tabular-nums">
-                          <span
-                            className={`font-semibold ${
-                              v.complianceRate < 70
-                                ? "text-bad"
-                                : v.complianceRate < 85
-                                ? "text-warn"
-                                : "text-ok"
-                            }`}
-                          >
-                            {v.complianceRate}%
-                          </span>
-                        </td>
-                        <td className="td tabular-nums font-bold text-ok text-sm">
-                          {naira(v.calculatedRebate)}
-                        </td>
-                        <td className="td">
-                          <a
-                            href={`mailto:support@vendor.com?subject=SLA%20Penalty%20Rebate%20Notice&body=Notice%20of%20SLA%20breaches%20for%20${encodeURIComponent(v.vendorName)}.`}
-                            className="btn btn-ghost text-xs py-1 px-2 text-accent"
-                          >
-                            Issue Clawback Notice
-                          </a>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
+            <ClawbackTable vendorClawbacks={vendorClawbacks} />
           </Card>
 
           {/* Linux Foundation FOCUS™ Spec Ingestion Preview */}
