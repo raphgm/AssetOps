@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Landmark, Hospital, GraduationCap, Building2, Check, ArrowUpRight, ShieldCheck, AlertCircle } from "lucide-react";
+import { Landmark, Hospital, GraduationCap, Building2, Check, ArrowRight, ShieldCheck, AlertCircle } from "lucide-react";
 import Link from "next/link";
 
 interface IndustryItem {
@@ -22,7 +22,7 @@ const INDUSTRIES: IndustryItem[] = [
     name: "Commercial Banking & FinTech",
     icon: Landmark,
     tagline: "High-density ATM, server rack, and branch terminal fleet governance",
-    badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
+    badgeColor: "bg-blue-950/80 text-blue-400 border-blue-800",
     painPoint:
       "When branch edge routers, ATM controller PCs, or core server nodes suffer unpredicted hardware downtime, banking transactions halt. Branches bleed millions in customer churn while paper logs fail to track multi-branch IT drift.",
     solution:
@@ -44,7 +44,7 @@ const INDUSTRIES: IndustryItem[] = [
     name: "Hospitals & Diagnostic Networks",
     icon: Hospital,
     tagline: "Life-critical biomedical diagnostic consoles & workstation availability",
-    badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    badgeColor: "bg-emerald-950/80 text-emerald-400 border-emerald-800",
     painPoint:
       "Hardware degradation in ICU telemetry terminals, MRI workstation consoles, and diagnostic PCs directly jeopardizes patient diagnostics. Biomedical teams battle unlogged component failures with zero preventative alerts.",
     solution:
@@ -66,7 +66,7 @@ const INDUSTRIES: IndustryItem[] = [
     name: "Higher Education & Multi-Campuses",
     icon: GraduationCap,
     tagline: "Governing 10,000+ laboratory workstations across dispersed campus faculties",
-    badgeColor: "bg-purple-50 text-purple-700 border-purple-200",
+    badgeColor: "bg-purple-950/80 text-purple-400 border-purple-800",
     painPoint:
       "Thousands of computer lab workstations, campus WiFi access points, and lecture hall projectors are scattered across massive acreage. Ghost asset shrinkage is rampant, and lab machines fail right before exam windows.",
     solution:
@@ -88,7 +88,7 @@ const INDUSTRIES: IndustryItem[] = [
     name: "Public Sector MDAs & Parastatals",
     icon: Building2,
     tagline: "Eliminate ghost hardware and defend capital procurement expenditure before audit",
-    badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+    badgeColor: "bg-amber-950/80 text-amber-400 border-amber-800",
     painPoint:
       "Government ministries struggle with untracked hardware on legacy spreadsheets, duplicate procurement contractor orders, and recurring repair budgets sunk into obsolete 7-year-old laptops and desktop towers.",
     solution:
@@ -113,7 +113,7 @@ export default function IndustrySolutions() {
   const Icon = current.icon;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-sans">
       {/* 4 Industry Buttons */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {INDUSTRIES.map((ind) => {
@@ -125,8 +125,8 @@ export default function IndustrySolutions() {
               onClick={() => setSelectedId(ind.id)}
               className={`p-4 rounded-2xl border text-left transition-all ${
                 isSelected
-                  ? "bg-white border-slate-300 shadow-md ring-2 ring-cyan-500/30"
-                  : "bg-white/80 border-slate-200 hover:border-slate-300 hover:bg-white"
+                  ? "bg-[#121520] border-cyan-500/60 shadow-lg shadow-cyan-950/30 ring-1 ring-cyan-500/30"
+                  : "bg-[#0d0f17]/80 border-white/[0.06] hover:border-white/[0.12] hover:bg-[#121520]/60"
               }`}
             >
               <div className="flex items-center justify-between mb-3">
@@ -134,20 +134,20 @@ export default function IndustrySolutions() {
                   <ItemIcon className="h-5 w-5" />
                 </div>
                 {isSelected && (
-                  <span className="text-[10px] font-mono font-bold text-cyan-800 bg-cyan-50 px-2 py-0.5 rounded-full border border-cyan-200">
-                    LOCKED
+                  <span className="text-[10px] font-mono font-bold text-cyan-300 bg-cyan-950 px-2 py-0.5 rounded-full border border-cyan-800">
+                    ACTIVE
                   </span>
                 )}
               </div>
-              <div className="font-bold text-sm text-slate-900">{ind.name}</div>
-              <div className="text-[11px] text-slate-500 line-clamp-1 mt-0.5 font-sans">{ind.tagline}</div>
+              <div className="font-bold text-sm text-white">{ind.name}</div>
+              <div className="text-[11px] text-slate-400 line-clamp-1 mt-0.5 font-sans">{ind.tagline}</div>
             </button>
           );
         })}
       </div>
 
       {/* Selected Industry Detail Card */}
-      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-9 shadow-2xl shadow-slate-200/50">
+      <div className="bg-[#0d0f17]/90 border border-white/[0.08] rounded-3xl p-6 sm:p-9 shadow-2xl relative overflow-hidden">
         <div className="grid lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Challenge & Solution */}
           <div className="lg:col-span-7 space-y-5 font-sans">
@@ -156,32 +156,32 @@ export default function IndustrySolutions() {
                 <Icon className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="text-2xl font-black text-slate-950 tracking-tight">{current.name}</h3>
-                <p className="text-xs font-bold text-cyan-700 mt-0.5 font-mono">{current.tagline}</p>
+                <h3 className="text-2xl font-black text-white tracking-tight">{current.name}</h3>
+                <p className="text-xs font-bold text-cyan-400 mt-0.5 font-mono">{current.tagline}</p>
               </div>
             </div>
 
             {/* Pain Point */}
-            <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-1">
-              <div className="flex items-center gap-2 text-xs font-bold text-rose-800">
-                <AlertCircle className="h-4 w-4 text-rose-600" /> Operational Downtime & Drift Risk
+            <div className="p-4 rounded-2xl bg-rose-950/40 border border-rose-900/60 space-y-1">
+              <div className="flex items-center gap-2 text-xs font-bold text-rose-300">
+                <AlertCircle className="h-4 w-4 text-rose-400" /> Operational Downtime & Drift Risk
               </div>
-              <p className="text-xs text-rose-950 leading-relaxed font-medium">{current.painPoint}</p>
+              <p className="text-xs text-rose-200 leading-relaxed font-normal">{current.painPoint}</p>
             </div>
 
             {/* Solution */}
-            <div className="p-4 rounded-2xl bg-teal-50 border border-teal-200 space-y-1">
-              <div className="flex items-center gap-2 text-xs font-bold text-teal-800">
-                <ShieldCheck className="h-4 w-4 text-teal-600" /> AssetOps Intelligent Resolution
+            <div className="p-4 rounded-2xl bg-teal-950/40 border border-teal-900/60 space-y-1">
+              <div className="flex items-center gap-2 text-xs font-bold text-teal-300">
+                <ShieldCheck className="h-4 w-4 text-teal-400" /> AssetOps Intelligent Resolution
               </div>
-              <p className="text-xs text-teal-950 leading-relaxed font-medium">{current.solution}</p>
+              <p className="text-xs text-teal-200 leading-relaxed font-normal">{current.solution}</p>
             </div>
 
             {/* Features list */}
-            <div className="grid sm:grid-cols-2 gap-2 pt-1">
+            <div className="grid sm:grid-cols-2 gap-2.5 pt-1">
               {current.features.map((feat, idx) => (
-                <div key={idx} className="flex items-start gap-2 text-xs text-slate-700 font-medium">
-                  <Check className="h-4 w-4 text-cyan-600 shrink-0 mt-0.5" />
+                <div key={idx} className="flex items-start gap-2 text-xs text-slate-300">
+                  <Check className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
                   <span>{feat}</span>
                 </div>
               ))}
@@ -189,26 +189,26 @@ export default function IndustrySolutions() {
           </div>
 
           {/* Right Column: KPIs */}
-          <div className="lg:col-span-5 bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4 font-mono">
-            <div className="text-xs uppercase font-bold tracking-wider text-slate-500 border-b border-slate-200 pb-2">
+          <div className="lg:col-span-5 bg-[#121520] border border-white/[0.08] rounded-2xl p-6 space-y-4 font-mono">
+            <div className="text-xs uppercase font-bold tracking-wider text-slate-400 border-b border-white/[0.06] pb-2">
               Verified Telemetry Benchmarks
             </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {current.kpis.map((kpi, idx) => (
-                <div key={idx} className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-center justify-between shadow-sm">
-                  <span className="text-xs font-medium text-slate-600 font-sans">{kpi.label}</span>
-                  <span className="text-base font-black text-cyan-700">{kpi.value}</span>
+                <div key={idx} className="p-3.5 rounded-xl bg-[#0a0c12] border border-white/[0.06] flex items-center justify-between shadow-sm">
+                  <span className="text-xs text-slate-300 font-sans">{kpi.label}</span>
+                  <span className="text-base font-black text-cyan-400">{kpi.value}</span>
                 </div>
               ))}
             </div>
 
             <div className="pt-2">
               <Link
-                href="/sign-up"
-                className="w-full inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl text-xs font-black bg-slate-950 hover:bg-slate-800 text-white shadow-md transition"
+                href="/sign-in"
+                className="w-full inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl text-xs font-black bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-500 text-slate-950 shadow-md hover:brightness-105 transition"
               >
-                DEPLOY SECTOR WORKFLOW <ArrowUpRight className="h-4 w-4" />
+                DEPLOY SECTOR WORKFLOW <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>

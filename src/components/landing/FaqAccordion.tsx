@@ -19,7 +19,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: "Does AssetOps require expensive proprietary RFID hardware scanners?",
-    a: "No. AssetOps generates cryptographic, high-contrast QR passports for every physical device. Field engineers and branch IT officers can scan tags using any standard mobile phone camera or handheld 2D barcode scanner to instantly bring up service history, custody records, and open work orders.",
+    a: "No. AssetOps includes an in-browser HTML5 camera scanner that works directly on mobile phones without installing an app store binary. It also generates print-ready QR passport stickers with company logos and serial tags for physical labeling.",
   },
   {
     q: "What data sanitization standards are enforced during asset decommissioning?",
@@ -31,7 +31,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: "Can AssetOps data and financial depreciation be exported to our ERP?",
-    a: "Yes. All asset registries, multi-year CapEx forecasts, maintenance expenditure ledgers, and audit histories can be exported in one click to clean CSV/Excel and structured JSON/API feeds compatible with SAP, Oracle, Microsoft Dynamics, and regional accounting software.",
+    a: "Yes. All asset registers, depreciation schedules, maintenance expenditure ledgers, and audit histories can be exported in one click to streaming Excel .xlsx and Linux Foundation FOCUS™ v1.0 JSON format for SAP, Oracle, and Microsoft Dynamics.",
   },
 ];
 
@@ -43,7 +43,7 @@ export default function FaqAccordion() {
   };
 
   return (
-    <div className="space-y-3 max-w-3xl mx-auto">
+    <div className="space-y-3 max-w-3xl mx-auto font-sans">
       {FAQS.map((faq, idx) => {
         const isOpen = openIndex === idx;
         return (
@@ -51,8 +51,8 @@ export default function FaqAccordion() {
             key={idx}
             className={`border rounded-2xl transition-all ${
               isOpen
-                ? "bg-white border-cyan-300 shadow-md ring-1 ring-cyan-500/20"
-                : "bg-white/80 border-slate-200/90 hover:border-slate-300 hover:bg-white"
+                ? "bg-[#121520] border-cyan-500/50 shadow-lg shadow-cyan-950/20 ring-1 ring-cyan-500/20"
+                : "bg-[#0d0f17]/80 border-white/[0.06] hover:border-white/[0.12] hover:bg-[#121520]/50"
             }`}
           >
             <button
@@ -60,15 +60,17 @@ export default function FaqAccordion() {
               className="w-full py-4 px-5 text-left flex items-center justify-between gap-4 focus:outline-none rounded-2xl"
               aria-expanded={isOpen}
             >
-              <span className="font-bold text-sm text-slate-900 leading-snug font-sans">{faq.q}</span>
+              <span className="font-bold text-sm sm:text-base text-white tracking-tight">
+                {faq.q}
+              </span>
               <ChevronDown
-                className={`h-4 w-4 text-slate-400 shrink-0 transition-transform duration-200 ${
-                  isOpen ? "rotate-180 text-cyan-600" : ""
+                className={`h-4 w-4 text-cyan-400 shrink-0 transition-transform duration-200 ${
+                  isOpen ? "rotate-180" : ""
                 }`}
               />
             </button>
             {isOpen && (
-              <div className="px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3 font-sans">
+              <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-white/[0.06]">
                 {faq.a}
               </div>
             )}
