@@ -47,10 +47,10 @@ export default function RoiCalculator() {
             </div>
             <div>
               <h3 className="text-xl font-black text-slate-950 tracking-tight">
-                Hardware FinOps ROI Simulator
+                Hardware FinOps ROI Calculator
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
-                Model immediate capital recovery using deterministic fleet economics
+                Calculate immediate capital recovery using deterministic fleet economics
               </p>
             </div>
           </div>
@@ -200,7 +200,7 @@ export default function RoiCalculator() {
               href="/sign-in"
               className="w-full sm:w-auto inline-flex items-center justify-center py-3 px-4 rounded-xl text-xs font-bold text-slate-300 hover:text-white bg-slate-900 border border-slate-700 transition"
             >
-              Simulate in Demo
+              Explore Live Platform
             </Link>
           </div>
         </div>

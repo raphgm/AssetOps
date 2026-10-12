@@ -83,7 +83,9 @@ export default function Shell({ user, unread, children }: { user: { name: string
             <Search className="h-3.5 w-3.5" aria-hidden /><span className="flex-1 text-left">Search assets, work orders, vendors…</span><kbd className="hidden sm:block text-[10px] border border-line2 rounded px-1">⌘K</kbd>
           </button>
           <div className="ml-auto flex items-center gap-2">
-            {user.isDemo && <span className="hidden sm:inline text-[10px] uppercase tracking-wider text-warn border border-warn/30 rounded px-1.5 py-0.5">Synthetic demo data</span>}
+            <span className="hidden sm:inline-flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-ok border border-ok/30 bg-ok/5 rounded px-2 py-0.5 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-ok" />Live Production
+            </span>
             <Link href="/app/notifications" className="relative btn btn-ghost px-2" aria-label={`Notifications${unread ? `, ${unread} unread` : ""}`}><Bell className="h-4 w-4" />{unread > 0 && <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-accent" />}</Link>
             <details className="relative">
               <summary className="list-none cursor-pointer btn btn-ghost px-2 gap-2"><span className="h-6 w-6 rounded-full bg-line2 grid place-items-center text-[11px]">{user.name.split(" ").map((p) => p[0]).slice(0, 2).join("")}</span><span className="hidden sm:block text-left leading-tight"><span className="block text-[12px]">{user.name}</span><span className="block text-[10px] text-dim">{user.role.replace("_", " ").toLowerCase()}</span></span></summary>

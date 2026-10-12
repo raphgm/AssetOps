@@ -27,6 +27,10 @@ export function LocationForm({
     name: string;
     city: string;
     code: string;
+    address?: string | null;
+    type?: string | null;
+    contactPerson?: string | null;
+    contactPhone?: string | null;
     lat: number | null;
     lng: number | null;
   };
@@ -36,6 +40,10 @@ export function LocationForm({
   const [name, setName] = useState(initial?.name ?? "");
   const [city, setCity] = useState(initial?.city ?? "");
   const [code, setCode] = useState(initial?.code ?? "");
+  const [address, setAddress] = useState(initial?.address ?? "");
+  const [type, setType] = useState(initial?.type ?? "OFFICE");
+  const [contactPerson, setContactPerson] = useState(initial?.contactPerson ?? "");
+  const [contactPhone, setContactPhone] = useState(initial?.contactPhone ?? "");
   const [coords, setCoords] = useState<{ lat: number | null; lng: number | null }>({
     lat: initial?.lat ?? null,
     lng: initial?.lng ?? null,
@@ -57,6 +65,10 @@ export function LocationForm({
           name,
           city,
           code: code || undefined,
+          address: address.trim() || null,
+          type,
+          contactPerson: contactPerson.trim() || null,
+          contactPhone: contactPhone.trim() || null,
           lat: coords.lat,
           lng: coords.lng,
         });
@@ -65,6 +77,10 @@ export function LocationForm({
           name,
           city,
           code: code || undefined,
+          address: address.trim() || null,
+          type,
+          contactPerson: contactPerson.trim() || null,
+          contactPhone: contactPhone.trim() || null,
           lat: coords.lat,
           lng: coords.lng,
         });
@@ -100,7 +116,7 @@ export function LocationForm({
       <div className="grid sm:grid-cols-2 gap-3">
         <div>
           <label className="label" htmlFor="loc-name">
-            Location Name *
+            Location / Site Name *
           </label>
           <input
             id="loc-name"
@@ -112,13 +128,33 @@ export function LocationForm({
                 setCode(e.target.value.slice(0, 3).toUpperCase());
               }
             }}
-            placeholder="e.g. Lagos HQ / Victoria Island Branch"
+            placeholder="e.g. Lagos Corporate HQ / Lekki Deep Sea Project"
             className="input"
           />
         </div>
         <div>
+          <label className="label" htmlFor="loc-type">
+            Facility / Site Category *
+          </label>
+          <select
+            id="loc-type"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            className="input"
+          >
+            <option value="OFFICE">Corporate Office / Headquarters</option>
+            <option value="PROJECT">Client Project Site / Field Operation</option>
+            <option value="BRANCH">Regional Branch Office</option>
+            <option value="DATA_CENTER">Data Center / Network PoP</option>
+            <option value="WAREHOUSE">Warehouse / Logistics Depot</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="grid sm:grid-cols-3 gap-3">
+        <div className="sm:col-span-2">
           <label className="label" htmlFor="loc-city">
-            City / Region *
+            City / State / Region *
           </label>
           <input
             id="loc-city"
@@ -129,27 +165,66 @@ export function LocationForm({
             className="input"
           />
         </div>
+        <div>
+          <label className="label" htmlFor="loc-code">
+            Facility Code
+          </label>
+          <input
+            id="loc-code"
+            value={code}
+            onChange={(e) => setCode(e.target.value.toUpperCase())}
+            placeholder="e.g. LAG, PRJ, PHC"
+            className="input font-mono uppercase"
+            maxLength={6}
+          />
+        </div>
       </div>
 
-      <div className="w-full sm:w-1/2">
-        <label className="label" htmlFor="loc-code">
-          Facility Code
+      <div>
+        <label className="label" htmlFor="loc-address">
+          Configured Physical Street Address / Project Site Location
         </label>
         <input
-          id="loc-code"
-          value={code}
-          onChange={(e) => setCode(e.target.value.toUpperCase())}
-          placeholder="e.g. LAG, ABJ, PHC"
-          className="input font-mono uppercase"
-          maxLength={6}
+          id="loc-address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          placeholder="e.g. Plot 1412, Adetokunbo Ademola St, Victoria Island, Lagos"
+          className="input"
         />
         <p className="text-[11px] text-dim mt-1">
-          Used in asset barcodes and serial number prefixes.
+          Exact street, campus, building, or field project site coordinates.
         </p>
       </div>
 
+      <div className="grid sm:grid-cols-2 gap-3">
+        <div>
+          <label className="label" htmlFor="loc-contact-person">
+            Site / Facility Manager
+          </label>
+          <input
+            id="loc-contact-person"
+            value={contactPerson}
+            onChange={(e) => setContactPerson(e.target.value)}
+            placeholder="e.g. Babatunde Fashola (Site Lead)"
+            className="input"
+          />
+        </div>
+        <div>
+          <label className="label" htmlFor="loc-contact-phone">
+            Site Contact Phone / Hotline
+          </label>
+          <input
+            id="loc-contact-phone"
+            value={contactPhone}
+            onChange={(e) => setContactPhone(e.target.value)}
+            placeholder="e.g. +234 802 345 6789"
+            className="input"
+          />
+        </div>
+      </div>
+
       <div className="pt-2 border-t border-line">
-        <label className="label mb-2">Geographic Coordinates (Pin Drop)</label>
+        <label className="label mb-2">GPS Coordinates (Map Pin Drop)</label>
         <MapPinPicker
           initialLat={coords.lat}
           initialLng={coords.lng}

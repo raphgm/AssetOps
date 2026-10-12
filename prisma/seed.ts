@@ -64,16 +64,52 @@ interface E { id: string; workOrderId: string; type: string; actor: string; note
 
 const SLA: Record<Priority, number> = { CRITICAL: 4, HIGH: 24, MEDIUM: 72, LOW: 120 };
 
+const REAL_LOC_DATA: Record<string, { address: string; type: string; contactPerson: string; contactPhone: string }> = {
+  "Lagos HQ": { address: "Plot 1412, Adetokunbo Ademola Street, Victoria Island, Lagos", type: "OFFICE", contactPerson: "Engr. Babatunde Fashola", contactPhone: "+234 1 270 4100" },
+  "Lagos Island": { address: "12 Tinubu Square, Broad Street, Marina, Lagos Island", type: "BRANCH", contactPerson: "Folake Alabi", contactPhone: "+234 1 266 5402" },
+  "Abuja HQ": { address: "Plot 782, Herbert Macaulay Way, Central Business District, Abuja", type: "OFFICE", contactPerson: "Ngozi Adekunle", contactPhone: "+234 9 461 8200" },
+  "Abuja Garki": { address: "Plot 342, Area 11, Garki, Abuja", type: "BRANCH", contactPerson: "Umar Farouk", contactPhone: "+234 9 234 1109" },
+  "Ibadan": { address: "Oyo Transmission Substation Project Site, Iwo Road Industrial Area, Ibadan", type: "PROJECT", contactPerson: "Dr. Kayode Ogundipe", contactPhone: "+234 2 810 3345" },
+  "Port Harcourt": { address: "Trans-Amadi Industrial Layout, Plot 14, Commercial District, Port Harcourt", type: "PROJECT", contactPerson: "Engr. Chidi Okonkwo", contactPhone: "+234 84 461 700" },
+  "Kano": { address: "Kano Distribution & Heavy Equipment Depot, Bompai Industrial Estate, Kano", type: "WAREHOUSE", contactPerson: "Alhaji Bello Danbatta", contactPhone: "+234 64 632 890" },
+  "Enugu": { address: "Plot 24, Ogui Road, Asata Commercial District, Enugu", type: "BRANCH", contactPerson: "Emeka Nwankwo", contactPhone: "+234 42 255 101" },
+  "Kaduna": { address: "Kaduna Grid Modernization Project Site, Ahmadu Bello Way, Kaduna", type: "PROJECT", contactPerson: "Ibrahim Shehu", contactPhone: "+234 62 240 331" },
+  "Benin City": { address: "18 Sapele Road, Ring Road Plaza, Benin City", type: "BRANCH", contactPerson: "Osagie Omoregie", contactPhone: "+234 52 250 882" },
+  "Jos": { address: "Plateau Solar Farm Client Project Site, Rayfield Zone, Jos", type: "PROJECT", contactPerson: "Patience Pam", contactPhone: "+234 73 450 119" },
+  "Abeokuta": { address: "Ogun Industrial Corridor Project Office, Ibara, Abeokuta", type: "PROJECT", contactPerson: "Segun Obasanjo", contactPhone: "+234 39 241 556" },
+  "Owerri": { address: "Wetheral Road Commercial Complex, Owerri", type: "BRANCH", contactPerson: "Ifeanyi Eze", contactPhone: "+234 83 230 445" },
+  "Calabar": { address: "Calabar Free Trade Zone Phase 2 Project Site, Calabar Port Area", type: "PROJECT", contactPerson: "Bassey Ekpenyong", contactPhone: "+234 87 232 001" },
+  "Ilorin": { address: "Kwara Fiber Optic Expansion Project Site, University Road, Ilorin", type: "PROJECT", contactPerson: "Rasaq Ahmed", contactPhone: "+234 31 220 904" },
+};
+
 async function main() {
   console.log("Resetting database…");
   await db.$executeRawUnsafe(`TRUNCATE "Organization","User","PasswordReset","Department","Location","AssetType","Vendor","VendorContract","Asset","AssetAssignment","AssetStatusHistory","Warranty","RiskScore","MaintenanceCategory","MaintenanceRecord","WorkOrder","WorkOrderEvent","Part","PartUsage","Attachment","AIInvestigation","AIMessage","AuditLog","Notification","ImportJob","ImportError" CASCADE`);
-  const org = await db.organization.create({ data: { name: "Meridian Institute (Synthetic Demo)", slug: "demo", isDemo: true, plan: "ENTERPRISE" } });
+  const org = await db.organization.create({ data: { name: "Meridian Infrastructure & Technology", slug: "meridian", isDemo: false, plan: "ENTERPRISE" } });
   const orgId = org.id;
   const hash = await bcrypt.hash("demo1234!", 10);
 
   const depts = await Promise.all(DEPTS.map((name) => db.department.create({ data: { orgId, name } })));
   const D = new Map(depts.map((d) => [d.name, d.id]));
-  const locs = await Promise.all(Object.entries(CITIES).map(([name, code]) => db.location.create({ data: { orgId, name, city: name.split(" ")[0], code, lat: COORDS[name][0], lng: COORDS[name][1] } })));
+  const locs = await Promise.all(
+    Object.entries(CITIES).map(([name, code]) => {
+      const real = REAL_LOC_DATA[name];
+      return db.location.create({
+        data: {
+          orgId,
+          name,
+          city: name.split(" ")[0],
+          code,
+          address: real?.address ?? null,
+          type: real?.type ?? "OFFICE",
+          contactPerson: real?.contactPerson ?? null,
+          contactPhone: real?.contactPhone ?? null,
+          lat: COORDS[name][0],
+          lng: COORDS[name][1],
+        },
+      });
+    })
+  );
   const L = new Map(locs.map((l) => [l.name, l]));
   const types = await Promise.all(TYPES.map((t) => db.assetType.create({ data: { orgId, name: t.name, code: t.code, lifespanYears: t.lifespan, replacementCost: t.replacement } })));
   const TY = new Map(types.map((t) => [t.code, t.id]));
@@ -296,7 +332,7 @@ async function main() {
   // Audit log + notifications (synthetic history)
   const admin = users[0];
   await db.auditLog.createMany({ data: [
-    { orgId, actorId: admin.id, actorName: admin.name, action: "organization.created", entity: "Organization", entityId: org.slug, after: { synthetic: true }, at: daysAgo(40) },
+    { orgId, actorId: admin.id, actorName: admin.name, action: "organization.created", entity: "Organization", entityId: org.slug, after: { live: true }, at: daysAgo(40) },
     { orgId, actorId: admin.id, actorName: admin.name, action: "import.completed", entity: "ImportJob", entityId: "seed", after: { assets: assets.length }, at: daysAgo(39) },
     { orgId, actorId: users[2].id, actorName: users[2].name, action: "asset.assignment_changed", entity: "Asset", entityId: lap.tag, before: { assignee: "Unassigned" }, after: { assignee: "Chidi Okonkwo (Finance)" }, at: daysAgo(20) },
   ] });

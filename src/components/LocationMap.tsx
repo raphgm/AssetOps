@@ -11,6 +11,8 @@ export interface MapLocationData {
   name: string;
   city?: string | null;
   code?: string | null;
+  address?: string | null;
+  type?: string | null;
   lat: number;
   lng: number;
   assets: number;
@@ -26,26 +28,26 @@ interface LocationMapProps {
 }
 
 const TILE_LAYERS = {
-  dark: {
-    name: "Dark",
-    url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: "abcd",
-    maxZoom: 19,
-  },
   streets: {
-    name: "Streets",
+    name: "OpenStreetMap",
     url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors (Free & Open)',
     subdomains: "abc",
     maxZoom: 19,
   },
-  satellite: {
-    name: "Satellite",
-    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    attribution: "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
-    subdomains: "",
-    maxZoom: 18,
+  humanitarian: {
+    name: "OSM Humanitarian",
+    url: "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors',
+    subdomains: "abc",
+    maxZoom: 19,
+  },
+  topo: {
+    name: "OSM Topo",
+    url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+    attribution: 'Map: &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> | <a href="https://opentopomap.org" target="_blank" rel="noreferrer">OpenTopoMap</a>',
+    subdomains: "abc",
+    maxZoom: 17,
   },
 };
 
@@ -66,7 +68,7 @@ export default function LocationMap({
   const tileLayerRef = useRef<any>(null);
   const markersRef = useRef<CircleMarker[]>([]);
 
-  const [activeLayer, setActiveLayer] = useState<keyof typeof TILE_LAYERS>("dark");
+  const [activeLayer, setActiveLayer] = useState<keyof typeof TILE_LAYERS>("streets");
   const [selectedLocation, setSelectedLocation] = useState<MapLocationData | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -129,8 +131,13 @@ export default function LocationMap({
         });
 
         // Tooltip
+        const typeLabel = loc.type === "PROJECT" ? "Project Site" : loc.type === "DATA_CENTER" ? "Data Center" : loc.type === "WAREHOUSE" ? "Warehouse" : loc.type === "BRANCH" ? "Branch" : "Office";
+        const typeColorStyle = loc.type === "PROJECT" ? "background:rgba(245,158,11,0.2);color:#f59e0b;border:1px solid rgba(245,158,11,0.4)" : "background:rgba(56,189,248,0.2);color:#38bdf8;border:1px solid rgba(56,189,248,0.4)";
+        const typeBadge = loc.type ? `<span style="font-size:8px;padding:1px 4px;border-radius:3px;font-weight:700;text-transform:uppercase;margin-left:6px;${typeColorStyle}">${typeLabel}</span>` : "";
+        const addrHtml = loc.address ? `<div style="font-size:10px;color:#94a3b8;max-width:210px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;">📍 ${loc.address}</div>` : "";
+
         marker.bindTooltip(
-          `<div class="font-medium text-xs">${loc.name}</div><div class="text-[10px] text-gray-300">${loc.assets} assets &bull; ${loc.atRisk} at risk</div>`,
+          `<div><div style="font-weight:600;font-size:12px;display:flex;align-items:center;">${loc.name}${typeBadge}</div>${addrHtml}<div style="font-size:10px;color:#cbd5e1;margin-top:2px;">${loc.assets} assets &bull; ${loc.atRisk} at risk</div></div>`,
           {
             direction: "top",
             offset: [0, -radius],
@@ -253,15 +260,32 @@ export default function LocationMap({
         <div className="absolute bottom-3 left-3 right-3 sm:right-auto sm:max-w-xs z-[1000] bg-surface/95 backdrop-blur-md border border-line rounded-lg p-3 shadow-xl transition-all animate-in fade-in slide-in-from-bottom-2">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <div className="font-semibold text-fg text-sm flex items-center gap-1.5">
+              <div className="font-semibold text-fg text-sm flex items-center flex-wrap gap-1.5">
                 {selectedLocation.name}
                 {selectedLocation.code && (
                   <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-raised border border-line text-dim">
                     {selectedLocation.code}
                   </span>
                 )}
+                {selectedLocation.type && (
+                  <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border uppercase ${
+                    selectedLocation.type === "PROJECT"
+                      ? "bg-warn/15 text-warn border-warn/30"
+                      : selectedLocation.type === "DATA_CENTER"
+                      ? "bg-accent/15 text-accent border-accent/30"
+                      : "bg-line2 text-fg border-line"
+                  }`}>
+                    {selectedLocation.type === "PROJECT" ? "Project Site" : selectedLocation.type.replace("_", " ")}
+                  </span>
+                )}
               </div>
-              <div className="text-[11px] text-dim">
+              {selectedLocation.address && (
+                <div className="text-[11px] text-fg/90 flex items-start gap-1 mt-1 font-medium">
+                  <span className="text-dim text-[12px] leading-tight shrink-0">📍</span>
+                  <span className="break-words">{selectedLocation.address}</span>
+                </div>
+              )}
+              <div className="text-[11px] text-dim mt-0.5">
                 {selectedLocation.city ?? "Nigeria"} &bull; {selectedLocation.lat.toFixed(2)}°N, {selectedLocation.lng.toFixed(2)}°E
               </div>
             </div>

@@ -296,7 +296,7 @@ export default function Landing() {
         <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold mb-3">
             <Cpu className="h-3.5 w-3.5 text-cyan-600" />
-            <span>FinOps Simulator</span>
+            <span>FinOps Calculator</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 font-sans">
             Model your enterprise hardware cost recovery.
@@ -669,12 +669,12 @@ export default function Landing() {
               href="/sign-in"
               className="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 transition"
             >
-              EXPLORE LIVE DEMO
+              EXPLORE LIVE PLATFORM
             </Link>
           </div>
 
           <div className="mt-5 text-xs text-slate-400 relative font-sans">
-            Live demo includes 12,482 pre-seeded enterprise assets across nationwide locations. Zero setup required.
+            Enterprise hardware tracking across nationwide offices and client project sites.
           </div>
         </div>
       </Sec>

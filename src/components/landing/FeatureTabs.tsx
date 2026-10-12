@@ -162,11 +162,11 @@ export default function FeatureTabs() {
               See your entire hardware estate across every branch.
             </h3>
             <p className="text-slate-600 text-sm leading-relaxed">
-              No more guessing where critical switches or failing UPS batteries are located. AssetOps includes free Leaflet maps featuring CARTO Dark vector tiles, proportional risk clusters, and an interactive pin-drop picker.
+              No more guessing where critical switches or failing UPS batteries are located. AssetOps includes free OpenStreetMap geospatial tracking featuring proportional risk clusters, live address configuration, and an interactive pin-drop picker.
             </p>
             <div className="space-y-2 pt-2 text-xs text-slate-700 font-medium">
               {[
-                "100% Free OpenStreetMap & CARTO vector tiles (zero Google Maps fees)",
+                "100% Free OpenStreetMap vector tiles (zero API keys, zero Google Maps fees)",
                 "Proportional asset cluster circles scaled by device count and failure risk",
                 "Interactive GPS Pin-Drop picker when registering branches or server rooms",
                 "Fly-to site inspection with instant work-order dispatch",

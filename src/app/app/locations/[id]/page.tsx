@@ -42,6 +42,8 @@ export default async function Loc({ params }: { params: Promise<{ id: string }> 
             name: l.name,
             city: l.city,
             code: l.code,
+            address: l.address,
+            type: l.type,
             lat: l.lat,
             lng: l.lng,
             assets: m.assets,
@@ -52,13 +54,75 @@ export default async function Loc({ params }: { params: Promise<{ id: string }> 
         ]
       : [];
 
+  const typeLabel = l.type === "PROJECT" ? "Client Project Site" : l.type === "DATA_CENTER" ? "Data Center" : l.type === "WAREHOUSE" ? "Logistics Warehouse" : l.type === "BRANCH" ? "Branch Office" : "Corporate Office";
+
   return (
     <div>
       <PageHeader
         title={l.name}
-        subtitle={`${l.city ? l.city + " • " : ""}Location detail`}
-        actions={can(s.role, "location:write") ? <Link href={`/app/locations/${id}/edit`} className="btn">Edit location</Link> : null}
+        subtitle={`${typeLabel} • ${l.city}`}
+        actions={
+          <div className="flex items-center gap-2">
+            {l.code && (
+              <span className="text-xs font-mono px-2 py-1 rounded bg-raised border border-line text-dim">
+                CODE: {l.code}
+              </span>
+            )}
+            {can(s.role, "location:write") ? (
+              <Link href={`/app/locations/${id}/edit`} className="btn btn-primary">
+                Edit configuration
+              </Link>
+            ) : null}
+          </div>
+        }
       />
+
+      {/* Facility & Configured Address Banner */}
+      <div className="card p-4 mb-3 grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        <div>
+          <span className="text-[11px] text-dim uppercase tracking-wider block font-semibold mb-1">
+            Facility Type
+          </span>
+          <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-bold border ${
+            l.type === "PROJECT"
+              ? "bg-warn/15 text-warn border-warn/30"
+              : l.type === "DATA_CENTER"
+              ? "bg-accent/15 text-accent border-accent/30"
+              : "bg-raised text-fg border-line"
+          }`}>
+            {typeLabel}
+          </span>
+        </div>
+        <div>
+          <span className="text-[11px] text-dim uppercase tracking-wider block font-semibold mb-1">
+            Configured Physical Address
+          </span>
+          <span className="text-fg font-medium">
+            {l.address ? `📍 ${l.address}` : `${l.city}, Nigeria (Street unconfigured)`}
+          </span>
+        </div>
+        <div>
+          <span className="text-[11px] text-dim uppercase tracking-wider block font-semibold mb-1">
+            Site Lead / Contact
+          </span>
+          <span className="text-fg font-medium">
+            {l.contactPerson || "Not assigned"}
+          </span>
+          {l.contactPhone && (
+            <span className="text-dim block text-[11px] mt-0.5">{l.contactPhone}</span>
+          )}
+        </div>
+        <div>
+          <span className="text-[11px] text-dim uppercase tracking-wider block font-semibold mb-1">
+            GPS Coordinates
+          </span>
+          <span className="text-fg font-mono">
+            {typeof l.lat === "number" && typeof l.lng === "number"
+              ? `${l.lat.toFixed(4)}°N, ${l.lng.toFixed(4)}°E`
+              : "No pin dropped"}
+          </span>
+        </div>
+      </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
         <Stat label="Assets" value={num(m.assets)} href={`/app/assets?location=${id}`} />
@@ -73,7 +137,7 @@ export default async function Loc({ params }: { params: Promise<{ id: string }> 
         </Card>
 
         {mapData.length > 0 && (
-          <Card title="Geographic placement">
+          <Card title="Geographic placement & Estate pin">
             <LocationMap locations={mapData} selectedId={l.id} heightClass="h-[280px]" />
           </Card>
         )}

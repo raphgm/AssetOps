@@ -55,9 +55,9 @@ export default function AuthForm({ mode, token, showDemo }: { mode: Mode; token?
         </div>
         {mode === "sign-in" && showDemo && (
           <div className="mt-8 card p-3 text-xs text-mute">
-            <div className="text-fg font-medium mb-1">Synthetic demo organisation</div>
+            <div className="text-fg font-medium mb-1">Enterprise Quick-Access Credentials</div>
             <code className="font-mono">demo@assetops.local</code> / <code className="font-mono">demo1234!</code>
-            <div className="mt-1">Also: manager@, director@, technician@, auditor@, finance@ (same password, @assetops.local).</div>
+            <div className="mt-1">Role accounts: manager@, director@, technician@, auditor@, finance@ (password: <code className="font-mono">demo1234!</code>).</div>
           </div>
         )}
       </div>

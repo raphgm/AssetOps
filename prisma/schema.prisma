@@ -117,13 +117,17 @@ model Department {
 }
 
 model Location {
-  id    String @id @default(cuid())
-  orgId String
-  name  String
-  city  String
-  code  String
-  lat   Float?
-  lng   Float?
+  id            String   @id @default(cuid())
+  orgId         String
+  name          String
+  city          String
+  code          String
+  address       String?
+  type          String   @default("OFFICE")
+  contactPerson String?
+  contactPhone  String?
+  lat           Float?
+  lng           Float?
 
   org    Organization @relation(fields: [orgId], references: [id])
   assets Asset[]

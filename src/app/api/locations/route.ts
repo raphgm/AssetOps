@@ -10,6 +10,10 @@ const CreateSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters"),
   city: z.string().trim().min(2, "City must be at least 2 characters"),
   code: z.string().trim().optional(),
+  address: z.string().trim().optional().nullable(),
+  type: z.enum(["OFFICE", "PROJECT", "BRANCH", "DATA_CENTER", "WAREHOUSE"]).default("OFFICE"),
+  contactPerson: z.string().trim().optional().nullable(),
+  contactPhone: z.string().trim().optional().nullable(),
   lat: z.coerce.number().min(-90).max(90).optional().nullable(),
   lng: z.coerce.number().min(-180).max(180).optional().nullable(),
 });
@@ -46,6 +50,10 @@ export const POST = handle(async (req) => {
       name: body.name,
       city: body.city,
       code,
+      address: body.address || null,
+      type: body.type,
+      contactPerson: body.contactPerson || null,
+      contactPhone: body.contactPhone || null,
       lat: body.lat ?? null,
       lng: body.lng ?? null,
     },
@@ -57,7 +65,15 @@ export const POST = handle(async (req) => {
     "Location",
     loc.id,
     undefined,
-    { name: loc.name, city: loc.city, code: loc.code, lat: loc.lat, lng: loc.lng }
+    {
+      name: loc.name,
+      city: loc.city,
+      code: loc.code,
+      address: loc.address,
+      type: loc.type,
+      lat: loc.lat,
+      lng: loc.lng,
+    }
   );
 
   return loc;
