@@ -23,15 +23,15 @@ import {
   Server,
   QrCode,
   Wrench,
-  TrendingDown,
   Activity,
-  ArrowUpRight,
-  AlertTriangle,
+  Zap,
+  CheckCircle2,
+  ShieldAlert,
 } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
-import LiveFeed from "@/components/landing/LiveFeed";
+import InteractiveConsole from "@/components/landing/InteractiveConsole";
+import BentoGrid from "@/components/landing/BentoGrid";
 import RoiCalculator from "@/components/landing/RoiCalculator";
-import FeatureTabs from "@/components/landing/FeatureTabs";
 import IndustrySolutions from "@/components/landing/IndustrySolutions";
 import FaqAccordion from "@/components/landing/FaqAccordion";
 import { Logo } from "@/components/ui";
@@ -47,7 +47,7 @@ const Sec = ({
 }) => (
   <section
     id={id}
-    className={`max-w-6xl mx-auto px-4 py-16 sm:py-24 scroll-mt-16 relative z-10 ${className}`}
+    className={`max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24 scroll-mt-20 relative z-10 ${className}`}
   >
     {children}
   </section>
@@ -55,154 +55,90 @@ const Sec = ({
 
 export default function Landing() {
   return (
-    <div className="bg-[#ffffff] text-slate-900 min-h-screen selection:bg-cyan-100 font-sans relative overflow-x-hidden">
-      {/* Luminous Ambient Prismatic Glows */}
-      <div className="fixed inset-0 prismatic-mesh opacity-70 pointer-events-none z-0" aria-hidden />
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-tr from-cyan-200/40 via-teal-200/30 to-indigo-200/35 rounded-full blur-[140px] pointer-events-none -z-10" aria-hidden />
-      <div className="fixed bottom-0 right-10 w-[600px] h-[450px] bg-emerald-200/25 rounded-full blur-[140px] pointer-events-none -z-10" aria-hidden />
+    <div className="bg-[#fafbfc] text-slate-900 min-h-screen selection:bg-cyan-100 font-sans relative overflow-x-hidden">
+      {/* Refined Ambient Radial Glows */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[550px] bg-gradient-to-tr from-cyan-200/35 via-teal-100/25 to-indigo-200/30 rounded-full blur-[150px] pointer-events-none -z-10" aria-hidden />
+      <div className="fixed bottom-0 right-10 w-[700px] h-[480px] bg-emerald-100/30 rounded-full blur-[150px] pointer-events-none -z-10" aria-hidden />
 
+      {/* Clean Uncluttered Header */}
       <Navbar />
 
-      {/* 1. MINIMAL MODERN HERO SECTION */}
+      {/* 1. HERO SECTION (PINTEREST / SAAS HIGHEST-CONVERTING DESIGN) */}
       <div className="relative pt-28 sm:pt-36 pb-16 border-b border-slate-200/80">
-        <Sec className="py-0 sm:py-6 grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-14 items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-200 bg-cyan-50/70 shadow-sm text-cyan-800 text-xs font-mono font-bold mb-6">
-              <Radio className="h-3.5 w-3.5 text-cyan-600 animate-pulse" />
-              <span>HARDWARE FINOPS OS // ENTERPRISE FLEET INTELLIGENCE</span>
+        <Sec className="py-0 sm:py-4">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+            {/* Trust Pill */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-200 bg-white shadow-sm text-cyan-900 text-xs font-mono font-bold mb-6">
+              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
+              <span>FINOPS FOUNDATION ALIGNED // NATIVE HARDWARE INTELLIGENCE</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight leading-[1.08] text-slate-950 font-sans">
-              Hardware intelligence.{" "}
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-[1.08] text-slate-950 font-sans">
+              Hardware FinOps.{" "}
               <span className="bg-gradient-to-r from-cyan-600 via-teal-500 to-indigo-600 bg-clip-text text-transparent">
-                Ahead of its time.
+                Engineered for the physical enterprise.
               </span>
             </h1>
 
-            <p className="text-slate-600 text-base sm:text-lg mt-5 max-w-xl leading-relaxed font-sans font-normal">
-              The unified operating system for enterprise ICT hardware, geospatial fleet tracking, and automated FinOps intelligence. Halt runaway repair costs with the 70% threshold rule, enforce preventative maintenance, and govern asset lifecycles from acquisition to certified NIST 800-88 decommissioning.
+            {/* Subhead */}
+            <p className="text-slate-600 text-base sm:text-lg mt-5 leading-relaxed font-sans max-w-2xl mx-auto">
+              Stop pouring budget into dead assets. Unify real-time network auto-discovery, IoT power telemetry, keyless OpenStreetMap GIS, and 70% threshold financial governance in one mission-critical operating system.
             </p>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-3.5 mt-8 font-mono">
+            {/* CTA Buttons: Exactly 1 primary + 1 secondary */}
+            <div className="flex flex-wrap items-center justify-center gap-3.5 mt-8 font-sans">
               <Link
                 href="/sign-in"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl font-black text-xs bg-gradient-to-r from-cyan-500 via-teal-400 to-indigo-600 text-white shadow-lg shadow-cyan-500/25 hover:brightness-105 transition"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-sm bg-slate-950 text-white hover:bg-slate-800 shadow-xl shadow-slate-900/10 hover:shadow-2xl transition"
               >
-                EXPLORE LIVE DEMO <ArrowRight className="h-4 w-4" />
+                <span>Launch Live Platform</span>
+                <ArrowRight className="h-4 w-4 text-cyan-400" />
               </Link>
-              <Link
-                href="/sign-up"
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl font-bold text-xs bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 shadow-sm transition"
+              <a
+                href="#finops"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl font-semibold text-sm bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 shadow-sm transition"
               >
-                START FREE TRIAL
-              </Link>
+                Model FinOps ROI
+              </a>
             </div>
 
-            <div className="flex flex-wrap items-center gap-5 mt-7 text-xs font-mono text-slate-500 font-medium">
+            {/* Compliance & Trust Chips */}
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-xs font-mono text-slate-500 font-medium">
               <span className="flex items-center gap-1.5">
-                <Check className="h-3.5 w-3.5 text-cyan-600" /> 12,482 Monitored Assets
+                <Check className="h-3.5 w-3.5 text-cyan-600" /> FOCUS™ v1.0 Standard
               </span>
               <span className="flex items-center gap-1.5">
                 <Check className="h-3.5 w-3.5 text-cyan-600" /> 70% Repair-to-Value Rule
               </span>
               <span className="flex items-center gap-1.5">
-                <Check className="h-3.5 w-3.5 text-cyan-600" /> Real-Time Nationwide GIS
+                <Check className="h-3.5 w-3.5 text-cyan-600" /> 100% Keyless OpenStreetMap
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5 text-cyan-600" /> NIST SP 800-88 Certified
               </span>
             </div>
           </div>
 
-          {/* Luminous Flight Deck Hub Card */}
-          <div className="bg-white/95 border border-slate-200/90 rounded-3xl p-5 sm:p-6 shadow-2xl shadow-indigo-100/60 backdrop-blur-2xl relative font-mono overflow-hidden">
-            <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-cyan-500 ring-4 ring-cyan-100 animate-pulse" />
-                <span className="text-xs font-bold text-slate-800 tracking-wider">
-                  FLEET TELEMETRY // PRODUCTION
-                </span>
-              </div>
-              <span className="text-[10px] font-bold text-cyan-800 bg-cyan-50 px-2.5 py-0.5 rounded-full border border-cyan-200">
-                12,482 Assets Live
-              </span>
-            </div>
-
-            {/* Vibrant KPI Pills */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
-              {[
-                { v: "12,482", l: "Monitored", c: "text-slate-900", bg: "bg-slate-50 border-slate-200" },
-                { v: "96.4%", l: "Uptime", c: "text-emerald-600", bg: "bg-emerald-50/70 border-emerald-200" },
-                { v: "₦428M", l: "Net Value", c: "text-cyan-700", bg: "bg-cyan-50/70 border-cyan-200" },
-                { v: "₦41M", l: "CapEx Due", c: "text-indigo-700", bg: "bg-indigo-50/70 border-indigo-200" },
-              ].map((item) => (
-                <div key={item.l} className={`rounded-2xl border p-2.5 ${item.bg}`}>
-                  <div className={`text-lg sm:text-xl font-black ${item.c}`}>{item.v}</div>
-                  <div className="text-[9.5px] uppercase font-bold text-slate-500 mt-0.5 tracking-wider">{item.l}</div>
-                </div>
-              ))}
-            </div>
-
-            {/* Split Visual HUD */}
-            <div className="grid sm:grid-cols-[1.2fr_1fr] gap-3">
-              {/* FinOps 70% Rule Monitor */}
-              <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-3.5 flex flex-col justify-between">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10.5px] font-bold text-slate-600 uppercase">FinOps 70% Repair Rule</span>
-                  <span className="text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
-                    Threshold Flagged
-                  </span>
-                </div>
-                <div className="space-y-1.5 my-1">
-                  <div className="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden flex border border-slate-200">
-                    <div className="h-full bg-cyan-500 shadow-sm" style={{ width: "70%" }} />
-                    <div className="h-full bg-rose-500 animate-pulse shadow-sm" style={{ width: "16%" }} />
-                  </div>
-                  <div className="flex justify-between text-[10px] text-slate-500 font-sans font-medium">
-                    <span>Safe Repair Budget (70%)</span>
-                    <span className="text-rose-600 font-mono font-bold">WO-29381 Quoted: 86%</span>
-                  </div>
-                </div>
-                <div className="text-[11px] text-slate-600 border-t border-slate-200 pt-2 mt-2 flex justify-between">
-                  <span>Diverted to CapEx:</span>
-                  <span className="text-cyan-700 font-bold">₦480,000 Recovered</span>
-                </div>
-              </div>
-
-              {/* Real-time Live Event Stream */}
-              <div className="rounded-2xl border border-slate-200 bg-white p-3.5">
-                <div className="flex items-center gap-1.5 text-[10.5px] text-cyan-700 mb-2 font-bold uppercase">
-                  <Radio className="h-2.5 w-2.5 text-cyan-600 animate-ping" />
-                  Live Maintenance Feed
-                </div>
-                <LiveFeed />
-              </div>
-            </div>
-
-            {/* Nationwide Coordinates Banner */}
-            <div className="mt-3 p-2.5 rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-cyan-600" />
-                <span className="text-slate-600 text-xs font-medium font-sans">Hubs: Lagos HQ Data Center (5,410), Abuja Regional (4,120), Port Harcourt (2,952)</span>
-              </div>
-              <span className="text-[10px] font-bold text-cyan-800 font-mono bg-cyan-50 px-2 py-0.5 rounded border border-cyan-200">
-                NATIONWIDE FLEET
-              </span>
-            </div>
+          {/* Interactive Console: The Signature Pinterest Hero Element */}
+          <div className="max-w-5xl mx-auto">
+            <InteractiveConsole />
           </div>
         </Sec>
       </div>
 
-      {/* 2. SECTOR HUBS BANNER */}
+      {/* 2. ENTERPRISE SECTOR TRUST STRIP */}
       <div className="border-b border-slate-200/80 bg-white py-6 relative z-10 font-mono">
-        <div className="max-w-6xl mx-auto px-4">
-          <p className="text-center text-[10.5px] uppercase tracking-widest text-slate-400 font-bold mb-4">
-            MISSION-CRITICAL ENTERPRISE INFRASTRUCTURE
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <p className="text-center text-[11px] uppercase tracking-widest text-slate-400 font-bold mb-4">
+            MISSION-CRITICAL HARDWARE FLEET GOVERNANCE
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             {[
-              { title: "Commercial Banking", desc: "Sub-minute branch & ATM uptime", color: "border-blue-200 bg-blue-50/50" },
-              { title: "Diagnostic Networks", desc: "Life-critical clinical terminals", color: "border-emerald-200 bg-emerald-50/50" },
-              { title: "Higher Education", desc: "10,000+ campus lab computers", color: "border-purple-200 bg-purple-50/50" },
-              { title: "Public Sector MDAs", desc: "Zero ghost hardware & 5-yr CapEx", color: "border-amber-200 bg-amber-50/50" },
+              { title: "Commercial Banking", desc: "Sub-minute branch & ATM uptime", color: "border-blue-200 bg-blue-50/40" },
+              { title: "Diagnostic Healthcare", desc: "Life-critical clinical terminals", color: "border-emerald-200 bg-emerald-50/40" },
+              { title: "Higher Education", desc: "10,000+ campus lab computers", color: "border-purple-200 bg-purple-50/40" },
+              { title: "Energy & Project Sites", desc: "Solar farms & transmission substations", color: "border-amber-200 bg-amber-50/40" },
             ].map((sector) => (
               <div key={sector.title} className={`p-3.5 rounded-2xl border ${sector.color} hover:shadow-md transition`}>
                 <div className="font-bold text-sm text-slate-900">{sector.title}</div>
@@ -213,90 +149,30 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* 3. THE HARDWARE FINOPS CHALLENGE */}
-      <Sec id="problem">
-        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold mb-3">
-            <BarChart3 className="h-3.5 w-3.5 text-rose-600" />
-            <span>The FinOps Dilemma</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 font-sans">
-            Unmonitored enterprise hardware bleeds millions in untracked repair cycles.
-          </h2>
-          <p className="text-slate-600 mt-3 text-sm sm:text-base font-sans">
-            Pouring maintenance budget into equipment past its economic lifecycle creates runaway operational loss.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6 font-mono">
-          {/* Legacy Primitive Way */}
-          <div className="bg-white border-2 border-rose-200 rounded-3xl p-6 sm:p-8 space-y-4 shadow-sm">
-            <div className="inline-flex items-center gap-1.5 text-rose-700 text-xs uppercase font-black tracking-wider bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">
-              ✕ Legacy Spreadsheet & Ticketing Model
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 font-sans">Runaway Costs & Asset Blindspots</h3>
-            <ul className="space-y-3 text-xs text-slate-600 font-sans">
-              {[
-                "Paying ₦1.6M to repeatedly repair a server with residual book value of only ₦1.8M",
-                "Ghost laptops and desktop towers sitting on asset ledgers years after disappearing",
-                "Reactive emergency breakdowns causing multi-hour branch outages during peak business hours",
-                "Retired storage drives discarded or swapped without verified NIST 800-88 sanitization certificates",
-              ].map((p, i) => (
-                <li key={i} className="flex items-start gap-2.5">
-                  <span className="text-rose-600 font-black mt-0.5">✕</span>
-                  <span>{p}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* AssetOps Intelligent Way */}
-          <div className="bg-white border-2 border-cyan-300 rounded-3xl p-6 sm:p-8 space-y-4 shadow-md shadow-cyan-500/10 ring-1 ring-cyan-500/20">
-            <div className="inline-flex items-center gap-1.5 text-cyan-800 text-xs uppercase font-black tracking-wider bg-cyan-50 px-2.5 py-1 rounded-full border border-cyan-200">
-              ✓ AssetOps Intelligent FinOps Model
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 font-sans">Disciplined Hardware Financial Governance</h3>
-            <ul className="space-y-3 text-xs text-slate-700 font-sans font-medium">
-              {[
-                "Automatic 70% FinOps Rule flags repeat repair quotes and diverts capital to fresh procurement",
-                "Real-time GIS tracks headquarter data centers and regional branch terminals on one dashboard",
-                "Automated Preventative Maintenance routines dispatch technicians weeks before component failure",
-                "NIST SP 800-88 certified media sanitization with tamper-proof PDF audit certificates",
-              ].map((p, i) => (
-                <li key={i} className="flex items-start gap-2.5">
-                  <Check className="h-4 w-4 text-cyan-600 shrink-0 mt-0.5" />
-                  <span>{p}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </Sec>
-
-      {/* 4. FEATURE PILLARS (TABS) */}
-      <Sec id="features" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold mb-3">
+      {/* 3. BENTO GRID: THE 5 PRODUCTION PILLARS */}
+      <Sec id="platform">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-mono font-bold mb-3">
             <Layers className="h-3.5 w-3.5 text-cyan-600" />
-            <span>Intelligent Subsystems</span>
+            <span>PLATFORM CAPABILITIES</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 font-sans">
-            Engineered for enterprise scale, financial rigor, and speed.
+            Five core engines. One integrated operating system.
           </h2>
           <p className="text-slate-600 mt-2 text-sm sm:text-base font-sans">
-            Explore the five core engines that govern your physical ICT infrastructure.
+            Built from the ground up for IT directors, field engineers, and financial controllers.
           </p>
         </div>
 
-        <FeatureTabs />
+        <BentoGrid />
       </Sec>
 
-      {/* 5. HARDWARE FINOPS SIMULATOR */}
-      <Sec id="calculator" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+      {/* 4. HARDWARE FINOPS SIMULATOR */}
+      <Sec id="finops" className="border-t border-slate-200/80">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 font-mono">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold mb-3">
             <Cpu className="h-3.5 w-3.5 text-cyan-600" />
-            <span>FinOps Calculator</span>
+            <span>FINOPS ENGINE</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 font-sans">
             Model your enterprise hardware cost recovery.
@@ -309,7 +185,7 @@ export default function Landing() {
         <RoiCalculator />
       </Sec>
 
-      {/* 6. NATIONWIDE FLEET GIS SPOTLIGHT */}
+      {/* 5. NATIONWIDE FLEET GIS SPOTLIGHT */}
       <Sec id="gis" className="border-t border-slate-200/80">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-4">
@@ -318,19 +194,19 @@ export default function Landing() {
               <span>Zero-License Fleet GIS</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 font-sans">
-              Headquarter data centers to regional branches on one interactive map.
+              Headquarter data centers to remote project sites on one map.
             </h2>
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-sans">
-              Managing physical IT infrastructure requires geospatial clarity. AssetOps connects central server rooms, campus faculties, and remote state offices on high-speed vector tiles with zero third-party Google Maps or Mapbox license fees.
+              Managing physical IT infrastructure requires geospatial clarity. AssetOps connects central server rooms, campus faculties, and remote client project sites (e.g. solar farms, marine terminals, transmission substations) on high-speed vector tiles with zero third-party Google Maps or Mapbox license fees.
             </p>
             <div className="space-y-2 pt-2 text-xs text-slate-700 font-medium font-sans">
               <div className="flex items-start gap-2.5">
                 <Check className="h-4 w-4 text-teal-600 shrink-0 mt-0.5" />
-                <span>Zero commercial map billing: runs on high-performance open-source Leaflet</span>
+                <span>Zero commercial map billing: runs on 100% keyless OpenStreetMap</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <Check className="h-4 w-4 text-teal-600 shrink-0 mt-0.5" />
-                <span>Real-time location clustering with room and rack level asset counts</span>
+                <span>Real-time location clustering with room, rack, and site-level asset counts</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <Check className="h-4 w-4 text-teal-600 shrink-0 mt-0.5" />
@@ -347,8 +223,8 @@ export default function Landing() {
             </div>
           </div>
 
-          {/* GIS Hubs Telemetry Card */}
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-2xl shadow-slate-200/50 font-mono">
+          {/* GIS Telemetry Card */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xl font-mono">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
               <div className="flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-teal-500 animate-pulse" />
@@ -371,38 +247,38 @@ export default function Landing() {
                   <span className="text-[10px] text-cyan-700 font-bold">Fed Complex</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white border border-slate-200/80 shadow-sm">
-                  <div className="text-[9px] text-slate-400 uppercase font-bold">Port Harcourt</div>
-                  <div className="font-bold text-slate-900 mt-0.5">2,952 Assets</div>
-                  <span className="text-[10px] text-indigo-700 font-bold">Coastal Hub</span>
+                  <div className="text-[9px] text-slate-400 uppercase font-bold">Epe Solar Site</div>
+                  <div className="font-bold text-slate-900 mt-0.5">1,840 Assets</div>
+                  <span className="text-[10px] text-indigo-700 font-bold">Substation</span>
                 </div>
               </div>
               <p className="text-[11.5px] text-slate-500 text-center font-sans">
-                Leaflet GIS telemetry streams live updates across desktop browsers and mobile field devices.
+                OpenStreetMap GIS telemetry streams live updates across desktop browsers and mobile field devices.
               </p>
             </div>
           </div>
         </div>
       </Sec>
 
-      {/* 7. INDUSTRY SECTORS */}
+      {/* 6. INDUSTRY SOLUTIONS */}
       <Sec id="solutions" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 font-mono">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold mb-3">
             <Building className="h-3.5 w-3.5 text-cyan-600" />
-            <span>Enterprise Sector Solutions</span>
+            <span>ENTERPRISE SOLUTIONS</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 font-sans">
             Built for institutions where hardware downtime is unacceptable.
           </h2>
           <p className="text-slate-600 mt-2 text-sm sm:text-base font-sans">
-            Select your sector below to see tailored preventative workflows and proven financial impact.
+            Tailored preventative workflows and proven financial impact for your sector.
           </p>
         </div>
 
         <IndustrySolutions />
       </Sec>
 
-      {/* 8. GROQ AI COPILOT */}
+      {/* 7. DETERMINISTIC AI COPILOT */}
       <Sec className="border-t border-slate-200/80">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-4">
@@ -414,7 +290,7 @@ export default function Landing() {
               Direct database reasoning. Zero model hallucinations.
             </h2>
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-sans">
-              AssetOps connects Groq&apos;s lightning-fast Llama 3 engine directly to physical hardware records. The Copilot diagnoses spend anomalies and surfaces overdue preventative maintenance, but it never fabricates facts. If data isn&apos;t in your PostgreSQL database, it reports no record found.
+              AssetOps connects Groq&apos;s lightning-fast Llama 3 engine directly to physical hardware records. The Copilot diagnoses spend anomalies and surfaces overdue preventative maintenance, but it never fabricates facts. If data isn&apos;t in your database, it reports no record found.
             </p>
             <div className="space-y-2 pt-2 text-xs text-slate-700 font-medium font-sans">
               <div className="flex items-start gap-2.5">
@@ -433,7 +309,7 @@ export default function Landing() {
           </div>
 
           {/* AI Copilot Chat Preview */}
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-5 sm:p-6 space-y-3.5 shadow-2xl shadow-indigo-100/50 font-mono">
+          <div className="bg-white border border-slate-200/90 rounded-3xl p-5 sm:p-6 space-y-3.5 shadow-xl font-mono">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <span className="text-xs font-bold text-slate-500 uppercase">AI COPILOT // REASONING FEED</span>
               <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
@@ -473,15 +349,15 @@ export default function Landing() {
         </div>
       </Sec>
 
-      {/* 9. CRYPTOGRAPHIC PROOF & GOVERNANCE */}
+      {/* 8. COMPLIANCE & GOVERNANCE */}
       <Sec id="security" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 font-mono">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-800 text-xs font-bold mb-3">
             <Shield className="h-3.5 w-3.5 text-slate-700" />
-            <span>Governance & Compliance</span>
+            <span>GOVERNANCE & AUDIT</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 font-sans">
-            Defend every hardware metric before internal and external auditors.
+            Defend every hardware metric before auditors.
           </h2>
           <p className="text-slate-600 mt-2 text-sm font-sans">
             Mathematical, cryptographic, and operational proof anchored to tamper-proof records.
@@ -494,10 +370,10 @@ export default function Landing() {
             { icon: ScrollText, title: "Immutable Audit Log", desc: "Append-only record of every status change, custody transfer, and sign-off." },
             { icon: Database, title: "PostgreSQL Isolation", desc: "Every query scoped strictly to your organization tenant ID." },
             { icon: FileBadge, title: "NIST SP 800-88 Standard", desc: "Cryptographic proof of irreversible storage drive media sanitization." },
-            { icon: Download, title: "One-Click ERP Export", desc: "Direct feeds formatted for SAP, Oracle, and Microsoft Dynamics." },
+            { icon: Download, title: "1-Click Audit & FOCUS™", desc: "Excel .xlsx export and Linux Foundation FOCUS™ v1.0 standard JSON." },
             { icon: Lock, title: "Encrypted Data Enclave", desc: "AES-256 encryption at rest and TLS 1.3 encryption in transit." },
             { icon: QrCode, title: "Digital QR Passports", desc: "Scan physical hardware with any smartphone camera for instant history." },
-            { icon: Timer, title: "Multi-Year Retention", desc: "Preserve lifecycle maintenance histories for warranty and dispute defense." },
+            { icon: Timer, title: "Live SLA Countdown", desc: "Contract breach detection with automated vendor penalty calculations." },
           ].map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -511,12 +387,12 @@ export default function Landing() {
         </div>
       </Sec>
 
-      {/* 10. PRICING TIERS */}
+      {/* 9. TRANSPARENT PRICING TIERS */}
       <Sec id="pricing" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 font-mono">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold mb-3">
             <Coins className="h-3.5 w-3.5 text-cyan-600" />
-            <span>Transparent Pricing</span>
+            <span>TRANSPARENT PRICING</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 font-sans">
             Predictable, transparent licensing.
@@ -549,7 +425,7 @@ export default function Landing() {
             </div>
             <div className="pt-6 border-t border-slate-100 mt-6">
               <Link
-                href="/sign-up"
+                href="/sign-in"
                 className="w-full inline-flex items-center justify-center py-3 rounded-2xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-900 transition"
               >
                 START FREE
@@ -558,8 +434,8 @@ export default function Landing() {
           </div>
 
           {/* Professional Tier */}
-          <div className="bg-white border-2 border-cyan-400 rounded-3xl p-6 sm:p-7 shadow-2xl shadow-cyan-500/10 ring-2 ring-cyan-500/20 flex flex-col justify-between relative">
-            <span className="absolute -top-3 right-6 text-[10.5px] font-black uppercase text-white bg-gradient-to-r from-cyan-500 via-teal-400 to-indigo-600 px-3.5 py-0.5 rounded-full shadow-md shadow-cyan-500/30">
+          <div className="bg-white border-2 border-cyan-500 rounded-3xl p-6 sm:p-7 shadow-2xl shadow-cyan-500/10 ring-2 ring-cyan-500/20 flex flex-col justify-between relative">
+            <span className="absolute -top-3 right-6 text-[10.5px] font-black uppercase text-white bg-gradient-to-r from-cyan-600 via-teal-500 to-indigo-600 px-3.5 py-0.5 rounded-full shadow-md">
               MOST POPULAR
             </span>
             <div>
@@ -572,11 +448,11 @@ export default function Landing() {
                 {[
                   "Up to 5,000 monitored ICT hardware assets",
                   "Full 70% FinOps Suite & threshold warnings",
-                  "5-Year CapEx Replacement Forecaster",
-                  "Automated Preventative Maintenance Scheduler",
-                  "NIST SP 800-88 Certified Media Decommissioning",
-                  "Groq Llama 3 AI Telemetry Copilot",
-                  "Automated CSV/Excel & ERP data export",
+                  "Auto-Discovery (Subnet Scanner + MDM Webhook)",
+                  "Live IoT Power & Thermal Telemetry",
+                  "In-Browser Camera Barcode/QR Scanner",
+                  "Automated Vendor SLA Dispatch & Timer",
+                  "1-Click Excel .xlsx & FOCUS™ v1.0 Export",
                 ].map((f, i) => (
                   <li key={i} className="flex gap-2">
                     <Check className="h-4 w-4 text-cyan-600 shrink-0" />
@@ -587,8 +463,8 @@ export default function Landing() {
             </div>
             <div className="pt-6 border-t border-slate-100 mt-6">
               <Link
-                href="/sign-up"
-                className="w-full inline-flex items-center justify-center py-3 rounded-2xl text-xs font-black bg-gradient-to-r from-cyan-500 via-teal-400 to-indigo-600 text-white shadow-md hover:brightness-105 transition"
+                href="/sign-in"
+                className="w-full inline-flex items-center justify-center py-3 rounded-2xl text-xs font-bold bg-slate-950 text-white shadow-md hover:bg-slate-800 transition"
               >
                 DEPLOY PROFESSIONAL
               </Link>
@@ -628,12 +504,12 @@ export default function Landing() {
         </div>
       </Sec>
 
-      {/* 11. FAQ */}
+      {/* 10. FAQ */}
       <Sec id="faq" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10 font-mono">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 font-mono">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold mb-3">
             <HelpCircle className="h-3.5 w-3.5 text-cyan-600" />
-            <span>Enterprise FAQ</span>
+            <span>ENTERPRISE FAQ</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 font-sans">
             Frequently asked questions.
@@ -646,7 +522,7 @@ export default function Landing() {
         <FaqAccordion />
       </Sec>
 
-      {/* 12. FINAL HIGH-IMPACT CTA */}
+      {/* 11. FINAL HIGH-IMPACT CTA */}
       <Sec className="border-t border-slate-200/80 text-center py-16 sm:py-24">
         <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-white rounded-3xl p-8 sm:p-14 relative overflow-hidden shadow-2xl font-mono">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none" />
@@ -658,18 +534,12 @@ export default function Landing() {
             Take control of your enterprise infrastructure with mathematical FinOps precision, automated preventative maintenance, and instant compliance proof.
           </p>
 
-          <div className="flex justify-center flex-wrap gap-4 mt-8 relative">
-            <Link
-              href="/sign-up"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl font-black text-xs bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-500 text-slate-950 shadow-md hover:brightness-105 transition"
-            >
-              START FREE WITH ASSETOPS <ArrowRight className="h-4 w-4" />
-            </Link>
+          <div className="flex justify-center flex-wrap gap-4 mt-8 relative font-sans">
             <Link
               href="/sign-in"
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 transition"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-xs bg-cyan-400 hover:bg-cyan-300 text-slate-950 shadow-md transition"
             >
-              EXPLORE LIVE PLATFORM
+              LAUNCH LIVE DEMO <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
@@ -679,9 +549,9 @@ export default function Landing() {
         </div>
       </Sec>
 
-      {/* 13. FOOTER */}
+      {/* 12. FOOTER */}
       <footer className="border-t border-slate-200/80 bg-white relative z-10 font-mono">
-        <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Logo />
             <span className="hidden sm:inline text-slate-300">|</span>
@@ -690,19 +560,19 @@ export default function Landing() {
             </span>
           </div>
 
-          <nav aria-label="Footer" className="flex flex-wrap gap-6 text-xs text-slate-600 font-bold font-sans">
-            <a href="#features" className="hover:text-cyan-600 transition">Subsystems</a>
-            <a href="#calculator" className="hover:text-cyan-600 transition">FinOps</a>
+          <nav aria-label="Footer" className="flex flex-wrap gap-6 text-xs text-slate-600 font-semibold font-sans">
+            <a href="#platform" className="hover:text-cyan-600 transition">Platform</a>
+            <a href="#finops" className="hover:text-cyan-600 transition">FinOps Engine</a>
             <a href="#gis" className="hover:text-cyan-600 transition">Nationwide GIS</a>
-            <a href="#solutions" className="hover:text-cyan-600 transition">Sectors</a>
-            <a href="#pricing" className="hover:text-cyan-600 transition">Tiers</a>
+            <a href="#solutions" className="hover:text-cyan-600 transition">Solutions</a>
+            <a href="#pricing" className="hover:text-cyan-600 transition">Pricing</a>
             <a href="#faq" className="hover:text-cyan-600 transition">FAQ</a>
           </nav>
 
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 text-xs text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200">
-              <span className="h-1.5 w-1.5 rounded-full bg-teal-500 shadow-sm animate-pulse" />
-              <span>TELEMETRY ENGINE: ONLINE</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-teal-500 animate-pulse" />
+              <span>FINOPS ENGINE: ONLINE</span>
             </div>
             <div className="text-xs text-slate-400 font-mono">© ASSETOPS</div>
           </div>
