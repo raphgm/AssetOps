@@ -4,352 +4,625 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   Coins,
-  Wifi,
   Activity,
   MapPin,
   ArrowRight,
-  ShieldAlert,
   Server,
   Zap,
-  Radio,
   Sliders,
   CheckCircle2,
-  Sparkles,
+  AlertTriangle,
+  QrCode,
+  ShieldCheck,
+  TrendingDown,
+  Info,
 } from "lucide-react";
 
-type TabId = "finops" | "discovery" | "telemetry" | "gis";
+type TabId = "finops" | "scanner" | "telemetry" | "gis";
 
 export default function InteractiveConsole() {
   const [activeTab, setActiveTab] = useState<TabId>("finops");
-  const [repairQuote, setRepairQuote] = useState(1450000); // ₦1.45M
-  const netBookValue = 1650000; // ₦1.65M
-  const thresholdRatio = Math.round((repairQuote / netBookValue) * 100);
-  const isCrossoverBreached = thresholdRatio >= 70;
+
+  // Lifecycle FinOps parameters for Dell PowerEdge R740
+  // Year 1 (Acquisition): ₦2,400,000
+  // Year 3 (Current Age): Net Book Value = ₦1,200,000
+  // 70% Threshold at Year 3 = ₦840,000
+  // Historical past repairs = ₦280,000
+  const acquisitionCost = 2400000;
+  const currentNBV = 1200000;
+  const historicalRepairs = 280000;
+  const cutoffLimit = Math.round(currentNBV * 0.7); // ₦840,000
+
+  // Repair quote slider state
+  const [repairQuote, setRepairQuote] = useState(620000); // ₦620k quote
+
+  // Total cumulative repairs = historical + proposed quote
+  const totalCumulativeRepair = historicalRepairs + repairQuote;
+  const ratio = Math.round((totalCumulativeRepair / currentNBV) * 100);
+  const isBreached = ratio >= 70;
+  const cushion = cutoffLimit - totalCumulativeRepair;
+
+  // Exact mathematical crossover time (t between 1.0 and 5.0)
+  // NBV(t) = 2400000 - (t - 1) * 550000
+  // Threshold(t) = 0.70 * NBV(t) = 1680000 - (t - 1) * 385000
+  // Repair(t) = 80000 + (t - 1) * ((totalCumulativeRepair - 80000) / 2) (through current age Year 3)
+  // Solve for t: Threshold(t) = Repair(t)
+  const repairSlope = (totalCumulativeRepair - 80000) / 2;
+  const denom = 385000 + repairSlope;
+  const t_cross_raw = denom > 0 ? 1 + (1680000 - 80000) / denom : 3.0;
+  const t_cross = Math.max(1.2, Math.min(4.8, t_cross_raw));
+
+  // SVG Coordinates for 600 x 200 viewBox
+  // X range: x=60 (Year 1) to x=540 (Year 5). Step per year = 120px.
+  // Y range: y=25 (₦2.4M) to y=175 (₦0). Height = 150px.
+  const getX = (year: number) => 60 + (year - 1) * 120;
+  const getY = (val: number) => 175 - (Math.max(0, Math.min(acquisitionCost, val)) / acquisitionCost) * 150;
+
+  // Points on NBV curve
+  const nbvPts = [1, 2, 3, 4, 5].map((yr) => ({
+    x: getX(yr),
+    y: getY(2400000 - (yr - 1) * 550000),
+  }));
+
+  // Points on 70% Threshold curve
+  const threshPts = [1, 2, 3, 4, 5].map((yr) => ({
+    x: getX(yr),
+    y: getY((2400000 - (yr - 1) * 550000) * 0.7),
+  }));
+
+  // Points on Cumulative Repair curve
+  const repairPts = [1, 2, 3, 4, 5].map((yr) => {
+    let val = 80000;
+    if (yr === 2) val = historicalRepairs;
+    else if (yr === 3) val = totalCumulativeRepair;
+    else if (yr === 4) val = totalCumulativeRepair + 280000;
+    else if (yr === 5) val = totalCumulativeRepair + 550000;
+    return { x: getX(yr), y: getY(val) };
+  });
+
+  // EXACT intersection coordinate:
+  const intersectX = getX(t_cross);
+  const intersectVal = 1680000 - (t_cross - 1) * 385000;
+  const intersectY = getY(intersectVal);
 
   return (
-    <div className="bg-white/95 backdrop-blur-2xl border border-slate-200/90 rounded-3xl shadow-[0_25px_60px_-15px_rgba(15,23,42,0.08)] overflow-hidden font-sans text-slate-900 ring-1 ring-slate-100 relative group">
-      {/* Top Window Header Chrome */}
-      <div className="bg-slate-50/80 px-4 sm:px-6 py-3.5 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3 backdrop-blur-md">
+    <div className="bg-white border border-slate-200 rounded-3xl shadow-[0_20px_60px_rgba(15,23,42,0.08)] overflow-hidden font-sans text-slate-900 ring-1 ring-slate-100 relative group">
+      {/* Top Console Bar */}
+      <div className="bg-slate-50/90 px-5 py-3.5 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] shadow-sm" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] shadow-sm" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f] shadow-sm" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
           </div>
-          <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-slate-500 font-semibold">
-            <span>assetops-kernel</span>
-            <span className="text-slate-400">/</span>
-            <span className="text-cyan-700">telemetry-cluster</span>
-          </div>
-          <span className="inline-flex items-center gap-1.5 text-[10.5px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 font-bold shadow-sm">
+          <span className="text-xs font-mono text-slate-500 font-bold hidden sm:inline">
+            ASSETOPS FINOPS ENGINE v2.4
+          </span>
+          <span className="inline-flex items-center gap-1 text-[10.5px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            LIVE TELEMETRY · 24ms
+            MATHEMATICAL SIMULATOR
           </span>
         </div>
 
-        {/* Tab Switcher */}
-        <div className="flex items-center gap-1 bg-slate-200/60 p-1 rounded-xl border border-slate-200/80">
+        {/* Visual Tab Selector */}
+        <div className="flex items-center gap-1 bg-slate-200/60 p-1 rounded-xl border border-slate-200">
           {[
-            { id: "finops" as TabId, label: "FinOps Crossover", icon: Coins },
-            { id: "discovery" as TabId, label: "Network Scanner", icon: Wifi },
-            { id: "telemetry" as TabId, label: "IoT Telemetry", icon: Activity },
-            { id: "gis" as TabId, label: "Geospatial GIS", icon: MapPin },
+            { id: "finops" as TabId, label: "70% Crossover Chart", icon: Coins },
+            { id: "scanner" as TabId, label: "Live Scanner HUD", icon: QrCode },
+            { id: "telemetry" as TabId, label: "Power & Thermal", icon: Activity },
+            { id: "gis" as TabId, label: "Fleet Node Map", icon: MapPin },
           ].map(({ id, label, icon: Icon }) => (
             <button
               key={id}
               onClick={() => setActiveTab(id)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 activeTab === id
-                  ? "bg-white text-cyan-800 shadow-sm border border-slate-200/80"
+                  ? "bg-white text-cyan-800 shadow-sm border border-slate-200"
                   : "text-slate-600 hover:text-slate-900 hover:bg-white/50"
               }`}
             >
               <Icon className="w-3.5 h-3.5 text-cyan-600" />
-              <span className="hidden sm:inline">{label}</span>
+              <span>{label}</span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Main Console Viewport */}
-      <div className="p-5 sm:p-7 min-h-[410px]">
-        {/* 1. FINOPS CROSSOVER ENGINE */}
+      {/* Main Viewport */}
+      <div className="p-5 sm:p-7 min-h-[460px]">
+        {/* 1. VISUAL FINOPS CROSSOVER CHART */}
         {activeTab === "finops" && (
-          <div className="space-y-5 animate-fadeIn">
-            {/* KPI Ticker Cards */}
+          <div className="space-y-6 animate-fadeIn">
+            {/* Top Stat Ribbon */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono">
-              <div className="bg-gradient-to-b from-white to-slate-50/70 border border-slate-200/80 p-3.5 rounded-2xl shadow-sm hover:border-cyan-300 transition-colors">
-                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Estate Total TCO</div>
-                <div className="text-xl sm:text-2xl font-black text-cyan-800 mt-1">₦428,500,000</div>
-                <div className="text-[10.5px] text-emerald-700 mt-0.5 font-bold flex items-center gap-1">
-                  <CheckCircle2 className="w-3 h-3 text-emerald-600" /> FOCUS™ v1.0 Audited
+              <div className="p-3.5 rounded-2xl bg-cyan-50/60 border border-cyan-200/80">
+                <div className="text-[10px] uppercase font-bold text-slate-500">Acquisition CapEx</div>
+                <div className="text-lg font-black text-slate-900 mt-0.5">₦2,400,000</div>
+                <div className="text-[10.5px] text-cyan-700 font-bold">Year 1 Original Cost</div>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="text-[10px] uppercase font-bold text-slate-500">Net Book Value (Age 3)</div>
+                <div className="text-lg font-black text-slate-900 mt-0.5">₦1,200,000</div>
+                <div className="text-[10.5px] text-slate-600 font-bold">50% Residual Value</div>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-indigo-50/60 border border-indigo-200/80">
+                <div className="text-[10px] uppercase font-bold text-slate-500">70% Replacement Gate</div>
+                <div className="text-lg font-black text-indigo-900 mt-0.5">₦840,000</div>
+                <div className="text-[10.5px] text-indigo-700 font-bold">Economic Repair Ceiling</div>
+              </div>
+
+              <div
+                className={`p-3.5 rounded-2xl border transition-colors ${
+                  isBreached
+                    ? "bg-rose-50/80 border-rose-200 text-rose-900"
+                    : "bg-emerald-50/80 border-emerald-200 text-emerald-900"
+                }`}
+              >
+                <div className="text-[10px] uppercase font-bold text-slate-500">Proposed Cumulative Spend</div>
+                <div className="text-lg font-black mt-0.5">₦{totalCumulativeRepair.toLocaleString()}</div>
+                <div className="text-[10.5px] font-bold">
+                  {isBreached ? `⚠ ${ratio}% OF NBV (BREACHED)` : `✓ ${ratio}% OF NBV (SAFE)`}
                 </div>
-              </div>
-              <div className="bg-gradient-to-b from-white to-slate-50/70 border border-slate-200/80 p-3.5 rounded-2xl shadow-sm hover:border-slate-300 transition-colors">
-                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Net Book Value</div>
-                <div className="text-xl sm:text-2xl font-black text-slate-900 mt-1">₦312,800,000</div>
-                <div className="text-[10.5px] text-slate-500 mt-0.5 font-bold">10% Residual Line</div>
-              </div>
-              <div className="bg-gradient-to-b from-white to-slate-50/70 border border-slate-200/80 p-3.5 rounded-2xl shadow-sm hover:border-amber-300 transition-colors">
-                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Money Pit Halts</div>
-                <div className="text-xl sm:text-2xl font-black text-amber-700 mt-1">₦18,400,000</div>
-                <div className="text-[10.5px] text-amber-700 mt-0.5 font-bold">Diverted to CapEx</div>
-              </div>
-              <div className="bg-gradient-to-b from-white to-slate-50/70 border border-slate-200/80 p-3.5 rounded-2xl shadow-sm hover:border-emerald-300 transition-colors">
-                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">SLA Rebate Credits</div>
-                <div className="text-xl sm:text-2xl font-black text-emerald-700 mt-1">₦3,200,000</div>
-                <div className="text-[10.5px] text-emerald-700 mt-0.5 font-bold">Automated Recovery</div>
               </div>
             </div>
 
-            {/* Interactive Threshold Simulator */}
-            <div className="bg-white border-2 border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-sm">
+            {/* Interactive Control Strip */}
+            <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-3 font-mono">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <div className="p-1.5 rounded-lg bg-cyan-50 border border-cyan-200 text-cyan-700">
-                    <Sliders className="w-4 h-4" />
-                  </div>
-                  <span className="text-xs font-bold text-slate-900">
-                    Interactive 70% Crossover Simulator: Dell PowerEdge R740 (SRV-DC-00281)
+                  <Sliders className="w-4 h-4 text-cyan-600" />
+                  <span className="text-xs font-bold text-slate-800">
+                    Adjust Proposed Repair Quote to Model 70% Cutoff:
                   </span>
                 </div>
-                <span
-                  className={`text-[10.5px] font-mono px-3 py-1 rounded-full font-bold border transition-colors shadow-sm ${
-                    isCrossoverBreached
-                      ? "bg-rose-50 text-rose-800 border-rose-200"
-                      : "bg-emerald-50 text-emerald-800 border-emerald-200"
+
+                {/* Preset quick buttons */}
+                <div className="flex items-center gap-1.5 text-[11px]">
+                  <button
+                    onClick={() => setRepairQuote(320000)}
+                    className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-cyan-400 font-bold text-slate-700 transition"
+                  >
+                    ₦320k (50% Safe)
+                  </button>
+                  <button
+                    onClick={() => setRepairQuote(520000)}
+                    className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-cyan-400 font-bold text-slate-700 transition"
+                  >
+                    ₦520k (67% Margin)
+                  </button>
+                  <button
+                    onClick={() => setRepairQuote(760000)}
+                    className="px-2.5 py-1 rounded-lg bg-white border border-rose-300 hover:border-rose-500 font-bold text-rose-700 transition"
+                  >
+                    ₦760k (87% Breach)
+                  </button>
+                </div>
+              </div>
+
+              {/* Slider with glowing track */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs">
+                  <span className="text-slate-500">Proposed Work Order Quote:</span>
+                  <span className="text-cyan-800 font-black text-sm">
+                    ₦{repairQuote.toLocaleString()}
+                  </span>
+                </div>
+                <div className="relative flex items-center">
+                  <input
+                    type="range"
+                    min="150000"
+                    max="1100000"
+                    step="10000"
+                    value={repairQuote}
+                    onChange={(e) => setRepairQuote(Number(e.target.value))}
+                    className="w-full accent-cyan-600 bg-slate-200 h-2.5 rounded-lg cursor-pointer border border-slate-200"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* High-Fidelity SVG Financial Crossover Canvas */}
+            <div className="bg-white border-2 border-slate-200 rounded-2xl p-4 space-y-2 shadow-sm font-mono relative overflow-hidden">
+              {/* Legend Bar */}
+              <div className="flex flex-wrap items-center justify-between text-[11px] gap-2 pb-1 border-b border-slate-100">
+                <div className="flex items-center gap-4">
+                  <span className="flex items-center gap-1.5 font-bold text-cyan-800">
+                    <span className="w-3 h-0.5 bg-cyan-600 inline-block" /> Net Book Value (Depreciation)
+                  </span>
+                  <span className="flex items-center gap-1.5 font-bold text-indigo-700">
+                    <span className="w-3 h-0.5 bg-indigo-500 stroke-dasharray inline-block" /> 70% FinOps Replacement Gate
+                  </span>
+                  <span className="flex items-center gap-1.5 font-bold text-rose-600">
+                    <span className="w-3 h-0.5 bg-rose-500 inline-block" /> Cumulative Repair Trajectory
+                  </span>
+                </div>
+                <span className="text-slate-400 text-[10px]">Asset: Dell PowerEdge R740 (S/N: CN-0X892)</span>
+              </div>
+
+              {/* SVG Canvas */}
+              <div className="relative w-full h-56">
+                <svg className="w-full h-full overflow-visible" viewBox="0 0 600 200" preserveAspectRatio="none">
+                  <defs>
+                    {/* Gradients */}
+                    <linearGradient id="safeFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.12" />
+                      <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.01" />
+                    </linearGradient>
+                    <linearGradient id="breachFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#f43f5e" stopOpacity="0.18" />
+                      <stop offset="100%" stopColor="#f43f5e" stopOpacity="0.02" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Horizontal Grid Lines */}
+                  {[
+                    { label: "₦2.4M", val: 2400000 },
+                    { label: "₦1.8M", val: 1800000 },
+                    { label: "₦1.2M", val: 1200000 },
+                    { label: "₦600k", val: 600000 },
+                    { label: "₦0", val: 0 },
+                  ].map((grid, i) => {
+                    const y = getY(grid.val);
+                    return (
+                      <g key={i}>
+                        <line x1="45" y1={y} x2="560" y2={y} stroke="#f1f5f9" strokeWidth="1" />
+                        <text x="40" y={y + 3.5} textAnchor="end" fontSize="9" fill="#94a3b8" fontFamily="monospace">
+                          {grid.label}
+                        </text>
+                      </g>
+                    );
+                  })}
+
+                  {/* Vertical Year Grid Lines */}
+                  {[1, 2, 3, 4, 5].map((yr) => {
+                    const x = getX(yr);
+                    return (
+                      <g key={yr}>
+                        <line x1={x} y1="20" x2={x} y2="175" stroke="#f1f5f9" strokeWidth="1" />
+                        <text x={x} y="190" textAnchor="middle" fontSize="10" fill={yr === 3 ? "#0f172a" : "#64748b"} fontWeight={yr === 3 ? "bold" : "normal"} fontFamily="monospace">
+                          {yr === 3 ? "Year 3 (Now)" : `Year ${yr}`}
+                        </text>
+                      </g>
+                    );
+                  })}
+
+                  {/* 1. Net Book Value Line (Cyan) */}
+                  <path
+                    d={`M ${nbvPts.map((p) => `${p.x} ${p.y}`).join(" L ")}`}
+                    fill="none"
+                    stroke="#0891b2"
+                    strokeWidth="3"
+                  />
+
+                  {/* 2. 70% Replacement Gate Line (Indigo Dashed) */}
+                  <path
+                    d={`M ${threshPts.map((p) => `${p.x} ${p.y}`).join(" L ")}`}
+                    fill="none"
+                    stroke="#6366f1"
+                    strokeWidth="2"
+                    strokeDasharray="4 3"
+                  />
+
+                  {/* 3. Cumulative Repair Curve (Green if safe, Rose if breached) */}
+                  <path
+                    d={`M ${repairPts.map((p) => `${p.x} ${p.y}`).join(" L ")}`}
+                    fill="none"
+                    stroke={isBreached ? "#e11d48" : "#059669"}
+                    strokeWidth="3.5"
+                    className="transition-all duration-150"
+                  />
+
+                  {/* Vertical Drop Line from Crossover Point to X-Axis */}
+                  <line
+                    x1={intersectX}
+                    y1={intersectY}
+                    x2={intersectX}
+                    y2="175"
+                    stroke={isBreached ? "#e11d48" : "#6366f1"}
+                    strokeWidth="1.5"
+                    strokeDasharray="3 3"
+                  />
+
+                  {/* Exact Mathematical Crossover Marker: LIES DIRECTLY ON BOTH CURVES */}
+                  <circle
+                    cx={intersectX}
+                    cy={intersectY}
+                    r="8"
+                    fill={isBreached ? "#e11d48" : "#6366f1"}
+                    className="animate-ping opacity-75"
+                  />
+                  <circle
+                    cx={intersectX}
+                    cy={intersectY}
+                    r="5"
+                    fill="#ffffff"
+                    stroke={isBreached ? "#e11d48" : "#6366f1"}
+                    strokeWidth="3"
+                  />
+
+                  {/* Year 3 Current Evaluation Dot */}
+                  <circle
+                    cx={getX(3)}
+                    cy={getY(totalCumulativeRepair)}
+                    r="4"
+                    fill={isBreached ? "#e11d48" : "#059669"}
+                    stroke="#ffffff"
+                    strokeWidth="2"
+                  />
+                </svg>
+
+                {/* Floating Tooltip at Exact Crossover */}
+                <div
+                  className="absolute pointer-events-none -translate-x-1/2 -translate-y-full mb-2 bg-slate-950 text-white px-2.5 py-1 rounded-lg shadow-xl text-[10px] font-mono border border-slate-700 whitespace-nowrap z-20"
+                  style={{
+                    left: `${(intersectX / 600) * 100}%`,
+                    top: `${(intersectY / 200) * 100}%`,
+                  }}
+                >
+                  <div className="font-bold flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    70% Crossover: Year {t_cross.toFixed(1)}
+                  </div>
+                  <div className="text-slate-300 text-[9px]">Ceiling: ₦{Math.round(intersectVal).toLocaleString()}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* FinOps Decision Engine Output Card */}
+            <div
+              className={`p-4 rounded-2xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all shadow-sm ${
+                isBreached
+                  ? "bg-rose-50 border-rose-200 text-rose-950"
+                  : "bg-emerald-50 border-emerald-200 text-emerald-950"
+              }`}
+            >
+              <div className="flex items-start gap-3">
+                <div
+                  className={`p-2.5 rounded-xl border mt-0.5 ${
+                    isBreached ? "bg-rose-100 border-rose-300 text-rose-700" : "bg-emerald-100 border-emerald-300 text-emerald-700"
                   }`}
                 >
-                  {isCrossoverBreached ? "STOP REPAIR: HALTED BY FINOPS RULE" : "APPROVED: WITHIN SAFE BUDGET"}
-                </span>
-              </div>
-
-              {/* Slider Control */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-mono">
-                  <span className="text-slate-600 font-semibold">Simulate Repair Quote:</span>
-                  <span className="text-cyan-800 font-black text-sm">₦{repairQuote.toLocaleString()}</span>
+                  {isBreached ? <AlertTriangle className="h-5 w-5" /> : <CheckCircle2 className="h-5 w-5" />}
                 </div>
-                <input
-                  type="range"
-                  min="500000"
-                  max="2000000"
-                  step="50000"
-                  value={repairQuote}
-                  onChange={(e) => setRepairQuote(Number(e.target.value))}
-                  className="w-full accent-cyan-600 bg-slate-200 h-2.5 rounded-lg cursor-pointer border border-slate-200"
-                />
-              </div>
 
-              {/* Visual Meter Bar */}
-              <div className="space-y-2">
-                <div className="w-full bg-slate-100 h-3.5 rounded-full overflow-hidden flex relative border border-slate-200">
-                  <div
-                    className="bg-cyan-500 h-full transition-all duration-300"
-                    style={{ width: `${Math.min(thresholdRatio, 70)}%` }}
-                    title="Safe Repair Window (Up to 70%)"
-                  />
-                  {thresholdRatio > 70 && (
-                    <div
-                      className="bg-rose-500 h-full animate-pulse transition-all duration-300"
-                      style={{ width: `${Math.min(thresholdRatio - 70, 30)}%` }}
-                      title="Runaway Breach"
-                    />
-                  )}
-                </div>
-                <div className="flex justify-between text-[11px] font-mono text-slate-500 font-medium">
-                  <span>Safe Threshold (70%): ₦1,155,000</span>
-                  <span className={isCrossoverBreached ? "text-rose-700 font-bold" : "text-emerald-700 font-bold"}>
-                    Current Ratio: {thresholdRatio}% of Net Book Value
-                  </span>
-                </div>
-              </div>
-
-              {/* Outcome Resolution */}
-              <div className="text-xs text-slate-700 pt-2.5 border-t border-slate-100 flex items-center justify-between font-medium">
-                <span>
-                  {isCrossoverBreached
-                    ? "Financial Action: Repair PO blocked. ₦1,450,000 diverted to replacement procurement queue."
-                    : "Financial Action: Repair quote is economically viable. Dispatched to vendor work order."}
-                </span>
-                <span className="text-cyan-800 font-mono font-bold text-[11px]">AUTONOMOUS RULE</span>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between pt-1">
-              <span className="text-xs text-slate-500 font-mono">
-                FOCUS™ v1.0 Spec · Net Book Value (10% Residual Straight-Line)
-              </span>
-              <Link
-                href="/app/finops"
-                className="inline-flex items-center gap-1.5 text-xs text-cyan-700 hover:text-cyan-800 font-bold group"
-              >
-                Inspect Live FinOps Hub <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {/* 2. SUBNET DISCOVERY & MDM */}
-        {activeTab === "discovery" && (
-          <div className="space-y-4 animate-fadeIn">
-            <div className="flex items-center justify-between bg-slate-50 border border-slate-200 px-4 py-3 rounded-2xl font-mono text-xs">
-              <div className="flex items-center gap-2.5">
-                <Radio className="w-3.5 h-3.5 text-cyan-600 animate-ping" />
-                <span className="text-slate-700">
-                  Subnet Probe: <span className="text-cyan-700 font-bold">192.168.1.0/24</span> (Ports: 22, 80, 443, 161, 9100)
-                </span>
-              </div>
-              <span className="text-emerald-700 font-bold flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> 3 Devices Enrolled
-              </span>
-            </div>
-
-            <div className="space-y-2.5">
-              {[
-                { ip: "192.168.1.1", name: "Cisco Catalyst 9300-48P", type: "Core Switch", mac: "00:1E:13:A8:4B:20", ports: "SSH 22 · SNMP v3 (161)", desc: "48-Port PoE+ Layer 3 Switch" },
-                { ip: "192.168.1.15", name: "Dell PowerEdge R740 iDRAC", type: "Server", mac: "B8:2A:72:C1:90:33", ports: "HTTPS 443 · IPMI 623", desc: "Dual Xeon Gold, 128GB ECC RAM" },
-                { ip: "192.168.1.42", name: "Zebra ZT411 Industrial Labeler", type: "Barcode Printer", mac: "00:07:4D:2A:9F:10", ports: "JetDirect 9100", desc: "Thermal Barcode Sticker Station" },
-              ].map((d, i) => (
-                <div key={i} className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-slate-200 text-xs shadow-sm hover:border-cyan-300 transition">
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-8 h-8 rounded-xl bg-cyan-50 border border-cyan-200 grid place-items-center text-cyan-700">
-                      <Server className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-slate-900 flex items-center gap-2">
-                        {d.name}
-                        <span className="text-[10px] font-mono px-2 py-0.2 rounded bg-slate-100 text-slate-600 font-semibold border border-slate-200">
-                          {d.type}
-                        </span>
-                      </div>
-                      <div className="text-[11px] font-mono text-slate-500 mt-0.5">
-                        {d.ip} · {d.mac} · {d.ports}
-                      </div>
-                    </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-black text-sm uppercase tracking-wide">
+                      {isBreached
+                        ? "FINOPS THRESHOLD BREACHED (REPAIR PO BLOCKED)"
+                        : "FINOPS COMPLIANCE VERIFIED (REPAIR APPROVED)"}
+                    </span>
+                    <span
+                      className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                        isBreached ? "bg-rose-200 text-rose-900" : "bg-emerald-200 text-emerald-900"
+                      }`}
+                    >
+                      {ratio}% OF NBV
+                    </span>
                   </div>
-                  <span className="px-2.5 py-1 rounded-full text-[10.5px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    ENROLLED
-                  </span>
+
+                  <p className="text-xs text-slate-700 mt-1 font-sans">
+                    {isBreached
+                      ? `Proposed repairs push lifetime spend past 70% of residual value. Repair PO halted automatically to avoid sunk cost trap. Requisition diverted to 2026 CapEx procurement queue.`
+                      : `Cumulative spend remains within the safe economic envelope. You have ₦${cushion.toLocaleString()} repair cushion before the replacement trigger is engaged.`}
+                  </p>
                 </div>
-              ))}
-            </div>
+              </div>
 
-            <div className="p-3.5 rounded-2xl bg-cyan-50/70 border border-cyan-200 flex items-center justify-between text-xs">
-              <span className="text-cyan-900 font-mono font-medium">
-                Microsoft Intune & Jamf Webhook: 48 company laptops synced with live battery health
-              </span>
-              <span className="text-cyan-800 font-mono font-bold text-[10.5px]">MDM ACTIVE</span>
-            </div>
-
-            <div className="flex items-center justify-between pt-1">
-              <span className="text-xs text-slate-500 font-mono">Zero Manual Serial Typing Required</span>
-              <Link
-                href="/app/discovery"
-                className="inline-flex items-center gap-1.5 text-xs text-cyan-700 hover:text-cyan-800 font-bold group"
-              >
-                Open Discovery Studio <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+              <div className="shrink-0 font-mono">
+                {isBreached ? (
+                  <Link
+                    href="/app/finops"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-md transition"
+                  >
+                    CapEx Queue <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                ) : (
+                  <Link
+                    href="/app/work-orders"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md transition"
+                  >
+                    Dispatch Order <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         )}
 
-        {/* 3. IOT CRITICAL POWER & TELEMETRY */}
+        {/* 2. VISUAL IN-BROWSER SCANNER VIEW */}
+        {activeTab === "scanner" && (
+          <div className="space-y-5 animate-fadeIn">
+            <div className="grid md:grid-cols-2 gap-6 items-center">
+              {/* Phone Mockup with Laser Viewfinder */}
+              <div className="max-w-[280px] mx-auto w-full aspect-[9/16] bg-slate-900 rounded-[38px] p-3 shadow-2xl border-4 border-slate-800 relative overflow-hidden flex flex-col justify-between">
+                <div className="w-24 h-4 bg-slate-800 rounded-full mx-auto" />
+
+                {/* Laser Viewfinder */}
+                <div className="relative my-auto w-48 h-48 border-2 border-cyan-400/80 rounded-2xl mx-auto flex items-center justify-center overflow-hidden bg-slate-950/60">
+                  <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_#22d3ee] animate-pulse top-1/2 -translate-y-1/2" />
+                  <QrCode className="w-24 h-24 text-white/30" />
+                  <div className="absolute bottom-2 text-[9px] font-mono text-cyan-300 font-bold">
+                    SCANNING BARCODE / QR
+                  </div>
+                </div>
+
+                <div className="text-center text-[10px] text-slate-400 font-mono pb-2">
+                  Direct HTML5 WebRTC · 0 Downloads
+                </div>
+              </div>
+
+              {/* Scanned Hardware Inspection Record */}
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4 font-mono">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                  <span className="text-xs font-bold text-slate-700">QR PASSPORT SCANNED // INSTANT RECORD</span>
+                  <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300">
+                    MATCH: 100%
+                  </span>
+                </div>
+
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between py-1 border-b border-slate-200">
+                    <span className="text-slate-500">Asset Tag:</span>
+                    <span className="font-bold text-slate-900">SRV-DC-04</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-slate-200">
+                    <span className="text-slate-500">Model:</span>
+                    <span className="font-bold text-slate-900">Dell PowerEdge R740</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-slate-200">
+                    <span className="text-slate-500">Serial No:</span>
+                    <span className="font-bold text-cyan-800">CN-0X892-716</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-slate-200">
+                    <span className="text-slate-500">Facility:</span>
+                    <span className="font-bold text-slate-900">Marina HQ DC (Rack 04-B)</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-slate-200">
+                    <span className="text-slate-500">FinOps Gate:</span>
+                    <span className="font-bold text-rose-600">86% of NBV (Replacement Due)</span>
+                  </div>
+                  <div className="flex justify-between py-1">
+                    <span className="text-slate-500">Data Sanitization:</span>
+                    <span className="font-bold text-emerald-700">NIST SP 800-88 Compliant</span>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <Link
+                    href="/app/scan"
+                    className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white shadow-sm transition"
+                  >
+                    Open Live Camera Scanner <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 3. VISUAL TELEMETRY GAUGES */}
         {activeTab === "telemetry" && (
-          <div className="space-y-4 animate-fadeIn">
-            <div className="grid sm:grid-cols-2 gap-3.5">
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-2.5 shadow-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-900">APC Smart-UPS RT 3000 (Ikeja DC)</span>
-                  <span className="text-[10px] font-mono text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-bold">
-                    NOMINAL
-                  </span>
+          <div className="space-y-5 animate-fadeIn">
+            <div className="grid sm:grid-cols-2 gap-5 font-mono">
+              {/* Dial 1: APC UPS Battery Gauge */}
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 flex flex-col items-center justify-between text-center space-y-3">
+                <span className="text-xs font-bold text-slate-500 uppercase">APC SMART-UPS 3000 // BATTERY CELL</span>
+                {/* SVG Gauge */}
+                <div className="relative w-36 h-36 flex items-center justify-center">
+                  <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#e2e8f0" strokeWidth="8" />
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      fill="none"
+                      stroke="#10b981"
+                      strokeWidth="8"
+                      strokeDasharray="251.2"
+                      strokeDashoffset="25.12" // 90%
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-2xl font-black text-slate-900">92%</span>
+                    <span className="text-[9px] text-emerald-700 font-bold uppercase">Optimal Health</span>
+                  </div>
                 </div>
-                <div className="text-2xl font-black text-cyan-700 font-mono">94% Battery Health</div>
-                <div className="text-xs text-slate-500">Load: 42% · Voltage: 229.4V · Estimated Runtime: 52 min</div>
-                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
-                  <div className="bg-emerald-500 h-full" style={{ width: "94%" }} />
-                </div>
+                <div className="text-xs text-slate-500 font-mono">Auto-dispatches critical work order if &lt;40%</div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-2.5 shadow-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-900">Server Room Thermal Probe #2</span>
-                  <span className="text-[10px] font-mono text-cyan-800 bg-cyan-50 px-2 py-0.5 rounded border border-cyan-200 font-bold">
-                    OPTIMAL
-                  </span>
+              {/* Dial 2: Server Room Thermal Gauge */}
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 flex flex-col items-center justify-between text-center space-y-3">
+                <span className="text-xs font-bold text-slate-500 uppercase">TIER-III RACK 04-B // THERMAL SENSOR</span>
+                {/* SVG Gauge */}
+                <div className="relative w-36 h-36 flex items-center justify-center">
+                  <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#e2e8f0" strokeWidth="8" />
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      fill="none"
+                      stroke="#06b6d4"
+                      strokeWidth="8"
+                      strokeDasharray="251.2"
+                      strokeDashoffset="125.6" // 50%
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-2xl font-black text-slate-900">22.4°C</span>
+                    <span className="text-[9px] text-cyan-600 font-bold uppercase">Airflow Cool</span>
+                  </div>
                 </div>
-                <div className="text-2xl font-black text-slate-900 font-mono">22.4°C / 48% RH</div>
-                <div className="text-xs text-slate-500">Threshold: 28°C max · Automatic Work Order Trigger Armed</div>
-                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
-                  <div className="bg-cyan-500 h-full" style={{ width: "45%" }} />
-                </div>
+                <div className="text-xs text-slate-500 font-mono">Thermal Limit: 28°C max before auto-dispatch</div>
               </div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2.5">
+            <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs font-mono">
+              <span className="text-amber-900 font-bold flex items-center gap-2">
                 <Zap className="w-4 h-4 text-amber-600" />
-                <span className="text-amber-900 font-medium">
-                  Autonomous SLA Dispatch: Critical Work Order auto-dispatched if battery drops below 40%
-                </span>
-              </div>
-              <span className="text-[10.5px] font-mono font-bold text-amber-800">4-HR SLA CLOCK</span>
-            </div>
-
-            <div className="flex items-center justify-between pt-1">
-              <span className="text-xs text-slate-500 font-mono">SNMP Traps + Webhook Ingest Live</span>
-              <Link
-                href="/app/telemetry"
-                className="inline-flex items-center gap-1.5 text-xs text-cyan-700 hover:text-cyan-800 font-bold group"
-              >
-                Inspect Telemetry Engine <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+                Automatic Critical Work Order trigger armed for 4-hour SLA
+              </span>
+              <span className="px-2 py-0.5 rounded bg-amber-200 text-amber-900 font-bold text-[10px]">
+                AUTO DISPATCH
+              </span>
             </div>
           </div>
         )}
 
-        {/* 4. NATIONWIDE GEOSPATIAL GIS */}
+        {/* 4. VISUAL FLEET NODE MAP */}
         {activeTab === "gis" && (
-          <div className="space-y-4 animate-fadeIn">
-            <div className="grid sm:grid-cols-3 gap-3 font-mono">
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
-                <div className="text-[10px] text-slate-500 uppercase font-bold">Marina HQ Data Center</div>
-                <div className="text-xl font-black text-cyan-800 mt-1">5,410 Assets</div>
-                <div className="text-[11px] text-emerald-700 mt-0.5 font-bold">Lagos Island · Tier III DC</div>
-              </div>
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
-                <div className="text-[10px] text-slate-500 uppercase font-bold">Abuja Regional Hub</div>
-                <div className="text-xl font-black text-cyan-800 mt-1">4,120 Assets</div>
-                <div className="text-[11px] text-cyan-700 mt-0.5 font-bold">Central Business District</div>
-              </div>
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
-                <div className="text-[10px] text-slate-500 uppercase font-bold">Epe Solar Project Site</div>
-                <div className="text-xl font-black text-cyan-800 mt-1">1,840 Assets</div>
-                <div className="text-[11px] text-amber-700 mt-0.5 font-bold">Substation & Inverter Farm</div>
-              </div>
-            </div>
+          <div className="space-y-4 animate-fadeIn font-mono">
+            <div className="h-72 rounded-2xl bg-slate-100 border border-slate-200 relative overflow-hidden flex items-center justify-center">
+              <div
+                className="absolute inset-0 opacity-40"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px)",
+                  backgroundSize: "40px 40px",
+                }}
+              />
 
-            <div className="p-4 rounded-2xl bg-teal-50 border border-teal-200 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2.5">
-                <MapPin className="w-4 h-4 text-teal-600" />
-                <span className="text-teal-900 font-medium">
-                  100% Keyless OpenStreetMap: Zero surprise $5,000/mo Google Maps or Mapbox invoices
-                </span>
+              {/* Node 1: Lagos HQ */}
+              <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center animate-ping absolute" />
+                <div className="w-5 h-5 rounded-full bg-cyan-600 border-2 border-white shadow-md relative z-10" />
+                <div className="mt-1 bg-white/95 px-2.5 py-1 rounded-xl shadow-md border border-slate-200 text-[10.5px] font-bold text-slate-800 whitespace-nowrap">
+                  Lagos HQ Tier-III (5,410 Units)
+                </div>
               </div>
-              <span className="text-[10.5px] font-mono text-teal-800 bg-white px-2.5 py-0.5 rounded border border-teal-200 font-bold">
-                KEYLESS OSM
-              </span>
-            </div>
 
-            <div className="flex items-center justify-between pt-1">
-              <span className="text-xs text-slate-500 font-mono">Sub-Second Vector Tile Clustering</span>
-              <Link
-                href="/app/locations"
-                className="inline-flex items-center gap-1.5 text-xs text-teal-700 hover:text-teal-800 font-bold group"
-              >
-                Inspect Nationwide Map <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+              {/* Node 2: Abuja Federal */}
+              <div className="absolute top-1/4 right-1/3 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                <div className="w-5 h-5 rounded-full bg-indigo-600 border-2 border-white shadow-md relative z-10" />
+                <div className="mt-1 bg-white/95 px-2.5 py-1 rounded-xl shadow-md border border-slate-200 text-[10.5px] font-bold text-slate-800 whitespace-nowrap">
+                  Abuja Fed Complex (4,120 Units)
+                </div>
+              </div>
+
+              {/* Node 3: Epe Solar Project */}
+              <div className="absolute bottom-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                <div className="w-5 h-5 rounded-full bg-amber-500 border-2 border-white shadow-md relative z-10" />
+                <div className="mt-1 bg-white/95 px-2.5 py-1 rounded-xl shadow-md border border-slate-200 text-[10.5px] font-bold text-slate-800 whitespace-nowrap">
+                  Epe Solar Substation (1,840 Units)
+                </div>
+              </div>
+
+              {/* Node 4: Port Harcourt */}
+              <div className="absolute bottom-1/5 right-1/4 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                <div className="w-5 h-5 rounded-full bg-emerald-600 border-2 border-white shadow-md relative z-10" />
+                <div className="mt-1 bg-white/95 px-2.5 py-1 rounded-xl shadow-md border border-slate-200 text-[10.5px] font-bold text-slate-800 whitespace-nowrap">
+                  Port Harcourt Hub (2,952 Units)
+                </div>
+              </div>
+
+              <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur px-3 py-1 rounded-xl border border-slate-200 text-[10px] text-slate-600">
+                100% Keyless OpenStreetMap Tiles · Zero API Fees
+              </div>
             </div>
           </div>
         )}

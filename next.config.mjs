@@ -7,5 +7,6 @@ const securityHeaders = [
 export default {
   poweredByHeader: false,
   serverExternalPackages: ["@prisma/client", "bcryptjs"],
+  devIndicators: false,
   async headers() { return [{ source: "/(.*)", headers: securityHeaders }]; },
 };

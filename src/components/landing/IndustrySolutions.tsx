@@ -1,8 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { Landmark, Hospital, GraduationCap, Building2, Check, ArrowRight, ShieldCheck, AlertCircle } from "lucide-react";
+import {
+  Landmark,
+  Hospital,
+  GraduationCap,
+  Building2,
+  Check,
+  ArrowRight,
+  ShieldCheck,
+  Zap,
+  Activity,
+  Server,
+  Cpu,
+  Radio,
+  Clock,
+  QrCode,
+  Lock,
+} from "lucide-react";
 import Link from "next/link";
+
+interface TopologyNode {
+  label: string;
+  sub: string;
+  status: "online" | "warning" | "verified";
+  metric: string;
+}
 
 interface IndustryItem {
   id: string;
@@ -10,10 +33,10 @@ interface IndustryItem {
   icon: any;
   tagline: string;
   badgeColor: string;
-  painPoint: string;
-  solution: string;
-  kpis: { label: string; value: string }[];
-  features: string[];
+  kpis: { label: string; value: string; trend: string }[];
+  nodes: TopologyNode[];
+  summary: string;
+  ruleBadge: string;
 }
 
 const INDUSTRIES: IndustryItem[] = [
@@ -21,88 +44,76 @@ const INDUSTRIES: IndustryItem[] = [
     id: "banking",
     name: "Commercial Banking & FinTech",
     icon: Landmark,
-    tagline: "High-density ATM, server rack, and branch terminal fleet governance",
+    tagline: "High-density ATM, server rack, and branch terminal fleet",
     badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
-    painPoint:
-      "When branch edge routers, ATM controller PCs, or core server nodes suffer unpredicted hardware downtime, banking transactions halt. Branches bleed millions in customer churn while paper logs fail to track multi-branch IT drift.",
-    solution:
-      "AssetOps provides sub-minute hardware health telemetry across headquarters data centers and nationwide branch terminals, preventative maintenance schedules, and cryptographic NIST 800-88 certificates for retired storage drives.",
+    ruleBadge: "CBN / FOCUS™ v1.0 ALIGNED",
+    summary: "Sub-minute branch router & ATM uptime with automated 70% CapEx replacement gates.",
     kpis: [
-      { label: "Fleet Uptime Compliance", value: "99.94%" },
-      { label: "CBN Audit Reconciliation", value: "100% Verified" },
-      { label: "Data Sanitization Standard", value: "NIST 800-88" },
+      { label: "Branch Uptime", value: "99.98%", trend: "+0.4% vs SLA" },
+      { label: "CBN Audit Match", value: "100%", trend: "Zero Drift" },
+      { label: "Bad Fixes Blocked", value: "₦28.4M", trend: "Diverted to CapEx" },
     ],
-    features: [
-      "Real-time GIS mapping headquarter data centers and regional branch terminals",
-      "Automated preventative maintenance routines for power conditioning and rack cooling",
-      "Tamper-proof digital decommission certificates for decommissioned NVMe and SAS drives",
-      "Strict role segregation between field engineers, procurement officers, and internal auditors",
+    nodes: [
+      { label: "ATM Edge Fleet", sub: "1,420 NCR Nodes", status: "online", metric: "0.8ms Ping" },
+      { label: "Branch SD-WAN", sub: "Cisco Catalyst 9300", status: "online", metric: "100% Up" },
+      { label: "Tier-III Marina DC", sub: "48 Server Racks", status: "verified", metric: "NIST 800-88" },
     ],
   },
   {
     id: "healthcare",
     name: "Hospitals & Diagnostic Networks",
     icon: Hospital,
-    tagline: "Life-critical biomedical diagnostic consoles & workstation availability",
+    tagline: "Biomedical diagnostic consoles & clinical workstation availability",
     badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
-    painPoint:
-      "Hardware degradation in ICU telemetry terminals, MRI workstation consoles, and diagnostic PCs directly jeopardizes patient diagnostics. Biomedical teams battle unlogged component failures with zero preventative alerts.",
-    solution:
-      "AssetOps tracks clinical workstations and diagnostic computing assets down to the exact hospital wing and room. Scheduled preventative maintenance alerts dispatch biomedical engineers weeks before thermal or component breakdown occurs.",
+    ruleBadge: "HIPAA / PATIENT PRIVACY",
+    summary: "Wing-and-room biomedical tracking with automated thermal alerts before component breakdown.",
     kpis: [
-      { label: "Diagnostic Console Uptime", value: "99.98%" },
-      { label: "Preventative Maintenance Compliance", value: "98.6%" },
-      { label: "SLA Response to Critical Outages", value: "< 15 Minutes" },
+      { label: "Console Uptime", value: "99.99%", trend: "Life-Critical" },
+      { label: "PM Compliance", value: "98.6%", trend: "Scheduled" },
+      { label: "Response Time", value: "< 12 Min", trend: "Autonomous Dispatch" },
     ],
-    features: [
-      "Wing-and-room location hierarchy for operating theatres, ICU pods, and radiology units",
-      "Verified patient health data sanitization prior to drive disposal or warranty replacement",
-      "High-contrast QR passport scanning for instant mobile inspection by biomedical engineers",
-      "Strict vendor SLA tracking for specialized medical hardware maintenance contracts",
+    nodes: [
+      { label: "ICU Vital Displays", sub: "48 Telemetry Pods", status: "online", metric: "100% Calibrated" },
+      { label: "MRI Workstation", sub: "Dual Xeon PACs Node", status: "warning", metric: "24.2°C Thermal Warning" },
+      { label: "Encrypted Storage", sub: "NIST SP 800-88 Wipe", status: "verified", metric: "SHA-256 Signed" },
     ],
   },
   {
     id: "universities",
     name: "Higher Education & Multi-Campuses",
     icon: GraduationCap,
-    tagline: "Governing 10,000+ laboratory workstations across dispersed campus faculties",
+    tagline: "Governing 10,000+ laboratory workstations across dispersed faculties",
     badgeColor: "bg-purple-50 text-purple-700 border-purple-200",
-    painPoint:
-      "Thousands of computer lab workstations, campus WiFi access points, and lecture hall projectors are scattered across massive acreage. Ghost asset shrinkage is rampant, and lab machines fail right before exam windows.",
-    solution:
-      "AssetOps consolidates decentralized faculty IT inventory into one unified geospatial interface. Campus IT leads run semester preventative maintenance sweeps, and asset custody transfer logs prevent hardware disappearance.",
+    ruleBadge: "ZERO GHOST ASSETS",
+    summary: "Consolidate faculty IT labs into one GIS map with pre-semester maintenance sweeps.",
     kpis: [
-      { label: "Lab Workstation Readiness", value: "99.2%" },
-      { label: "Ghost Asset Leakage", value: "Eradicated 94%" },
-      { label: "Exam Window Availability", value: "Zero Downtime" },
+      { label: "Lab Readiness", value: "99.4%", trend: "Exam-Ready" },
+      { label: "Shrinkage Cut", value: "94%", trend: "Custody Tracked" },
+      { label: "Annual CapEx Saved", value: "₦42.0M", trend: "5-Year Horizon" },
     ],
-    features: [
-      "Geospatial fleet mapping specific campus faculties, departmental labs, and lecture complexes",
-      "Pre-semester batch maintenance workflows across thousands of lab PCs and UPS backups",
-      "Custodian assignment tracking: clear accountability between department heads and IT staff",
-      "Predictive FinOps budgeting hardware upgrade cycles 3 to 5 fiscal years in advance",
+    nodes: [
+      { label: "Science Lab A", sub: "120 Workstations", status: "online", metric: "Pre-Exam Passed" },
+      { label: "Engineering Hub", sub: "85 CAD Terminals", status: "online", metric: "UPS Verified" },
+      { label: "Faculty Ledger", sub: "10,400 Tagged Units", status: "verified", metric: "0 Ghost Units" },
     ],
   },
   {
     id: "government",
     name: "Public Sector MDAs & Parastatals",
     icon: Building2,
-    tagline: "Eliminate ghost hardware and defend capital procurement expenditure before audit",
+    tagline: "Eliminate ghost hardware and defend capital procurement before audit",
     badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
-    painPoint:
-      "Government ministries struggle with untracked hardware on legacy spreadsheets, duplicate procurement contractor orders, and recurring repair budgets sunk into obsolete 7-year-old laptops and desktop towers.",
-    solution:
-      "AssetOps enforces verified physical barcode/QR inventory for every public sector asset, automates straight-line depreciation, and applies the 70% FinOps rule to stop wasteful third-party contractor repair spending.",
+    ruleBadge: "PARLIAMENTARY AUDIT PROOF",
+    summary: "Cryptographic QR passports and 70% threshold stops runaway third-party contractor repair invoices.",
     kpis: [
-      { label: "Physical Inventory Accuracy", value: "99.8%" },
-      { label: "Auditable CapEx Horizon", value: "5 Fiscal Years" },
-      { label: "Runaway Repair Costs Recovered", value: "₦142M Saved" },
+      { label: "Physical Match", value: "99.9%", trend: "QR Verified" },
+      { label: "Repair Inflation Cut", value: "₦142M", trend: "Contractors Blocked" },
+      { label: "Audit Horizon", value: "5 Years", trend: "Straight-Line" },
     ],
-    features: [
-      "Multi-year CapEx replacement pipeline with transparent mathematical depreciation schedules",
-      "Anti-leakage 70% repair cost cut-off stopping repeat contractor repair inflation",
-      "Immutable audit trail logging every asset status change, custody reassignment, and sign-off",
-      "One-click PDF/CSV governance reports for parliamentary budget committees and state auditors",
+    nodes: [
+      { label: "Ministry Desktops", sub: "4,800 All-in-Ones", status: "online", metric: "QR Tagged" },
+      { label: "Legacy Servers", sub: "14 PowerEdge Units", status: "warning", metric: "70% FinOps Breached" },
+      { label: "Certified Disposal", sub: "Tamper-Proof Audit", status: "verified", metric: "Auditor Approved" },
     ],
   },
 ];
@@ -114,7 +125,7 @@ export default function IndustrySolutions() {
 
   return (
     <div className="space-y-6 font-sans">
-      {/* 4 Industry Buttons */}
+      {/* 4 Industry Selector Tabs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {INDUSTRIES.map((ind) => {
           const ItemIcon = ind.icon;
@@ -125,7 +136,7 @@ export default function IndustrySolutions() {
               onClick={() => setSelectedId(ind.id)}
               className={`p-4 rounded-2xl border text-left transition-all ${
                 isSelected
-                  ? "bg-white border-cyan-400 shadow-md ring-2 ring-cyan-500/20"
+                  ? "bg-white border-cyan-400 shadow-lg shadow-cyan-500/10 ring-2 ring-cyan-500/20"
                   : "bg-white/80 border-slate-200 hover:border-slate-300 hover:bg-white"
               }`}
             >
@@ -135,7 +146,7 @@ export default function IndustrySolutions() {
                 </div>
                 {isSelected && (
                   <span className="text-[10px] font-mono font-bold text-cyan-800 bg-cyan-50 px-2 py-0.5 rounded-full border border-cyan-200">
-                    SELECTED
+                    ACTIVE
                   </span>
                 )}
               </div>
@@ -146,71 +157,111 @@ export default function IndustrySolutions() {
         })}
       </div>
 
-      {/* Selected Industry Detail Card */}
-      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-9 shadow-xl shadow-slate-200/40 relative overflow-hidden">
-        <div className="grid lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column: Challenge & Solution */}
-          <div className="lg:col-span-7 space-y-5 font-sans">
-            <div className="flex items-center gap-3">
-              <div className={`p-3 rounded-2xl border ${current.badgeColor}`}>
-                <Icon className="h-6 w-6" />
-              </div>
-              <div>
-                <h3 className="text-2xl font-black text-slate-950 tracking-tight">{current.name}</h3>
-                <p className="text-xs font-bold text-cyan-700 mt-0.5 font-mono">{current.tagline}</p>
-              </div>
+      {/* Visual Interactive Architecture & Telemetry Display */}
+      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/40 relative overflow-hidden">
+        {/* Header Strip */}
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
+          <div className="flex items-center gap-3">
+            <div className={`p-3 rounded-2xl border ${current.badgeColor}`}>
+              <Icon className="h-6 w-6" />
             </div>
-
-            {/* Pain Point */}
-            <div className="p-4 rounded-2xl bg-rose-50/80 border border-rose-200 space-y-1">
-              <div className="flex items-center gap-2 text-xs font-bold text-rose-800">
-                <AlertCircle className="h-4 w-4 text-rose-600" /> Operational Downtime & Drift Risk
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-xl sm:text-2xl font-black text-slate-950 tracking-tight">{current.name}</h3>
+                <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                  {current.ruleBadge}
+                </span>
               </div>
-              <p className="text-xs text-rose-950 leading-relaxed font-medium">{current.painPoint}</p>
-            </div>
-
-            {/* Solution */}
-            <div className="p-4 rounded-2xl bg-teal-50/80 border border-teal-200 space-y-1">
-              <div className="flex items-center gap-2 text-xs font-bold text-teal-800">
-                <ShieldCheck className="h-4 w-4 text-teal-600" /> AssetOps Intelligent Resolution
-              </div>
-              <p className="text-xs text-teal-950 leading-relaxed font-medium">{current.solution}</p>
-            </div>
-
-            {/* Features list */}
-            <div className="grid sm:grid-cols-2 gap-2.5 pt-1">
-              {current.features.map((feat, idx) => (
-                <div key={idx} className="flex items-start gap-2 text-xs text-slate-700 font-medium">
-                  <Check className="h-4 w-4 text-cyan-600 shrink-0 mt-0.5" />
-                  <span>{feat}</span>
-                </div>
-              ))}
+              <p className="text-xs text-slate-500 mt-0.5">{current.summary}</p>
             </div>
           </div>
 
-          {/* Right Column: KPIs */}
-          <div className="lg:col-span-5 bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-4 font-mono">
-            <div className="text-xs uppercase font-bold tracking-wider text-slate-500 border-b border-slate-200 pb-2">
-              Verified Telemetry Benchmarks
+          <Link
+            href="/sign-in"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-slate-950 hover:bg-slate-800 text-white shadow-sm transition"
+          >
+            Launch Sector Workflow <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+
+        {/* Visual Body: Topology Flow Diagram + KPI Panel */}
+        <div className="grid lg:grid-cols-12 gap-6 mt-6 items-center">
+          {/* Visual Topology Diagram (Span 8) */}
+          <div className="lg:col-span-8 bg-slate-50 border border-slate-200 rounded-2xl p-5 relative overflow-hidden font-mono">
+            <div className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-4 flex items-center justify-between">
+              <span>LIVE INFRASTRUCTURE TOPOLOGY // VERIFIED PIPELINE</span>
+              <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[9.5px]">
+                ● ZERO LATENCY DRIFT
+              </span>
             </div>
 
-            <div className="space-y-3">
-              {current.kpis.map((kpi, idx) => (
-                <div key={idx} className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-center justify-between shadow-sm">
-                  <span className="text-xs text-slate-600 font-sans font-medium">{kpi.label}</span>
-                  <span className="text-base font-black text-cyan-700">{kpi.value}</span>
+            {/* Visual Node Flow Chart with connecting lines */}
+            <div className="grid sm:grid-cols-3 gap-3 relative z-10">
+              {current.nodes.map((node, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-2 relative group hover:border-cyan-300 transition"
+                >
+                  <div className="flex items-center justify-between">
+                    <span
+                      className={`w-2 h-2 rounded-full ${
+                        node.status === "online"
+                          ? "bg-emerald-500"
+                          : node.status === "warning"
+                          ? "bg-amber-500 animate-pulse"
+                          : "bg-cyan-500"
+                      }`}
+                    />
+                    <span
+                      className={`text-[9.5px] font-bold px-2 py-0.5 rounded ${
+                        node.status === "online"
+                          ? "bg-emerald-50 text-emerald-800"
+                          : node.status === "warning"
+                          ? "bg-amber-50 text-amber-800"
+                          : "bg-cyan-50 text-cyan-800"
+                      }`}
+                    >
+                      {node.status.toUpperCase()}
+                    </span>
+                  </div>
+
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 font-sans">{node.label}</div>
+                    <div className="text-[10.5px] text-slate-500">{node.sub}</div>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10.5px]">
+                    <span className="text-slate-400">Metric:</span>
+                    <span className="font-bold text-cyan-800">{node.metric}</span>
+                  </div>
                 </div>
               ))}
             </div>
 
-            <div className="pt-2">
-              <Link
-                href="/sign-in"
-                className="w-full inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white shadow-md transition"
-              >
-                DEPLOY SECTOR WORKFLOW <ArrowRight className="h-4 w-4" />
-              </Link>
+            {/* Connecting Visual Flow Track */}
+            <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500">
+              <span className="flex items-center gap-1.5">
+                <Zap className="h-3.5 w-3.5 text-cyan-600" />
+                Hardware FinOps Engine actively models depreciation & risk
+              </span>
+              <span className="text-slate-400">100% Keyless Vector Sync</span>
             </div>
+          </div>
+
+          {/* KPI Benchmarks (Span 4) */}
+          <div className="lg:col-span-4 space-y-3 font-mono">
+            {current.kpis.map((kpi, idx) => (
+              <div
+                key={idx}
+                className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-between"
+              >
+                <div>
+                  <div className="text-xs text-slate-500 font-sans font-medium">{kpi.label}</div>
+                  <div className="text-[10.5px] text-emerald-700 font-bold mt-0.5">{kpi.trend}</div>
+                </div>
+                <div className="text-2xl font-black text-slate-950">{kpi.value}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
