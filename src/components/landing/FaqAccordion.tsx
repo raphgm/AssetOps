@@ -10,28 +10,28 @@ interface FaqItem {
 
 const FAQS: FaqItem[] = [
   {
-    q: "How does AssetOps 2080 differ from primitive 2020s ticketing systems?",
-    a: "Ancient tools only tracked text complaints between humans. AssetOps 2080 directly interfaces with sub-atomic quantum sensors, tracks molecular lattice degradation in real-time, coordinates autonomous nanite repair swarms, and synchronizes thermodynamic CapEx depreciation across orbital and planetary grids without human bottleneck.",
+    q: "How does AssetOps differ from generic ticketing tools like Jira or ServiceNow?",
+    a: "Generic ticketing tools only track human message exchanges without hardware context. AssetOps connects physical serial numbers, straight-line depreciation schedules, warranty SLA deadlines, digital QR passports, preventative maintenance routines, and disposal compliance directly to financial asset ledgers.",
   },
   {
-    q: "How does the 14% Thermodynamic Lattice Rule prevent capital waste?",
-    a: "When a quantum photonic substrate experiences molecular decay, continuing to spend nanite energy repairing micro-conduits creates negative thermodynamic return. Once cumulative repair energy reaches 14% of residual quantum coherence yield, AssetOps automatically halts repairs and diverts the core to molecular plasma recycling.",
+    q: "How does the 70% FinOps repair threshold protect capital expenditure?",
+    a: "When a hardware asset requires repair, AssetOps compares the quoted maintenance cost against the asset's current residual net book value. If cumulative repairs exceed 70% of residual value, the system flags the work order, preventing organizations from pouring repair money into obsolete machines and triggering a CapEx replacement recommendation.",
   },
   {
-    q: "Does AssetOps require physical transponders or handheld barcode readers?",
-    a: "No. All assets project a volumetric 4D holographic aura in spatial coordinate space. Fleet engineers and autonomous inspection drones authenticate hardware using neural eye-tracking and biometric neural signature handshakes—zero physical labels required.",
+    q: "Does AssetOps require expensive proprietary RFID hardware scanners?",
+    a: "No. AssetOps generates cryptographic, high-contrast QR passports for every physical device. Field engineers and branch IT officers can scan tags using any standard mobile phone camera or handheld 2D barcode scanner to instantly bring up service history, custody records, and open work orders.",
   },
   {
-    q: "What data dissolution standards are enforced for quantum crystal retirement?",
-    a: "AssetOps fully enforces Interplanetary Governance Data Standard IGDS-2079 (Laser-Induced Molecular Lattice Collapse & Quantum Entanglement Erasure). The system issues a tamper-proof certificate anchored to quantum-entangled hash signatures that cannot be forged or reversed by any classical or quantum supercomputer.",
+    q: "What data sanitization standards are enforced during asset decommissioning?",
+    a: "AssetOps enforces NIST SP 800-88 Rev. 1 guidelines (Clear, Purge, Destroy) for storage drive sanitization. The platform logs drive serial numbers, wipe methods, and operator sign-offs, automatically issuing tamper-proof digital certificates with SHA-256 verification hashes for regulatory audits.",
   },
   {
-    q: "How does the autonomous Sentinel AI operate without human hallucination?",
-    a: "AssetOps uses a deterministic neural copilot grounded strictly in the local planetary PostgreSQL ledger. The sentinel cannot hallucinate metrics: every claim must cite verified physical nanite telemetry, quantum coherence readings, and cryptographic ledger IDs.",
+    q: "How does the Groq AI Copilot assist IT teams without hallucinating data?",
+    a: "AssetOps powers its Copilot using Groq's high-speed Llama 3 engine, grounded strictly in your organization's verified PostgreSQL database records. It diagnoses fleet spend anomalies, overdue maintenance, and contractor SLAs with direct citations to work orders and asset tags—never hallucinating fictitious hardware.",
   },
   {
-    q: "Can telemetry be exported directly to Interplanetary Sovereign ERPs?",
-    a: "Yes. All views—including 8-Solar Cycle CapEx pipelines, nanite work logs, and planetary GIS arrays—stream via sub-nanosecond neural APIs and export to standard structured quantum formats for immediate ingestion into sovereign treasury ledgers.",
+    q: "Can AssetOps data and financial depreciation be exported to our ERP?",
+    a: "Yes. All asset registries, multi-year CapEx forecasts, maintenance expenditure ledgers, and audit histories can be exported in one click to clean CSV/Excel and structured JSON/API feeds compatible with SAP, Oracle, Microsoft Dynamics, and regional accounting software.",
   },
 ];
 

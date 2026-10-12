@@ -2,16 +2,16 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, X, ArrowRight, Radio, Sparkles } from "lucide-react";
+import { Menu, X, ArrowRight, Sparkles } from "lucide-react";
 import { Logo } from "../ui";
 
 const LINKS = [
-  ["Subsystems", "#features"],
-  ["Quantum FinOps", "#calculator"],
-  ["Planetary GIS", "#gis"],
-  ["Sectors", "#solutions"],
-  ["Proof", "#security"],
-  ["Tiers", "#pricing"],
+  ["Features", "#features"],
+  ["FinOps ROI", "#calculator"],
+  ["GIS Map", "#gis"],
+  ["Solutions", "#solutions"],
+  ["Security", "#security"],
+  ["Pricing", "#pricing"],
   ["FAQ", "#faq"],
 ];
 
@@ -41,7 +41,7 @@ export default function Navbar() {
           </Link>
           <span className="hidden sm:inline-flex items-center gap-1.5 text-[10.5px] font-mono font-bold text-teal-800 bg-teal-50 border border-teal-200 px-2.5 py-0.5 rounded-full">
             <span className="h-1.5 w-1.5 rounded-full bg-teal-500 animate-pulse" />
-            <span>2080 QUANTUM OS // 99.999% COHERENCE</span>
+            <span>HARDWARE FINOPS OS // v2.4</span>
           </span>
         </div>
 
@@ -53,24 +53,24 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden sm:flex items-center gap-2.5 font-mono">
+        <div className="hidden sm:flex items-center gap-2.5 font-sans">
           <Link
             href="/sign-in"
-            className="text-xs font-bold text-slate-600 hover:text-slate-950 px-3 py-1.5 rounded-xl hover:bg-slate-100 transition"
+            className="text-xs font-semibold text-slate-600 hover:text-slate-950 px-3 py-1.5 rounded-xl hover:bg-slate-100 transition"
           >
-            Neural Sign In
+            Sign In
           </Link>
           <Link
             href="/sign-in"
             className="inline-flex items-center text-xs font-bold px-3 py-1.5 rounded-xl border border-cyan-200 bg-cyan-50/70 text-cyan-800 hover:bg-cyan-100 transition shadow-sm"
           >
-            Holo-Demo
+            Live Demo
           </Link>
           <Link
             href="/sign-up"
-            className="inline-flex items-center gap-1.5 text-xs font-black px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 via-teal-400 to-indigo-500 text-slate-950 shadow-md shadow-cyan-500/20 hover:brightness-105 transition"
+            className="inline-flex items-center gap-1.5 text-xs font-black px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 via-teal-400 to-indigo-600 text-white shadow-md shadow-cyan-500/25 hover:brightness-105 transition"
           >
-            Deploy Node <ArrowRight className="h-3.5 w-3.5" />
+            Start Free <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
 
@@ -99,18 +99,18 @@ export default function Navbar() {
               {l}
             </a>
           ))}
-          <div className="flex flex-col gap-2 pt-3 font-mono">
+          <div className="flex flex-col gap-2 pt-3 font-sans">
             <Link
               href="/sign-in"
               className="btn justify-center text-xs bg-slate-100 text-slate-800"
             >
-              Holo-Demo
+              Live Demo
             </Link>
             <Link
               href="/sign-up"
               className="btn btn-accent justify-center text-xs"
             >
-              Deploy Node
+              Start Free Workspace
             </Link>
           </div>
         </nav>

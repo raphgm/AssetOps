@@ -19,90 +19,90 @@ interface IndustryItem {
 const INDUSTRIES: IndustryItem[] = [
   {
     id: "banking",
-    name: "Interstellar Banking & Quantum FinTech",
+    name: "Commercial Banking & FinTech",
     icon: Landmark,
-    tagline: "Sub-picosecond quantum entanglement sync & zero trading desynchronization",
+    tagline: "High-density ATM, server rack, and branch terminal fleet governance",
     badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
     painPoint:
-      "When orbital-to-terrestrial quantum relays suffer phase decoherence, algorithmic trading vaults freeze. Banks bleed trillions in compute arbitrage while archaic ledgers fail to prove entanglement fidelity.",
+      "When branch edge routers, ATM controller PCs, or core server nodes suffer unpredicted hardware downtime, banking transactions halt. Branches bleed millions in customer churn while paper logs fail to track multi-branch IT drift.",
     solution:
-      "AssetOps provides sub-nanosecond hardware health telemetry across terrestrial vaults and orbital satellite arrays, autonomous nanite waveguide stabilization, and cryptographic molecular purge certs for retired QPUs.",
+      "AssetOps provides sub-minute hardware health telemetry across headquarters data centers and nationwide branch terminals, preventative maintenance schedules, and cryptographic NIST 800-88 certificates for retired storage drives.",
     kpis: [
-      { label: "Quantum Mesh Coherence", value: "99.9999%" },
-      { label: "Interplanetary Audit Deficit", value: "0 Violations" },
-      { label: "End-of-Life State Erasure", value: "100% Cryptographic" },
+      { label: "Fleet Uptime Compliance", value: "99.94%" },
+      { label: "CBN Audit Reconciliation", value: "100% Verified" },
+      { label: "Data Sanitization Standard", value: "NIST 800-88" },
     ],
     features: [
-      "Planetary 3D GIS tracking ground arrays and orbital satellite relays in real time",
-      "Autonomous nanite swarm maintenance for cryogenic superconducting conduits",
-      "Immutable tamper-proof molecular dissolution certificates for decommissioned QPUs",
-      "Strict neural-signature role segregation between fleet engineers and quantum auditors",
+      "Real-time GIS mapping headquarter data centers and regional branch terminals",
+      "Automated preventative maintenance routines for power conditioning and rack cooling",
+      "Tamper-proof digital decommission certificates for decommissioned NVMe and SAS drives",
+      "Strict role segregation between field engineers, procurement officers, and internal auditors",
     ],
   },
   {
     id: "healthcare",
-    name: "Bio-Digital Hospitals & Synthetic Life",
+    name: "Hospitals & Diagnostic Networks",
     icon: Hospital,
-    tagline: "Life-critical organ synthesis consoles & zero-entropy neural ICU telemetry",
+    tagline: "Life-critical biomedical diagnostic consoles & workstation availability",
     badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
     painPoint:
-      "Hardware degradation in synthetic organ printers, cryogenic preservation pods, and neural ICU consoles risks human lives. Biomedical teams battle micro-lattice stress fractures that human eyes cannot see.",
+      "Hardware degradation in ICU telemetry terminals, MRI workstation consoles, and diagnostic PCs directly jeopardizes patient diagnostics. Biomedical teams battle unlogged component failures with zero preventative alerts.",
     solution:
-      "AssetOps tracks clinical hardware down to the exact bio-theatre chamber. Autonomous nanite inspection swarms execute laser micro-welds weeks before molecular breakdown occurs.",
+      "AssetOps tracks clinical workstations and diagnostic computing assets down to the exact hospital wing and room. Scheduled preventative maintenance alerts dispatch biomedical engineers weeks before thermal or component breakdown occurs.",
     kpis: [
-      { label: "Organ Synthesizer Uptime", value: "100.00%" },
-      { label: "Nanite PM Compliance", value: "100% Autonomous" },
-      { label: "Neural Alarm to Nanite Dispatch", value: "< 50 Milliseconds" },
+      { label: "Diagnostic Console Uptime", value: "99.98%" },
+      { label: "Preventative Maintenance Compliance", value: "98.6%" },
+      { label: "SLA Response to Critical Outages", value: "< 15 Minutes" },
     ],
     features: [
-      "Chamber-level bio-digital hierarchy for surgical and cryogenic telemetry nodes",
-      "IGDS-2079 certified patient genomic data destruction prior to substrate recycling",
-      "Volumetric AR holographic auras projected directly over surgical console chassis",
-      "Sub-atomic SLA tracking for specialized bio-quantum hardware contracts",
+      "Wing-and-room location hierarchy for operating theatres, ICU pods, and radiology units",
+      "Verified patient health data sanitization prior to drive disposal or warranty replacement",
+      "High-contrast QR passport scanning for instant mobile inspection by biomedical engineers",
+      "Strict vendor SLA tracking for specialized medical hardware maintenance contracts",
     ],
   },
   {
     id: "universities",
-    name: "Mega-Campus Neural Academies",
+    name: "Higher Education & Multi-Campuses",
     icon: GraduationCap,
-    tagline: "50,000+ holographic neural pods across multi-planetary research campuses",
+    tagline: "Governing 10,000+ laboratory workstations across dispersed campus faculties",
     badgeColor: "bg-purple-50 text-purple-700 border-purple-200",
     painPoint:
-      "Tens of thousands of neural-interface headsets and quantum student compute pods are scattered across vast continental campuses. Ghost asset leakage is rampant, and pods face decoherence during exams.",
+      "Thousands of computer lab workstations, campus WiFi access points, and lecture hall projectors are scattered across massive acreage. Ghost asset shrinkage is rampant, and lab machines fail right before exam windows.",
     solution:
-      "AssetOps consolidates decentralized faculty nodes into one unified planetary GIS grid. Campus managers run semester nanite re-alignment sweeps, and stolen neural pods automatically engage spatial coordinate lockdown.",
+      "AssetOps consolidates decentralized faculty IT inventory into one unified geospatial interface. Campus IT leads run semester preventative maintenance sweeps, and asset custody transfer logs prevent hardware disappearance.",
     kpis: [
-      { label: "Student Neural Pod Availability", value: "99.85%" },
-      { label: "Ghost Asset Leakage", value: "Eradicated 100%" },
-      { label: "Exam Grid Readiness", value: "Phase-Locked" },
+      { label: "Lab Workstation Readiness", value: "99.2%" },
+      { label: "Ghost Asset Leakage", value: "Eradicated 94%" },
+      { label: "Exam Window Availability", value: "Zero Downtime" },
     ],
     features: [
-      "Planetary GIS mapping specific academic faculties, research domes, and quantum labs",
-      "Inter-semester batch nanite maintenance sweeps across thousands of student pods",
-      "Spatial geofencing: quantum hardware auto-freezes if moved beyond faculty borders",
-      "Thermodynamic FinOps forecasting hardware upgrade budgets 8 solar cycles ahead",
+      "Geospatial fleet mapping specific campus faculties, departmental labs, and lecture complexes",
+      "Pre-semester batch maintenance workflows across thousands of lab PCs and UPS backups",
+      "Custodian assignment tracking: clear accountability between department heads and IT staff",
+      "Predictive FinOps budgeting hardware upgrade cycles 3 to 5 fiscal years in advance",
     ],
   },
   {
     id: "government",
-    name: "Sovereign Fusion Grids & Planetary MDAs",
+    name: "Public Sector MDAs & Parastatals",
     icon: Building2,
-    tagline: "Eradicate ghost hardware in multi-GW fusion grids & defend 8-cycle capital budgets",
+    tagline: "Eliminate ghost hardware and defend capital procurement expenditure before audit",
     badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
     painPoint:
-      "Public sector ministries struggle with unverified hardware on paper ledgers, untracked procurement vendor contracts, and recurring repair budgets on obsolete quantum cores.",
+      "Government ministries struggle with untracked hardware on legacy spreadsheets, duplicate procurement contractor orders, and recurring repair budgets sunk into obsolete 7-year-old laptops and desktop towers.",
     solution:
-      "AssetOps enforces drone-verified physical inventory of every sovereign asset, automates thermodynamic straight-line depreciation, and applies the 14% lattice rule to stop contractor repair waste.",
+      "AssetOps enforces verified physical barcode/QR inventory for every public sector asset, automates straight-line depreciation, and applies the 70% FinOps rule to stop wasteful third-party contractor repair spending.",
     kpis: [
-      { label: "Phantom Assets Identified", value: "100% Verified" },
-      { label: "Defensible CapEx Forecast", value: "8 Solar Cycles" },
-      { label: "Wasteful Repair Diversion", value: "Ꞙ142M Recovered" },
+      { label: "Physical Inventory Accuracy", value: "99.8%" },
+      { label: "Auditable CapEx Horizon", value: "5 Fiscal Years" },
+      { label: "Runaway Repair Costs Recovered", value: "₦142M Saved" },
     ],
     features: [
-      "8-Cycle CapEx pipeline with transparent mathematical depreciation models",
-      "Anti-kickback 14% molecular decay cut-off stopping repeat contractor repair scams",
-      "Append-only immutable audit trail recording every state change and neural signature",
-      "One-click neural data reporting for parliamentary energy committees and public audit",
+      "Multi-year CapEx replacement pipeline with transparent mathematical depreciation schedules",
+      "Anti-leakage 70% repair cost cut-off stopping repeat contractor repair inflation",
+      "Immutable audit trail logging every asset status change, custody reassignment, and sign-off",
+      "One-click PDF/CSV governance reports for parliamentary budget committees and state auditors",
     ],
   },
 ];
@@ -164,7 +164,7 @@ export default function IndustrySolutions() {
             {/* Pain Point */}
             <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-1">
               <div className="flex items-center gap-2 text-xs font-bold text-rose-800">
-                <AlertCircle className="h-4 w-4 text-rose-600" /> Systemic Entropy Hazard
+                <AlertCircle className="h-4 w-4 text-rose-600" /> Operational Downtime & Drift Risk
               </div>
               <p className="text-xs text-rose-950 leading-relaxed font-medium">{current.painPoint}</p>
             </div>
@@ -172,7 +172,7 @@ export default function IndustrySolutions() {
             {/* Solution */}
             <div className="p-4 rounded-2xl bg-teal-50 border border-teal-200 space-y-1">
               <div className="flex items-center gap-2 text-xs font-bold text-teal-800">
-                <ShieldCheck className="h-4 w-4 text-teal-600" /> Autonomous 2080 Resolution
+                <ShieldCheck className="h-4 w-4 text-teal-600" /> AssetOps Intelligent Resolution
               </div>
               <p className="text-xs text-teal-950 leading-relaxed font-medium">{current.solution}</p>
             </div>
@@ -208,7 +208,7 @@ export default function IndustrySolutions() {
                 href="/sign-up"
                 className="w-full inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl text-xs font-black bg-slate-950 hover:bg-slate-800 text-white shadow-md transition"
               >
-                INITIALIZE SECTOR PROTOCOL <ArrowUpRight className="h-4 w-4" />
+                DEPLOY SECTOR WORKFLOW <ArrowUpRight className="h-4 w-4" />
               </Link>
             </div>
           </div>

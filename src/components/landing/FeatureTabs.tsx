@@ -3,11 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  Cpu,
-  Globe2,
-  Bot,
+  Coins,
+  MapPin,
+  CalendarClock,
   ShieldCheck,
-  Radio,
+  QrCode,
   ArrowRight,
   AlertTriangle,
   CheckCircle2,
@@ -18,15 +18,15 @@ export default function FeatureTabs() {
   const [activeTab, setActiveTab] = useState<"finops" | "gis" | "preventative" | "decommission" | "qr">("finops");
 
   return (
-    <div className="space-y-6 font-mono">
+    <div className="space-y-6">
       {/* Minimalist Switcher */}
       <div className="flex flex-wrap gap-2 p-1.5 bg-slate-100/80 border border-slate-200 rounded-2xl max-w-4xl mx-auto backdrop-blur shadow-inner">
         {[
-          { id: "finops", label: "Quantum FinOps", icon: Cpu, color: "text-cyan-600", activeBg: "bg-white text-cyan-800 shadow-sm border-slate-200" },
-          { id: "gis", label: "Planetary GIS", icon: Globe2, color: "text-teal-600", activeBg: "bg-white text-teal-800 shadow-sm border-slate-200" },
-          { id: "preventative", label: "Nanite Swarms", icon: Bot, color: "text-violet-600", activeBg: "bg-white text-violet-800 shadow-sm border-slate-200" },
-          { id: "decommission", label: "Molecular Purge", icon: ShieldCheck, color: "text-rose-600", activeBg: "bg-white text-rose-800 shadow-sm border-slate-200" },
-          { id: "qr", label: "Holo-Passports", icon: Radio, color: "text-amber-600", activeBg: "bg-white text-amber-800 shadow-sm border-slate-200" },
+          { id: "finops", label: "Hardware FinOps", icon: Coins, color: "text-cyan-600", activeBg: "bg-white text-cyan-800 shadow-sm border-slate-200" },
+          { id: "gis", label: "Real-Time GIS Map", icon: MapPin, color: "text-teal-600", activeBg: "bg-white text-teal-800 shadow-sm border-slate-200" },
+          { id: "preventative", label: "PM Scheduler", icon: CalendarClock, color: "text-violet-600", activeBg: "bg-white text-violet-800 shadow-sm border-slate-200" },
+          { id: "decommission", label: "Data-Wipe Certs", icon: ShieldCheck, color: "text-rose-600", activeBg: "bg-white text-rose-800 shadow-sm border-slate-200" },
+          { id: "qr", label: "QR Passports", icon: QrCode, color: "text-amber-600", activeBg: "bg-white text-amber-800 shadow-sm border-slate-200" },
         ].map((t) => {
           const Icon = t.icon;
           const isActive = activeTab === t.id;
@@ -47,25 +47,25 @@ export default function FeatureTabs() {
         })}
       </div>
 
-      {/* Tab 1: Quantum FinOps */}
+      {/* Tab 1: Hardware FinOps */}
       {activeTab === "finops" && (
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 grid lg:grid-cols-2 gap-8 items-center shadow-2xl shadow-slate-200/50">
           <div className="space-y-4 font-sans">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold font-mono">
-              <Cpu className="h-3.5 w-3.5 text-cyan-600" /> THERMODYNAMIC Q-FLOP GOVERNANCE
+              <Coins className="h-3.5 w-3.5 text-cyan-600" /> FINOPS HARDWARE INTELLIGENCE
             </div>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-              Eliminate thermodynamic decay before quantum lattice decoheres.
+              Stop pouring budget into financially dead hardware.
             </h3>
             <p className="text-slate-600 text-sm leading-relaxed">
-              AssetOps models sub-atomic hardware degradation in real-time. When cumulative lattice repair energy exceeds <strong className="text-cyan-700">14% of quantum coherence yield</strong>, the substrate automatically de-crystallizes into raw plasma salvage.
+              AssetOps models physical hardware depreciation in real-time. When cumulative repair costs exceed <strong className="text-cyan-700">70% of Net Book Value</strong>, the platform automatically flags the machine for replacement instead of endless maintenance.
             </p>
             <div className="space-y-2 pt-2 text-xs text-slate-700 font-medium">
               {[
-                "Quantum Coherence Straight-Line Degradation down to 10% lattice reserve",
-                "8-Solar Cycle CapEx Replacement Pipeline forecasting compute requirements",
-                "Autonomous 14% Thermodynamic Rule: halts wasteful nanite micro-welds",
-                "Neural telemetry export formatted for Interplanetary Ledger reconciliation",
+                "Straight-Line Depreciation model down to 10% residual salvage value",
+                "8-Quarter CapEx Replacement Pipeline forecasting procurement budgets",
+                "Automated 70% TCO threshold: prevents wasteful repair sign-offs",
+                "Instant CSV export formatted for SAP, Oracle ERP, and Excel ledgers",
               ].map((text) => (
                 <div key={text} className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-cyan-600 shrink-0 mt-0.5" />
@@ -78,7 +78,7 @@ export default function FeatureTabs() {
                 href="/app/finops"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-cyan-600 text-white hover:bg-cyan-700 shadow-sm transition"
               >
-                Access Quantum FinOps Ledger <ArrowRight className="h-3.5 w-3.5" />
+                Access FinOps Dashboard <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           </div>
@@ -86,64 +86,64 @@ export default function FeatureTabs() {
           {/* FinOps Visual Card */}
           <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4 shadow-inner">
             <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-              <span className="text-xs font-bold text-slate-500">CORE // Q-SUB-LOS-00912</span>
+              <span className="text-xs font-bold text-slate-500 font-mono">ASSET // ICT-LOS-00912</span>
               <span className="inline-flex items-center gap-1 text-[11px] font-bold text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200">
-                <AlertTriangle className="h-3.5 w-3.5 text-rose-600" /> PLASMA PURGE (88.4%)
+                <AlertTriangle className="h-3.5 w-3.5 text-rose-600" /> REPLACE (88.4%)
               </span>
             </div>
 
             <div className="grid grid-cols-3 gap-2 text-center text-xs">
               <div className="p-3 rounded-xl bg-white border border-slate-200/80 shadow-sm">
-                <div className="text-[10px] uppercase font-bold text-slate-400">Synthesis Cost</div>
-                <div className="text-sm font-black text-slate-900 mt-0.5">Ꞙ14.5M</div>
+                <div className="text-[10px] uppercase font-bold text-slate-400">Initial Price</div>
+                <div className="text-sm font-black text-slate-900 mt-0.5 font-mono">₦1,450,000</div>
               </div>
               <div className="p-3 rounded-xl bg-white border border-slate-200/80 shadow-sm">
-                <div className="text-[10px] uppercase font-bold text-slate-400">Coherence Yield</div>
-                <div className="text-sm font-black text-cyan-600 mt-0.5">Ꞙ3.8M</div>
+                <div className="text-[10px] uppercase font-bold text-slate-400">Net Book Value</div>
+                <div className="text-sm font-black text-cyan-600 mt-0.5 font-mono">₦380,000</div>
               </div>
               <div className="p-3 rounded-xl bg-white border border-slate-200/80 shadow-sm">
-                <div className="text-[10px] uppercase font-bold text-slate-400">Entropy Deficit</div>
-                <div className="text-sm font-black text-rose-600 mt-0.5">Ꞙ3.3M</div>
+                <div className="text-[10px] uppercase font-bold text-slate-400">Repairs Total</div>
+                <div className="text-sm font-black text-rose-600 mt-0.5 font-mono">₦336,000</div>
               </div>
             </div>
 
-            {/* Coherence Bar */}
+            {/* Repair Ratio Bar */}
             <div className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-sm">
               <div className="flex justify-between text-xs">
-                <span className="text-slate-600 font-sans font-medium">Lattice Decay Ratio</span>
-                <span className="text-rose-600 font-bold">88.4% (Threshold: 70%)</span>
+                <span className="text-slate-600 font-medium">Repair-to-Value Ratio</span>
+                <span className="text-rose-600 font-bold font-mono">88.4% (Threshold: 70%)</span>
               </div>
               <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden flex border border-slate-200">
                 <div className="h-full bg-cyan-500" style={{ width: "70%" }} />
                 <div className="h-full bg-rose-500 animate-pulse" style={{ width: "18.4%" }} />
               </div>
-              <div className="text-[11px] text-slate-500 flex justify-between pt-0.5 font-sans">
-                <span>Safe Coherence Zone</span>
-                <span className="text-rose-600 font-mono font-bold">Lattice Purge Triggered</span>
+              <div className="text-[11px] text-slate-500 flex justify-between pt-0.5">
+                <span>Safe repair zone (0-70%)</span>
+                <span className="text-rose-600 font-bold">Excess: ₦70,000</span>
               </div>
             </div>
 
             <div className="border border-slate-200 rounded-xl p-3 bg-white shadow-sm text-xs">
               <div className="text-[11px] uppercase font-bold text-slate-500 mb-2 flex justify-between">
-                <span>8-Solar Cycle CapEx Forecast</span>
-                <span className="text-cyan-700 font-bold">Ꞙ412.5M Planned</span>
+                <span>8-Quarter Replacement Forecast</span>
+                <span className="text-cyan-700 font-bold font-mono">₦41.2M CapEx</span>
               </div>
-              <div className="grid grid-cols-4 gap-1.5 text-center text-[11px]">
+              <div className="grid grid-cols-4 gap-1.5 text-center font-mono text-[11px]">
                 <div className="p-1.5 rounded bg-slate-50 border border-slate-200">
-                  <div className="text-[9px] text-slate-400">Cycle 1</div>
-                  <div className="font-bold text-slate-800">Ꞙ84M</div>
+                  <div className="text-[9px] text-slate-400">Q1 2026</div>
+                  <div className="font-bold text-slate-800">₦8.4M</div>
                 </div>
                 <div className="p-1.5 rounded bg-slate-50 border border-slate-200">
-                  <div className="text-[9px] text-slate-400">Cycle 2</div>
-                  <div className="font-bold text-slate-800">Ꞙ121M</div>
+                  <div className="text-[9px] text-slate-400">Q2 2026</div>
+                  <div className="font-bold text-slate-800">₦12.1M</div>
                 </div>
                 <div className="p-1.5 rounded bg-slate-50 border border-slate-200">
-                  <div className="text-[9px] text-slate-400">Cycle 3</div>
-                  <div className="font-bold text-slate-800">Ꞙ62M</div>
+                  <div className="text-[9px] text-slate-400">Q3 2026</div>
+                  <div className="font-bold text-slate-800">₦6.2M</div>
                 </div>
                 <div className="p-1.5 rounded bg-slate-50 border border-slate-200">
-                  <div className="text-[9px] text-slate-400">Cycle 4</div>
-                  <div className="font-bold text-slate-800">Ꞙ145M</div>
+                  <div className="text-[9px] text-slate-400">Q4 2026</div>
+                  <div className="font-bold text-slate-800">₦14.5M</div>
                 </div>
               </div>
             </div>
@@ -151,25 +151,25 @@ export default function FeatureTabs() {
         </div>
       )}
 
-      {/* Tab 2: Planetary GIS */}
+      {/* Tab 2: GIS Map */}
       {activeTab === "gis" && (
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 grid lg:grid-cols-2 gap-8 items-center shadow-2xl shadow-slate-200/50">
           <div className="space-y-4 font-sans">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-xs font-bold font-mono">
-              <Globe2 className="h-3.5 w-3.5 text-teal-600" /> PLANETARY & ORBITAL TELEMETRY
+              <MapPin className="h-3.5 w-3.5 text-teal-600" /> GEOSPATIAL FLEET TRACKING
             </div>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-              Track ground vaults, sub-oceanic trenches, and orbital satellite rings.
+              See your entire hardware estate across every branch.
             </h3>
             <p className="text-slate-600 text-sm leading-relaxed">
-              Hardware operations in 2080 span deep oceanic trenches, terrestrial fusion arrays, and satellite constellations visualized on an interactive 3D planetary mesh.
+              No more guessing where critical switches or failing UPS batteries are located. AssetOps includes free Leaflet maps featuring CARTO Dark vector tiles, proportional risk clusters, and an interactive pin-drop picker.
             </p>
             <div className="space-y-2 pt-2 text-xs text-slate-700 font-medium">
               {[
-                "Zero latency planetary coordinate locks with sub-millimeter precision",
-                "Orbital satellite drift and solar radiation exposure heatmaps",
-                "Deep-sea trench temperature and superconducting pressure telemetry",
-                "Instant failover rerouting during solar flare electromagnetic pulses",
+                "100% Free OpenStreetMap & CARTO vector tiles (zero Google Maps fees)",
+                "Proportional asset cluster circles scaled by device count and failure risk",
+                "Interactive GPS Pin-Drop picker when registering branches or server rooms",
+                "Fly-to site inspection with instant work-order dispatch",
               ].map((text) => (
                 <div key={text} className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-teal-600 shrink-0 mt-0.5" />
@@ -182,28 +182,28 @@ export default function FeatureTabs() {
                 href="/app/locations"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-teal-600 text-white hover:bg-teal-700 shadow-sm transition"
               >
-                Access Planetary GIS Fleet <ArrowRight className="h-3.5 w-3.5" />
+                Access GIS Fleet Grid <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* Planetary Visual */}
-          <div className="bg-slate-900 text-white rounded-2xl p-5 space-y-3 shadow-xl">
+          {/* GIS Visual Preview */}
+          <div className="bg-slate-900 text-white rounded-2xl p-5 space-y-3 shadow-xl font-mono">
             <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
               <div className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse shadow-[0_0_8px_#14b8a6]" />
-                <span className="text-xs font-bold text-white">TERRA & ORBITAL NODES // ACTIVE</span>
+                <span className="text-xs font-bold text-white">NIGERIA ESTATE NODES // ACTIVE</span>
               </div>
-              <span className="text-[10px] text-teal-400 font-mono">LAT: 9.0820°N // ORBIT: 420KM</span>
+              <span className="text-[10px] text-teal-400">14 SITES ACTIVE</span>
             </div>
 
             <div className="relative h-60 w-full bg-slate-950 rounded-xl border border-slate-800 overflow-hidden flex items-center justify-center">
               <div className="absolute top-8 left-1/3 flex flex-col items-center">
                 <div className="h-7 w-7 rounded-full bg-teal-950 border-2 border-teal-400 flex items-center justify-center text-[10px] font-bold text-teal-300 shadow-[0_0_12px_#14b8a6]">
-                  ORB
+                  ABJ
                 </div>
                 <span className="text-[10px] text-teal-200 bg-slate-900/90 px-2 py-0.5 rounded border border-slate-700 mt-1">
-                  Relay Alpha (Alt 420km)
+                  Abuja Data Center (1,842 units)
                 </span>
               </div>
 
@@ -212,57 +212,57 @@ export default function FeatureTabs() {
                   LOS
                 </div>
                 <span className="text-[10px] text-cyan-200 bg-slate-900/90 px-2 py-0.5 rounded border border-slate-700 mt-1">
-                  Lagos Oceanic Trench (Cryo 4K)
+                  Lagos HQ (2,410 units · 12 At Risk)
                 </span>
               </div>
 
               <div className="absolute bottom-12 right-1/4 flex flex-col items-center">
                 <div className="h-6 w-6 rounded-full bg-indigo-950 border-2 border-indigo-400 flex items-center justify-center text-[9px] font-bold text-indigo-300 shadow-[0_0_12px_#818cf8]">
-                  ABJ
+                  PHC
                 </div>
                 <span className="text-[10px] text-indigo-200 bg-slate-900/90 px-2 py-0.5 rounded border border-slate-700 mt-1">
-                  Abuja Fusion Core (5.2 GW)
+                  Port Harcourt Hub (850 units)
                 </span>
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+            <div className="grid grid-cols-3 gap-2 text-center text-xs">
               <div className="p-2 rounded-lg bg-slate-800/80 border border-slate-700">
-                <div className="text-[9px] text-slate-400 uppercase">Array Hubs</div>
-                <div className="font-bold text-white">48 Sectors</div>
+                <div className="text-[9px] text-slate-400 uppercase">Branches</div>
+                <div className="font-bold text-white">14 Sites</div>
               </div>
               <div className="p-2 rounded-lg bg-slate-800/80 border border-slate-700">
-                <div className="text-[9px] text-slate-400 uppercase">Entanglement</div>
-                <div className="font-bold text-teal-400">100% Synced</div>
+                <div className="text-[9px] text-slate-400 uppercase">GPS Accuracy</div>
+                <div className="font-bold text-teal-400">100% Pinned</div>
               </div>
               <div className="p-2 rounded-lg bg-slate-800/80 border border-slate-700">
-                <div className="text-[9px] text-slate-400 uppercase">Coherence</div>
-                <div className="font-bold text-cyan-400">99.999%</div>
+                <div className="text-[9px] text-slate-400 uppercase">Health</div>
+                <div className="font-bold text-cyan-400">96.4% Good</div>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Tab 3: Nanite Swarms */}
+      {/* Tab 3: Preventative Maintenance */}
       {activeTab === "preventative" && (
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 grid lg:grid-cols-2 gap-8 items-center shadow-2xl shadow-slate-200/50">
           <div className="space-y-4 font-sans">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-50 border border-violet-200 text-violet-800 text-xs font-bold font-mono">
-              <Bot className="h-3.5 w-3.5 text-violet-600" /> AUTONOMOUS SWARM PROTOCOL
+              <CalendarClock className="h-3.5 w-3.5 text-violet-600" /> ROUTINE MAINTENANCE ENGINE
             </div>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-              Self-healing circuits. Zero human technician callouts.
+              Fix degradation before it creates business emergencies.
             </h3>
             <p className="text-slate-600 text-sm leading-relaxed">
-              AssetOps directs fleets of microscopic nanite drones that navigate thermal conduits, de-dust optical waveguides, and atomic-solder degrading quantum gates before downtime occurs.
+              Don&apos;t wait for a server power supply to fail or a branch switch to drop offline during peak transactions. AssetOps schedules recurring service cadences (30, 90, 180 days) and automatically creates batch work orders.
             </p>
             <div className="space-y-2 pt-2 text-xs text-slate-700 font-medium">
               {[
-                "Real-time microscopic laser welding with zero server shutdown",
-                "Automated 30-day thermal conduit purge and particulate de-crystallization",
-                "Drone swarm coordination with cryptographic proof-of-repair logs",
-                "Predictive lattice restoration prior to semiconductor lattice breach",
+                "Targeted by Asset Type, Location, or Department",
+                "Automatic batch creation of timestamped work orders with SLA countdowns",
+                "Prioritized by operational criticality: High, Medium, Low",
+                "Verified technician sign-off with photographic evidence and part logs",
               ].map((text) => (
                 <div key={text} className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-violet-600 shrink-0 mt-0.5" />
@@ -275,35 +275,35 @@ export default function FeatureTabs() {
                 href="/app/preventative"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-violet-600 text-white hover:bg-violet-700 shadow-sm transition"
               >
-                Inspect Nanite Dispatcher <ArrowRight className="h-3.5 w-3.5" />
+                Inspect PM Scheduler <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* Nanite Card */}
+          {/* PM Card */}
           <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3 shadow-inner">
             <div className="flex items-center justify-between border-b border-slate-200 pb-2.5">
-              <span className="text-xs font-bold text-slate-500">DISPATCH // SWARM-742-ALPHA</span>
+              <span className="text-xs font-bold text-slate-500 font-mono">SCHEDULE // PM-CORE-Q1</span>
               <span className="text-[11px] font-bold text-violet-800 bg-violet-50 px-2 py-0.5 rounded border border-violet-200">
-                ACTIVE REPAIR RUN
+                ACTIVE (EVERY 90 DAYS)
               </span>
             </div>
 
             <div className="space-y-2">
               {[
-                { title: "Optical Waveguide Phase Alignment", target: "Cryo QPU Array #04", status: "In Progress (92%)", drones: "4,200 micro-drones" },
-                { title: "Fusion Conduit Superconducting Purge", target: "Main Terawatt Bus", status: "Scheduled (2h)", drones: "12,000 micro-drones" },
-                { title: "Memory Crystal Lattice Recalibration", target: "Atlantic Vault Core", status: "Completed", drones: "800 micro-drones" },
+                { title: "Quarterly Switch Stack Firmware & Dust Cleaning", target: "All Cisco / Juniper Switches", next: "In 4 days", count: "48 assets" },
+                { title: "Bi-Monthly UPS Battery Load & Calibration Test", target: "Server Room APC Systems", next: "In 12 days", count: "16 units" },
+                { title: "Annual Air-Conditioning & Thermal Inspection", target: "Data Center Cooling Units", next: "In 28 days", count: "6 chillers" },
               ].map((item, i) => (
                 <div key={i} className="p-3.5 rounded-xl border border-slate-200/80 bg-white flex items-center justify-between shadow-sm">
                   <div>
-                    <div className="text-xs font-bold text-slate-900 font-sans">{item.title}</div>
-                    <div className="text-[11px] text-slate-500 mt-0.5 font-sans">
-                      <span>{item.target}</span> • <span className="font-mono text-cyan-600 font-bold">{item.drones}</span>
+                    <div className="text-xs font-bold text-slate-900">{item.title}</div>
+                    <div className="text-[11px] text-slate-500 mt-0.5">
+                      <span>{item.target}</span> • <span className="font-mono text-cyan-600 font-bold">{item.count}</span>
                     </div>
                   </div>
                   <span className="text-[11px] font-bold text-violet-800 bg-violet-50 px-2.5 py-0.5 rounded-full border border-violet-200">
-                    {item.status}
+                    {item.next}
                   </span>
                 </div>
               ))}
@@ -312,25 +312,25 @@ export default function FeatureTabs() {
         </div>
       )}
 
-      {/* Tab 4: Molecular Purge */}
+      {/* Tab 4: Certified Decommissioning */}
       {activeTab === "decommission" && (
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 grid lg:grid-cols-2 gap-8 items-center shadow-2xl shadow-slate-200/50">
           <div className="space-y-4 font-sans">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold font-mono">
-              <ShieldCheck className="h-3.5 w-3.5 text-rose-600" /> ZERO-STATE ATOMIC PURGE
+              <ShieldCheck className="h-3.5 w-3.5 text-rose-600" /> NIST 800-88 SANITIZATION
             </div>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-              Molecular data dissolution & quantum entanglement erasure.
+              Audit-proof data wipe & retirement certificates.
             </h3>
             <p className="text-slate-600 text-sm leading-relaxed">
-              When a quantum memory crystal reaches end-of-life, AssetOps triggers laser-induced molecular lattice collapse, erasing all quantum entanglement states with certified proof for interplanetary regulators.
+              Retiring servers or storage arrays without cryptographic proof invites massive regulatory fines. AssetOps certifies disposal with NIST 800-88 & DoD 5220.22-M sanitization methods and automatically logs salvage recovery value.
             </p>
             <div className="space-y-2 pt-2 text-xs text-slate-700 font-medium">
               {[
-                "Compliant with Interplanetary Governance Data Standard IGDS-2079",
-                "Irreversible sub-atomic lattice collapse with 0 reconstructible states",
-                "Quantum Entangled Certificate generated with unique cryptographic hash",
-                "Molecular scrap recovery credits logged directly into the FinOps ledger",
+                "Compliant with NIST SP 800-88 Rev 1, DoD 5220.22-M, and NDPR/GDPR",
+                "Tamper-evident certificate with unique Certificate ID and SHA-256 digest",
+                "Automatic transition to RETIRED state with zero ghost inventory",
+                "Salvage and recycling valuation credited straight to FinOps capital ledger",
               ].map((text) => (
                 <div key={text} className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-rose-600 shrink-0 mt-0.5" />
@@ -348,66 +348,66 @@ export default function FeatureTabs() {
             </div>
           </div>
 
-          {/* Certificate Mockup 2080 */}
+          {/* Certificate Mockup */}
           <div className="bg-white border-2 border-slate-300 rounded-2xl p-5 shadow-lg relative space-y-3 text-xs">
             <div className="flex items-start justify-between border-b border-slate-200 pb-3">
               <div className="flex items-center gap-2">
                 <FileBadge className="h-6 w-6 text-rose-600" />
                 <div>
-                  <div className="text-xs font-black text-slate-900 uppercase font-sans">MOLECULAR DISSOLUTION CERTIFICATE</div>
-                  <div className="text-[10px] text-slate-500 font-mono">IGDS-2079 QUANTUM PURGE STANDARD</div>
+                  <div className="text-xs font-black text-slate-900 uppercase">SANITIZATION CERTIFICATE</div>
+                  <div className="text-[10px] text-slate-500 font-mono">NIST SP 800-88 REV 1 COMPLIANT</div>
                 </div>
               </div>
-              <span className="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                PURGED // ZERO STATE
+              <span className="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-mono">
+                VERIFIED VALID
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-xs font-mono">
               <div>
-                <span className="text-[10px] text-slate-400 block">SUBSTRATE</span>
-                <span className="font-bold text-slate-800">Quantum Crystal Q-9481</span>
+                <span className="text-[10px] text-slate-400 block">ASSET</span>
+                <span className="font-bold text-slate-800">Dell PowerEdge R740</span>
               </div>
               <div>
                 <span className="text-[10px] text-slate-400 block">METHOD</span>
-                <span className="font-bold text-rose-600">Laser Lattice Collapse</span>
+                <span className="font-bold text-rose-600">NIST 800-88 Purge</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 block">CERTIFIED SYSTEM</span>
-                <span className="text-slate-800">Sentinel AI Sentinel</span>
+                <span className="text-[10px] text-slate-400 block">CERTIFIED BY</span>
+                <span className="text-slate-800">SecOps Lead</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 block">PLASMA SALVAGE</span>
-                <span className="text-teal-700 font-bold">Ꞙ420,000 Recovered</span>
+                <span className="text-[10px] text-slate-400 block">SALVAGE RECOVERY</span>
+                <span className="text-teal-700 font-bold">₦185,000 Credited</span>
               </div>
             </div>
 
             <div className="p-2.5 rounded bg-slate-50 border border-slate-200 text-[10px] text-slate-500 break-all font-mono">
-              QUANTUM-HASH: 9f8a2bc4109de7a00318bbca7104f291048ba9e1
+              SHA256: 7e9a82f3a14c8109bf1d02c633aef234b071192e42bc51030
             </div>
           </div>
         </div>
       )}
 
-      {/* Tab 5: Spatial Holo-Passports */}
+      {/* Tab 5: QR Passports */}
       {activeTab === "qr" && (
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 grid lg:grid-cols-2 gap-8 items-center shadow-2xl shadow-slate-200/50">
           <div className="space-y-4 font-sans">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold font-mono">
-              <Radio className="h-3.5 w-3.5 text-amber-600" /> VOLUMETRIC AR PASSPORTS
+              <QrCode className="h-3.5 w-3.5 text-amber-600" /> DIGITAL HARDWARE PASSPORTS
             </div>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-              Spatial neural aura projecting above physical hardware.
+              One mobile scan. Complete lifetime maintenance history.
             </h3>
             <p className="text-slate-600 text-sm leading-relaxed">
-              No QR stickers or handheld screens. Wearable neural contacts or drone optics project a 4D holographic aura 5 centimeters above any quantum chassis to view lifetime coherence, nanite logs, and cryptographic ownership.
+              Equip every laptop, server, and access point with an encrypted QR passport label. Any technician with a smartphone camera can point at the device to view historical repairs, verify warranty status, and log diagnostic notes on the spot.
             </p>
             <div className="space-y-2 pt-2 text-xs text-slate-700 font-medium">
               {[
-                "Neural eye-tracking authentication with zero handheld scanners",
-                "Instant biometric verification tied to employee neural implant signature",
-                "One-thought work order dispatch directly into the nanite fleet queue",
-                "Volumetric holographic teardown diagrams projected in 3D air",
+                "Zero proprietary hardware needed: works on any standard mobile browser",
+                "Cryptographically signed token prevents unauthorized serial crawling",
+                "One-tap work order initiation right in front of the malfunctioning device",
+                "Batch printable high-resolution QR sheets for thermal label printers",
               ].map((text) => (
                 <div key={text} className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
@@ -420,42 +420,42 @@ export default function FeatureTabs() {
                 href="/app/assets"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-amber-600 text-white hover:bg-amber-700 shadow-sm transition"
               >
-                Inspect Holo-Passport Registry <ArrowRight className="h-3.5 w-3.5" />
+                Browse Asset Registry <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* AR Hologram Mockup */}
-          <div className="mx-auto w-72 rounded-3xl border-2 border-slate-300 bg-slate-900 p-4 shadow-xl">
-            <div className="space-y-3 font-mono">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span className="text-[10px] text-amber-400 font-bold">NEURAL AR RETICLE</span>
-                <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping" />
+          {/* QR Phone Mockup */}
+          <div className="mx-auto w-64 rounded-3xl border-2 border-slate-300 bg-slate-900 p-3 shadow-xl">
+            <div className="rounded-2xl bg-white p-4 space-y-3 text-slate-800 font-mono">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                <span className="text-[10px] text-slate-400 font-bold">DIGITAL PASSPORT</span>
+                <span className="h-2 w-2 rounded-full bg-teal-500" />
               </div>
 
-              <div className="p-3 rounded-xl border border-slate-800 bg-slate-950 flex items-center gap-3">
-                <div className="h-10 w-10 bg-amber-500/10 border border-amber-400/40 text-amber-400 rounded-lg flex items-center justify-center shrink-0">
-                  <Radio className="h-5 w-5 animate-pulse" />
+              <div className="p-2.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center gap-3">
+                <div className="h-9 w-9 bg-slate-900 text-white rounded-lg flex items-center justify-center shrink-0">
+                  <QrCode className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-black text-white">Q-CORE-LAG-004821</div>
-                  <div className="text-[10.5px] text-slate-400 font-sans">Photonic Synapse Array</div>
+                  <div className="text-xs font-black text-slate-900">ICT-LAG-004821</div>
+                  <div className="text-[11px] text-slate-500 font-sans">Dell Latitude 7440</div>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-2 text-center text-xs">
-                <div className="p-2 rounded-lg bg-slate-950 border border-slate-800">
-                  <div className="text-[9px] text-slate-400">COHERENCE</div>
-                  <div className="font-bold text-cyan-400">99.98%</div>
+                <div className="p-2 rounded-lg bg-teal-50 border border-teal-200">
+                  <div className="text-[9px] text-teal-700 font-bold">HEALTH</div>
+                  <div className="font-bold text-teal-800">84 / 100</div>
                 </div>
-                <div className="p-2 rounded-lg bg-slate-950 border border-slate-800">
-                  <div className="text-[9px] text-slate-400">ENTROPY</div>
-                  <div className="font-bold text-amber-400">-0.002%</div>
+                <div className="p-2 rounded-lg bg-slate-100 border border-slate-200">
+                  <div className="text-[9px] text-slate-500 font-bold">REPAIRS</div>
+                  <div className="font-bold text-slate-800">3 Total</div>
                 </div>
               </div>
 
-              <button className="w-full py-2.5 rounded-xl text-xs font-bold bg-amber-400 text-slate-950 hover:bg-amber-300 transition">
-                Engage Nanite Re-alignment
+              <button className="w-full py-2 rounded-xl text-xs font-bold bg-slate-900 text-white font-sans hover:bg-slate-800 transition">
+                Log New Work Order
               </button>
             </div>
           </div>
