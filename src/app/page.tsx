@@ -37,6 +37,7 @@ import InteractiveConsole from "@/components/landing/InteractiveConsole";
 import BentoGrid from "@/components/landing/BentoGrid";
 import RoiCalculator from "@/components/landing/RoiCalculator";
 import IndustrySolutions from "@/components/landing/IndustrySolutions";
+import LocationAwareFleetGis from "@/components/landing/LocationAwareFleetGis";
 import FaqAccordion from "@/components/landing/FaqAccordion";
 import { Logo } from "@/components/ui";
 
@@ -311,91 +312,9 @@ export default function Landing() {
         <RoiCalculator />
       </Sec>
 
-      {/* 7. NATIONWIDE FLEET GIS SPOTLIGHT (VISUAL MAP RADAR) */}
+      {/* 7. NATIONWIDE FLEET GIS SPOTLIGHT (LOCATION-AWARE) */}
       <Sec id="gis" className="border-t border-slate-200/80">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-xs font-mono font-bold">
-              <Globe2 className="h-3.5 w-3.5 text-teal-600" />
-              <span>Zero-License Fleet GIS</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 font-sans">
-              Headquarter data centers to remote project sites.
-            </h2>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-sans">
-              100% keyless OpenStreetMap vector clustering. Zero Google Maps or Mapbox monthly billing invoices.
-            </p>
-
-            {/* Live Location Visual Chips */}
-            <div className="grid sm:grid-cols-3 gap-2.5 font-mono pt-2">
-              <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
-                <div className="text-[9px] text-slate-400 uppercase font-bold">Marina HQ DC</div>
-                <div className="font-black text-slate-900 mt-0.5 text-sm">5,410 Units</div>
-                <div className="text-[10px] text-emerald-700 font-bold">Tier III Active</div>
-              </div>
-              <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
-                <div className="text-[9px] text-slate-400 uppercase font-bold">Abuja CBD Hub</div>
-                <div className="font-black text-slate-900 mt-0.5 text-sm">4,120 Units</div>
-                <div className="text-[10px] text-cyan-700 font-bold">Sub-Minute Sync</div>
-              </div>
-              <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
-                <div className="text-[9px] text-slate-400 uppercase font-bold">Epe Solar Site</div>
-                <div className="font-black text-slate-900 mt-0.5 text-sm">1,840 Units</div>
-                <div className="text-[10px] text-amber-700 font-bold">Substation RTU</div>
-              </div>
-            </div>
-
-            <div className="pt-3 font-mono">
-              <Link
-                href="/app/locations"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-700 text-white shadow-sm transition"
-              >
-                Inspect Nationwide Fleet Map <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Visual Map Radar Canvas */}
-          <div className="h-72 rounded-3xl bg-slate-100 border border-slate-200 relative overflow-hidden flex items-center justify-center font-mono shadow-xl">
-            <div
-              className="absolute inset-0 opacity-40"
-              style={{
-                backgroundImage:
-                  "linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px)",
-                backgroundSize: "40px 40px",
-              }}
-            />
-
-            {/* Node 1: Lagos HQ */}
-            <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-              <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center animate-ping absolute" />
-              <div className="w-5 h-5 rounded-full bg-cyan-600 border-2 border-white shadow-md relative z-10" />
-              <div className="mt-1 bg-white/95 px-2.5 py-1 rounded-xl shadow-md border border-slate-200 text-[10.5px] font-bold text-slate-800 whitespace-nowrap">
-                Lagos HQ (5,410 Units)
-              </div>
-            </div>
-
-            {/* Node 2: Abuja */}
-            <div className="absolute top-1/4 right-1/3 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-              <div className="w-5 h-5 rounded-full bg-indigo-600 border-2 border-white shadow-md relative z-10" />
-              <div className="mt-1 bg-white/95 px-2.5 py-1 rounded-xl shadow-md border border-slate-200 text-[10.5px] font-bold text-slate-800 whitespace-nowrap">
-                Abuja Fed Hub (4,120 Units)
-              </div>
-            </div>
-
-            {/* Node 3: Epe Solar */}
-            <div className="absolute bottom-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-              <div className="w-5 h-5 rounded-full bg-amber-500 border-2 border-white shadow-md relative z-10" />
-              <div className="mt-1 bg-white/95 px-2.5 py-1 rounded-xl shadow-md border border-slate-200 text-[10.5px] font-bold text-slate-800 whitespace-nowrap">
-                Epe Solar Substation (1,840 Units)
-              </div>
-            </div>
-
-            <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur px-3 py-1 rounded-xl border border-slate-200 text-[10px] text-slate-600">
-              Keyless OpenStreetMap Vector Mesh · ₦0 API Billing
-            </div>
-          </div>
-        </div>
+        <LocationAwareFleetGis />
       </Sec>
 
       {/* 8. INDUSTRY TOPOLOGY WORKFLOWS */}
@@ -475,12 +394,12 @@ export default function Landing() {
 
       {/* 10. CRYPTOGRAPHIC AUDIT DEFENSE */}
       <Sec id="security" className="border-t border-slate-200/80">
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 font-mono">
+        <div className="text-center max-w-4xl mx-auto mb-8 sm:mb-12 font-mono">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-800 text-xs font-bold mb-3">
             <Shield className="h-3.5 w-3.5 text-slate-700" />
             <span>GOVERNANCE & AUDIT</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-950 font-sans">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-slate-950 font-sans md:whitespace-nowrap">
             Defend every hardware metric before auditors.
           </h2>
         </div>
@@ -652,18 +571,21 @@ export default function Landing() {
         </div>
       </Sec>
 
-      {/* 14. BRIGHT CLEAN FOOTER */}
+      {/* 14. BRIGHT CLEAN FOOTER - SINGLE LINE */}
       <footer className="border-t border-slate-200/80 bg-white relative z-10 font-mono">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col lg:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 flex-shrink-0">
             <Logo />
             <span className="text-slate-300">|</span>
-            <span className="text-xs text-slate-500 font-sans">
+            <span className="text-xs text-slate-500 font-sans hidden sm:inline">
               Enterprise ICT Hardware FinOps & Lifecycle Intelligence
+            </span>
+            <span className="text-xs text-slate-500 font-sans sm:hidden">
+              ICT FinOps Platform
             </span>
           </div>
 
-          <nav aria-label="Footer" className="flex flex-wrap gap-6 text-xs text-slate-600 font-semibold font-sans">
+          <nav aria-label="Footer" className="flex items-center gap-5 lg:gap-6 text-xs text-slate-600 font-medium font-sans whitespace-nowrap">
             <a href="#platform" className="hover:text-cyan-600 transition">Platform</a>
             <a href="#finops" className="hover:text-cyan-600 transition">FinOps Engine</a>
             <a href="#gis" className="hover:text-cyan-600 transition">Nationwide GIS</a>
@@ -672,12 +594,12 @@ export default function Landing() {
             <a href="#faq" className="hover:text-cyan-600 transition">FAQ</a>
           </nav>
 
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 text-xs text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200">
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <div className="flex items-center gap-1.5 text-xs text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200 font-medium">
               <span className="h-1.5 w-1.5 rounded-full bg-teal-500 animate-pulse" />
               <span>ONLINE</span>
             </div>
-            <div className="text-xs text-slate-400">© ASSETOPS</div>
+            <div className="text-xs text-slate-400 font-sans">© ASSETOPS</div>
           </div>
         </div>
       </footer>
