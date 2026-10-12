@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Landmark, Hospital, GraduationCap, Building2, Check, ArrowUpRight, ShieldCheck, AlertCircle, Orbit, Cpu, Sparkles } from "lucide-react";
+import { Landmark, Hospital, GraduationCap, Building2, Check, ArrowUpRight, ShieldCheck, AlertCircle } from "lucide-react";
 import Link from "next/link";
 
 interface IndustryItem {
@@ -21,12 +21,12 @@ const INDUSTRIES: IndustryItem[] = [
     id: "banking",
     name: "Interstellar Banking & Quantum FinTech",
     icon: Landmark,
-    tagline: "Sub-picosecond quantum entanglement sync & zero trading core desynchronization",
-    badgeColor: "bg-cyan-950/80 text-cyan-300 border-cyan-400/40",
+    tagline: "Sub-picosecond quantum entanglement sync & zero trading desynchronization",
+    badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
     painPoint:
-      "When orbital-to-terrestrial quantum relays suffer atmospheric phase decoherence, algorithmic trading vaults freeze. Banks bleed trillions in compute arbitrage while archaic audit ledgers fail to prove entanglement fidelity.",
+      "When orbital-to-terrestrial quantum relays suffer phase decoherence, algorithmic trading vaults freeze. Banks bleed trillions in compute arbitrage while archaic ledgers fail to prove entanglement fidelity.",
     solution:
-      "AssetOps provides sub-nanosecond hardware health telemetry across terrestrial vault rings and orbital satellite arrays, autonomous nanite waveguide stabilization, and cryptographic molecular purge certs for retired quantum storage crystals.",
+      "AssetOps provides sub-nanosecond hardware health telemetry across terrestrial vaults and orbital satellite arrays, autonomous nanite waveguide stabilization, and cryptographic molecular purge certs for retired QPUs.",
     kpis: [
       { label: "Quantum Mesh Coherence", value: "99.9999%" },
       { label: "Interplanetary Audit Deficit", value: "0 Violations" },
@@ -41,14 +41,14 @@ const INDUSTRIES: IndustryItem[] = [
   },
   {
     id: "healthcare",
-    name: "Bio-Digital Hospitals & Synthetic Life Hubs",
+    name: "Bio-Digital Hospitals & Synthetic Life",
     icon: Hospital,
     tagline: "Life-critical organ synthesis consoles & zero-entropy neural ICU telemetry",
-    badgeColor: "bg-emerald-950/80 text-emerald-300 border-emerald-400/40",
+    badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
     painPoint:
       "Hardware degradation in synthetic organ printers, cryogenic preservation pods, and neural ICU consoles risks human lives. Biomedical teams battle micro-lattice stress fractures that human eyes cannot see.",
     solution:
-      "AssetOps tracks clinical hardware down to the exact bio-theatre chamber. Autonomous nanite inspection swarms execute laser micro-welds weeks before molecular lattice breakdown occurs, while volumetric holo-passports allow instant surgical intervention.",
+      "AssetOps tracks clinical hardware down to the exact bio-theatre chamber. Autonomous nanite inspection swarms execute laser micro-welds weeks before molecular breakdown occurs.",
     kpis: [
       { label: "Organ Synthesizer Uptime", value: "100.00%" },
       { label: "Nanite PM Compliance", value: "100% Autonomous" },
@@ -66,9 +66,9 @@ const INDUSTRIES: IndustryItem[] = [
     name: "Mega-Campus Neural Academies",
     icon: GraduationCap,
     tagline: "50,000+ holographic neural pods across multi-planetary research campuses",
-    badgeColor: "bg-indigo-950/80 text-indigo-300 border-indigo-400/40",
+    badgeColor: "bg-purple-50 text-purple-700 border-purple-200",
     painPoint:
-      "Tens of thousands of neural-interface headsets and quantum student compute pods are scattered across vast continental campuses. Ghost asset leakage is rampant, and exam pods frequently face quantum decoherence during testing.",
+      "Tens of thousands of neural-interface headsets and quantum student compute pods are scattered across vast continental campuses. Ghost asset leakage is rampant, and pods face decoherence during exams.",
     solution:
       "AssetOps consolidates decentralized faculty nodes into one unified planetary GIS grid. Campus managers run semester nanite re-alignment sweeps, and stolen neural pods automatically engage spatial coordinate lockdown.",
     kpis: [
@@ -88,11 +88,11 @@ const INDUSTRIES: IndustryItem[] = [
     name: "Sovereign Fusion Grids & Planetary MDAs",
     icon: Building2,
     tagline: "Eradicate ghost hardware in multi-GW fusion grids & defend 8-cycle capital budgets",
-    badgeColor: "bg-amber-950/80 text-amber-300 border-amber-400/40",
+    badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
     painPoint:
-      "Public sector ministries struggle with unverified hardware on paper ledgers, untracked procurement vendor contracts, and recurring repair budgets on obsolete quantum cores that should have been recycled.",
+      "Public sector ministries struggle with unverified hardware on paper ledgers, untracked procurement vendor contracts, and recurring repair budgets on obsolete quantum cores.",
     solution:
-      "AssetOps enforces drone-verified physical inventory of every sovereign asset, automates thermodynamic straight-line depreciation, and applies the 14% lattice rule to stop wasteful public-sector contractor repair waste.",
+      "AssetOps enforces drone-verified physical inventory of every sovereign asset, automates thermodynamic straight-line depreciation, and applies the 14% lattice rule to stop contractor repair waste.",
     kpis: [
       { label: "Phantom Assets Identified", value: "100% Verified" },
       { label: "Defensible CapEx Forecast", value: "8 Solar Cycles" },
@@ -113,7 +113,7 @@ export default function IndustrySolutions() {
   const Icon = current.icon;
 
   return (
-    <div className="space-y-6 font-mono">
+    <div className="space-y-6">
       {/* 4 Industry Buttons */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {INDUSTRIES.map((ind) => {
@@ -125,8 +125,8 @@ export default function IndustrySolutions() {
               onClick={() => setSelectedId(ind.id)}
               className={`p-4 rounded-2xl border text-left transition-all ${
                 isSelected
-                  ? "bg-[#091124] border-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.25)] ring-1 ring-cyan-400/50"
-                  : "bg-[#050914]/80 border-cyan-500/20 hover:border-cyan-400/50 hover:bg-[#070e1e]"
+                  ? "bg-white border-slate-300 shadow-md ring-2 ring-cyan-500/30"
+                  : "bg-white/80 border-slate-200 hover:border-slate-300 hover:bg-white"
               }`}
             >
               <div className="flex items-center justify-between mb-3">
@@ -134,54 +134,54 @@ export default function IndustrySolutions() {
                   <ItemIcon className="h-5 w-5" />
                 </div>
                 {isSelected && (
-                  <span className="text-[10px] font-bold text-cyan-300 bg-cyan-950 px-2 py-0.5 rounded-full border border-cyan-500/40">
+                  <span className="text-[10px] font-mono font-bold text-cyan-800 bg-cyan-50 px-2 py-0.5 rounded-full border border-cyan-200">
                     LOCKED
                   </span>
                 )}
               </div>
-              <div className="font-bold text-sm text-white">{ind.name}</div>
-              <div className="text-[11px] text-slate-400 line-clamp-1 mt-0.5 font-sans">{ind.tagline}</div>
+              <div className="font-bold text-sm text-slate-900">{ind.name}</div>
+              <div className="text-[11px] text-slate-500 line-clamp-1 mt-0.5 font-sans">{ind.tagline}</div>
             </button>
           );
         })}
       </div>
 
       {/* Selected Industry Detail Card */}
-      <div className="bg-[#060a16]/95 border border-cyan-500/30 rounded-2xl p-6 sm:p-9 shadow-[0_0_40px_rgba(0,240,255,0.12)]">
+      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-9 shadow-2xl shadow-slate-200/50">
         <div className="grid lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Challenge & Solution */}
-          <div className="lg:col-span-7 space-y-5">
+          <div className="lg:col-span-7 space-y-5 font-sans">
             <div className="flex items-center gap-3">
-              <div className={`p-3 rounded-xl border ${current.badgeColor}`}>
+              <div className={`p-3 rounded-2xl border ${current.badgeColor}`}>
                 <Icon className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="text-2xl font-black text-white tracking-tight">{current.name}</h3>
-                <p className="text-xs font-semibold text-cyan-300 mt-0.5">{current.tagline}</p>
+                <h3 className="text-2xl font-black text-slate-950 tracking-tight">{current.name}</h3>
+                <p className="text-xs font-bold text-cyan-700 mt-0.5 font-mono">{current.tagline}</p>
               </div>
             </div>
 
             {/* Pain Point */}
-            <div className="p-4 rounded-xl bg-rose-950/40 border border-rose-500/30 space-y-1">
-              <div className="flex items-center gap-2 text-xs font-bold text-rose-300">
-                <AlertCircle className="h-4 w-4 text-rose-400" /> Systemic Entropy Hazard
+            <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-1">
+              <div className="flex items-center gap-2 text-xs font-bold text-rose-800">
+                <AlertCircle className="h-4 w-4 text-rose-600" /> Systemic Entropy Hazard
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed font-sans">{current.painPoint}</p>
+              <p className="text-xs text-rose-950 leading-relaxed font-medium">{current.painPoint}</p>
             </div>
 
             {/* Solution */}
-            <div className="p-4 rounded-xl bg-cyan-950/40 border border-cyan-500/30 space-y-1">
-              <div className="flex items-center gap-2 text-xs font-bold text-cyan-300">
-                <ShieldCheck className="h-4 w-4 text-cyan-400" /> Autonomous 2080 Resolution
+            <div className="p-4 rounded-2xl bg-teal-50 border border-teal-200 space-y-1">
+              <div className="flex items-center gap-2 text-xs font-bold text-teal-800">
+                <ShieldCheck className="h-4 w-4 text-teal-600" /> Autonomous 2080 Resolution
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed font-sans">{current.solution}</p>
+              <p className="text-xs text-teal-950 leading-relaxed font-medium">{current.solution}</p>
             </div>
 
             {/* Features list */}
             <div className="grid sm:grid-cols-2 gap-2 pt-1">
               {current.features.map((feat, idx) => (
-                <div key={idx} className="flex items-start gap-2 text-xs text-slate-300 font-sans">
-                  <Check className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
+                <div key={idx} className="flex items-start gap-2 text-xs text-slate-700 font-medium">
+                  <Check className="h-4 w-4 text-cyan-600 shrink-0 mt-0.5" />
                   <span>{feat}</span>
                 </div>
               ))}
@@ -189,16 +189,16 @@ export default function IndustrySolutions() {
           </div>
 
           {/* Right Column: KPIs */}
-          <div className="lg:col-span-5 bg-[#091124] border border-cyan-500/30 rounded-xl p-5 space-y-4">
-            <div className="text-xs uppercase font-bold tracking-wider text-slate-400 border-b border-cyan-500/20 pb-2">
+          <div className="lg:col-span-5 bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4 font-mono">
+            <div className="text-xs uppercase font-bold tracking-wider text-slate-500 border-b border-slate-200 pb-2">
               Verified Telemetry Benchmarks
             </div>
 
             <div className="space-y-2.5">
               {current.kpis.map((kpi, idx) => (
-                <div key={idx} className="p-3.5 rounded-xl bg-[#040813] border border-cyan-500/25 flex items-center justify-between">
-                  <span className="text-xs text-slate-400 font-sans">{kpi.label}</span>
-                  <span className="text-base font-black text-cyan-300">{kpi.value}</span>
+                <div key={idx} className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-center justify-between shadow-sm">
+                  <span className="text-xs font-medium text-slate-600 font-sans">{kpi.label}</span>
+                  <span className="text-base font-black text-cyan-700">{kpi.value}</span>
                 </div>
               ))}
             </div>
@@ -206,7 +206,7 @@ export default function IndustrySolutions() {
             <div className="pt-2">
               <Link
                 href="/sign-up"
-                className="w-full inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-500 text-slate-950 shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:brightness-110 transition"
+                className="w-full inline-flex items-center justify-center gap-1.5 py-3 px-4 rounded-xl text-xs font-black bg-slate-950 hover:bg-slate-800 text-white shadow-md transition"
               >
                 INITIALIZE SECTOR PROTOCOL <ArrowUpRight className="h-4 w-4" />
               </Link>

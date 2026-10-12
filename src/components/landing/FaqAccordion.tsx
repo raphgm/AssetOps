@@ -27,7 +27,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: "How does the autonomous Sentinel AI operate without human hallucination?",
-    a: "AssetOps uses a deterministic neural copilot grounded strictly in the local planetary PostgreSQL ledger. The sentinel cannot hallucinate metrics: every claim must cite verified physical nanite telemetry, quantum coherence readings, and cryptographic ledger IDs. If telemetry is unavailable, it explicitly reports a phase-lock vacuum.",
+    a: "AssetOps uses a deterministic neural copilot grounded strictly in the local planetary PostgreSQL ledger. The sentinel cannot hallucinate metrics: every claim must cite verified physical nanite telemetry, quantum coherence readings, and cryptographic ledger IDs.",
   },
   {
     q: "Can telemetry be exported directly to Interplanetary Sovereign ERPs?",
@@ -43,7 +43,7 @@ export default function FaqAccordion() {
   };
 
   return (
-    <div className="space-y-3 max-w-3xl mx-auto font-mono">
+    <div className="space-y-3 max-w-3xl mx-auto">
       {FAQS.map((faq, idx) => {
         const isOpen = openIndex === idx;
         return (
@@ -51,8 +51,8 @@ export default function FaqAccordion() {
             key={idx}
             className={`border rounded-2xl transition-all ${
               isOpen
-                ? "bg-[#070e1e] border-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.2)]"
-                : "bg-[#050914]/80 border-cyan-500/20 hover:border-cyan-400/40 hover:bg-[#070d1a]"
+                ? "bg-white border-cyan-300 shadow-md ring-1 ring-cyan-500/20"
+                : "bg-white/80 border-slate-200/90 hover:border-slate-300 hover:bg-white"
             }`}
           >
             <button
@@ -60,15 +60,15 @@ export default function FaqAccordion() {
               className="w-full py-4 px-5 text-left flex items-center justify-between gap-4 focus:outline-none rounded-2xl"
               aria-expanded={isOpen}
             >
-              <span className="font-bold text-sm text-white leading-snug">{faq.q}</span>
+              <span className="font-bold text-sm text-slate-900 leading-snug font-sans">{faq.q}</span>
               <ChevronDown
-                className={`h-4 w-4 text-cyan-400 shrink-0 transition-transform duration-200 ${
-                  isOpen ? "rotate-180" : ""
+                className={`h-4 w-4 text-slate-400 shrink-0 transition-transform duration-200 ${
+                  isOpen ? "rotate-180 text-cyan-600" : ""
                 }`}
               />
             </button>
             {isOpen && (
-              <div className="px-5 pb-5 text-xs text-slate-300 leading-relaxed border-t border-cyan-500/15 pt-3 font-sans">
+              <div className="px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3 font-sans">
                 {faq.a}
               </div>
             )}
