@@ -14,12 +14,13 @@ import {
   Server,
   ShieldCheck,
   Check,
-  Smartphone,
+  AlertTriangle,
+  Radio,
 } from "lucide-react";
 
 export default function BentoGrid() {
   // Live ticking countdown for the SLA Card
-  const [secondsRemaining, setSecondsRemaining] = useState(15142); // ~4h 12m 22s
+  const [secondsRemaining, setSecondsRemaining] = useState(15102);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -31,200 +32,283 @@ export default function BentoGrid() {
   const hours = Math.floor(secondsRemaining / 3600);
   const minutes = Math.floor((secondsRemaining % 3600) / 60);
   const seconds = secondsRemaining % 60;
-  const formattedTime = `${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m ${String(seconds).padStart(2, "0")}s`;
+  const formattedTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-5 font-sans">
-      {/* 1. FinOps 70% Crossover Rule (Span 7) */}
-      <div className="lg:col-span-7 bg-white border border-slate-200/90 hover:border-cyan-400 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl shadow-slate-200/40 hover:shadow-2xl transition-all group relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-cyan-100/60 via-teal-50/30 to-transparent rounded-full blur-3xl pointer-events-none" />
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-mono font-bold mb-4">
-            <Coins className="w-3.5 h-3.5 text-cyan-600" />
-            <span>FINOPS FOUNDATION ALIGNED // FOCUS™ v1.0</span>
+      {/* ========================================================== */}
+      {/* 1. FINOPS 70% CROSSOVER ENGINE (SPAN 7 - VISUAL FIRST) */}
+      {/* ========================================================== */}
+      <div className="lg:col-span-7 bg-white border-2 border-slate-200/90 hover:border-cyan-400 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-lg hover:shadow-xl transition-all relative overflow-hidden group">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-mono font-bold">
+              <Coins className="w-3.5 h-3.5 text-cyan-600" />
+              <span>FINOPS FOUNDATION // FOCUS™ v1.0</span>
+            </div>
+            <span className="text-[11px] font-mono font-bold text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200">
+              86% OF NBV BREACHED
+            </span>
           </div>
-          <h3 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight leading-tight">
-            The 70% Crossover Rule: Halt runaway maintenance debt.
-          </h3>
-          <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed font-normal">
-            Pouring ₦1.6M into repeatedly patching a server with residual book value of ₦1.8M is financial negligence. AssetOps continuously evaluates cumulative repair debt against Net Book Value, automatically blocking the repair PO and redirecting capital to fresh CapEx procurement.
-          </p>
 
-          {/* Visual Mini Ledger */}
-          <div className="mt-6 p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3 font-mono text-xs">
-            <div className="flex items-center justify-between">
-              <span className="text-slate-600 font-bold uppercase text-[10.5px]">
-                SRV-DC-00281 (Dell PowerEdge R740)
-              </span>
-              <span className="text-rose-800 bg-rose-50 px-2.5 py-0.5 rounded font-bold border border-rose-200 text-[10.5px]">
-                THRESHOLD BREACH: 86% OF NBV
-              </span>
+          <div>
+            <h3 className="text-2xl font-black text-slate-950 tracking-tight">
+              The 70% Crossover Rule
+            </h3>
+            <p className="text-slate-600 text-xs sm:text-sm mt-1 font-medium">
+              Automated CapEx gate halts negative-ROI repair spending.
+            </p>
+          </div>
+
+          {/* High-Impact Visual FinOps Comparison Graphic */}
+          <div className="p-4 rounded-2xl bg-slate-50 border-2 border-slate-200 space-y-3 font-mono">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-bold text-slate-900">SRV-DC-04 (Dell PowerEdge R740)</span>
+              <span className="text-rose-700 font-black">₦1,120,000 / ₦1,300,000 NBV</span>
             </div>
-            <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden flex border border-slate-200">
-              <div className="bg-cyan-500 h-full" style={{ width: "70%" }} />
-              <div className="bg-rose-500 h-full animate-pulse" style={{ width: "16%" }} />
+
+            {/* Split Bar Meter */}
+            <div className="w-full bg-slate-200 h-3.5 rounded-full overflow-hidden flex border border-slate-300">
+              <div className="bg-cyan-600 h-full" style={{ width: "70%" }} title="70% Safe Zone" />
+              <div className="bg-rose-500 h-full animate-pulse" style={{ width: "16%" }} title="16% Breach" />
             </div>
-            <div className="flex justify-between text-[11px] text-slate-700 pt-1 border-t border-slate-200">
-              <span>Cumulative Repairs: ₦1,420,000</span>
-              <span className="text-cyan-800 font-bold">₦480,000 Diverted to 2026 CapEx</span>
+
+            <div className="grid grid-cols-2 gap-2 pt-1 text-[11px]">
+              <div className="p-2.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
+                <span className="text-slate-500">Cumulative Sunk Cost:</span>
+                <span className="font-bold text-rose-600">₦1,120,000</span>
+              </div>
+              <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between">
+                <span className="text-emerald-800">Diverted to CapEx:</span>
+                <span className="font-bold text-emerald-900">+₦480,000</span>
+              </div>
+            </div>
+
+            <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between text-xs text-rose-950 font-bold">
+              <span className="flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4 text-rose-600" />
+                Repair PO Automatically Blocked
+              </span>
+              <span className="text-[10px] bg-rose-200 px-2 py-0.5 rounded font-mono">
+                DIVERTED TO 2025 CAPEX
+              </span>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between relative z-10">
-          <span className="text-xs text-slate-500 font-mono">
-            Inform · Optimize · Operate
-          </span>
+        <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <span className="text-slate-500">Mathematical Replacement Gate</span>
           <Link
             href="/app/finops"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-700 hover:text-cyan-800 group"
+            className="inline-flex items-center gap-1.5 font-bold text-cyan-700 hover:text-cyan-800 group"
           >
-            Explore FinOps Engine <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            Open FinOps Engine <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>
 
-      {/* 2. In-Browser PWA Camera Scanner (Span 5) */}
-      <div className="lg:col-span-5 bg-gradient-to-br from-teal-500 via-teal-600 to-cyan-700 text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl shadow-teal-500/20 relative overflow-hidden group">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none" />
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 border border-white/30 text-white text-xs font-mono font-bold mb-4 backdrop-blur-md">
+      {/* ========================================================== */}
+      {/* 2. PWA CAMERA SCANNER (SPAN 5 - VISUAL HUD) */}
+      {/* ========================================================== */}
+      <div className="lg:col-span-5 bg-gradient-to-br from-teal-600 to-cyan-800 text-white rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-xl relative overflow-hidden group">
+        <div className="space-y-3 relative z-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 border border-white/30 text-white text-xs font-mono font-bold backdrop-blur-md">
             <ScanLine className="w-3.5 h-3.5 text-teal-200" />
             <span>PWA MOBILE CAMERA SCANNER</span>
           </div>
-          <h3 className="text-2xl font-black tracking-tight text-white leading-tight">
-            Instant Field Scanning. Zero App Store downloads.
-          </h3>
-          <p className="text-teal-50 text-xs sm:text-sm mt-3 leading-relaxed font-normal">
-            Equip field engineers inspecting an Abuja substation or Kano depot with direct in-browser HTML5 scanning. Tap to launch the laser HUD, scan serial tags, and inspect machine history in sub-seconds.
-          </p>
 
-          {/* Scanner Viewfinder Visual */}
-          <div className="mt-5 p-4 rounded-2xl bg-teal-900/40 border border-teal-400/40 relative flex items-center justify-center font-mono backdrop-blur-md">
-            <div className="w-44 h-24 border-2 border-white/80 rounded-xl relative flex items-center justify-center bg-teal-950/20">
-              <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-300 to-transparent absolute animate-pulse shadow-sm shadow-cyan-300" />
-              <QrCode className="w-10 h-10 text-white/40" />
+          <div>
+            <h3 className="text-2xl font-black text-white tracking-tight">
+              Instant Field Camera Scanner
+            </h3>
+            <p className="text-teal-100 text-xs sm:text-sm mt-0.5 font-medium">
+              Sub-second QR & barcode recognition. Zero app installs.
+            </p>
+          </div>
+
+          {/* Visual Viewfinder & Scanned Card */}
+          <div className="p-4 rounded-2xl bg-teal-950/40 border border-teal-400/30 font-mono space-y-3 backdrop-blur-md">
+            <div className="w-full h-24 border-2 border-white/70 rounded-xl relative flex items-center justify-center bg-teal-950/30 overflow-hidden">
+              <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-300 to-transparent shadow-[0_0_12px_#22d3ee] animate-pulse top-1/2 -translate-y-1/2" />
+              <QrCode className="w-12 h-12 text-white/50" />
+              <div className="absolute top-2 left-2 text-[9px] text-teal-200 font-bold">LASER ACTIVE</div>
+              <div className="absolute bottom-2 right-2 text-[9px] text-teal-200 font-bold">0.2s DECODE</div>
             </div>
-            <div className="absolute bottom-2 left-4 right-4 flex justify-between text-[10px] text-teal-100">
-              <span>Laser HUD Active</span>
-              <span>100% In-Browser PWA</span>
+
+            {/* Scanned Tag Result Pill */}
+            <div className="p-2.5 rounded-xl bg-white/95 text-slate-900 flex items-center justify-between text-xs shadow-md">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="font-black text-cyan-800">LAP-005128</span>
+                <span className="text-slate-500 text-[11px]">MacBook Pro M3 Max</span>
+              </div>
+              <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-bold text-[10px]">
+                89% HEALTH
+              </span>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-white/20 flex items-center justify-between relative z-10">
-          <span className="text-xs text-teal-100 font-mono">Safari & Chrome Ready</span>
+        <div className="mt-5 pt-3 border-t border-white/20 flex items-center justify-between text-xs font-mono relative z-10">
+          <span className="text-teal-100">Safari & Chrome WebRTC</span>
           <Link
             href="/app/scan"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-white hover:text-teal-100 group"
+            className="inline-flex items-center gap-1.5 font-bold text-white hover:text-teal-100 group"
           >
-            Launch Camera Scanner <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            Launch Camera <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>
 
-      {/* 3. Automated SLA Engine & Vendor Penalty Credits (Span 4) */}
-      <div className="lg:col-span-4 bg-white border border-slate-200/90 hover:border-amber-400 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-xl shadow-slate-200/40 transition-all">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-mono font-bold mb-3">
+      {/* ========================================================== */}
+      {/* 3. AUTOMATED SLA COUNTDOWN CLOCK (SPAN 4 - VISUAL FIRST) */}
+      {/* ========================================================== */}
+      <div className="lg:col-span-4 bg-white border-2 border-slate-200/90 hover:border-amber-400 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-lg hover:shadow-xl transition-all">
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-mono font-bold">
             <Clock className="w-3.5 h-3.5 text-amber-600" />
-            <span>LIVE SLA CLOCK & REBATES</span>
+            <span>LIVE SLA CLOCK</span>
           </div>
-          <h3 className="text-xl font-black text-slate-950 tracking-tight">
-            Automated Vendor SLA Dispatch & Timer
-          </h3>
-          <p className="text-slate-600 text-xs sm:text-sm mt-2 leading-relaxed">
-            The instant a Work Order opens, AssetOps triggers an automated email to vendor support (e.g. Cisco TAC, Schneider Electric). A live SLA timer starts ticking — any breach automatically routes financial penalty credits to your FinOps ledger.
-          </p>
 
-          <div className="mt-4 p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-1.5 font-mono text-xs">
-            <div className="flex items-center justify-between text-[11px] font-bold text-amber-900">
-              <span>Vendor: Schneider Power TAC</span>
-              <span className="text-rose-600 animate-pulse font-mono">{formattedTime} REMAINING</span>
+          <div>
+            <h3 className="text-xl font-black text-slate-950 tracking-tight">
+              Automated Vendor SLA Timer
+            </h3>
+            <p className="text-slate-600 text-xs mt-0.5">
+              Breaches auto-credit contractual financial penalty rebates.
+            </p>
+          </div>
+
+          {/* Giant Digital Countdown Timer Visual */}
+          <div className="p-4 rounded-2xl bg-amber-50/70 border-2 border-amber-200 text-center font-mono space-y-2">
+            <div className="text-[10px] uppercase font-bold text-slate-500">
+              Vendor TAC Response Countdown
             </div>
-            <div className="text-[10.5px] text-slate-600 font-sans">
-              Contract Rebate: ₦25,000 / hour breached
+            <div className="text-3xl font-black text-rose-600 tracking-wider">
+              {formattedTime}
+            </div>
+            <div className="w-full bg-amber-200 h-2 rounded-full overflow-hidden">
+              <div className="bg-rose-500 h-full" style={{ width: "65%" }} />
+            </div>
+            <div className="flex items-center justify-between text-[11px] pt-1 text-amber-950 font-bold">
+              <span>Schneider Electric TAC</span>
+              <span className="text-rose-700">₦25,000 / hr Penalty</span>
             </div>
           </div>
         </div>
 
-        <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
-          <span className="text-xs text-slate-500 font-mono">Contract SLA Enforced</span>
+        <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <span className="text-slate-500">Contract SLA Enforced</span>
           <Link
             href="/app/work-orders"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 hover:text-amber-800 group"
+            className="inline-flex items-center gap-1.5 font-bold text-amber-800 hover:text-amber-900 group"
           >
             Review Orders <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>
 
-      {/* 4. Critical Power & Cooling Telemetry (Span 4) */}
-      <div className="lg:col-span-4 bg-white border border-slate-200/90 hover:border-emerald-400 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-xl shadow-slate-200/40 transition-all">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-bold mb-3">
+      {/* ========================================================== */}
+      {/* 4. AUTONOMOUS IOT POWER & THERMAL (SPAN 4 - VISUAL FIRST) */}
+      {/* ========================================================== */}
+      <div className="lg:col-span-4 bg-white border-2 border-slate-200/90 hover:border-emerald-400 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-lg hover:shadow-xl transition-all">
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-bold">
             <Activity className="w-3.5 h-3.5 text-emerald-600" />
             <span>CRITICAL POWER & COOLING</span>
           </div>
-          <h3 className="text-xl font-black text-slate-950 tracking-tight">
-            Autonomous IoT Work Order Dispatch
-          </h3>
-          <p className="text-slate-600 text-xs sm:text-sm mt-2 leading-relaxed">
-            Continuous SNMP telemetry monitors smart UPS battery swelling, voltage anomalies, and server room thermal runaway. When battery health drops below 40% or temperatures pass 28°C, a Critical Work Order is dispatched instantly.
-          </p>
 
-          <div className="mt-4 p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-1.5 font-mono text-xs">
-            <div className="flex items-center justify-between text-[11px] font-bold text-emerald-900">
-              <span>APC Smart-UPS 3000</span>
-              <span className="text-emerald-700 font-bold">94% HEALTH</span>
+          <div>
+            <h3 className="text-xl font-black text-slate-950 tracking-tight">
+              Autonomous IoT Telemetry
+            </h3>
+            <p className="text-slate-600 text-xs mt-0.5">
+              Continuous SNMP triggers 4-hour SLA dispatch on threshold spikes.
+            </p>
+          </div>
+
+          {/* Dual Visual Telemetry Dials */}
+          <div className="grid grid-cols-2 gap-2.5 font-mono">
+            <div className="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200 text-center">
+              <div className="text-[10px] uppercase font-bold text-slate-500">UPS Battery</div>
+              <div className="text-2xl font-black text-emerald-800 mt-1">94%</div>
+              <div className="text-[10px] text-emerald-700 font-bold">Healthy Cell</div>
             </div>
-            <div className="text-[10.5px] text-slate-600 font-sans">
-              Autonomous 4-hour SLA dispatch rule armed
+
+            <div className="p-3.5 rounded-2xl bg-cyan-50/80 border border-cyan-200 text-center">
+              <div className="text-[10px] uppercase font-bold text-slate-500">Airflow Temp</div>
+              <div className="text-2xl font-black text-cyan-800 mt-1">22.4°C</div>
+              <div className="text-[10px] text-cyan-700 font-bold">Cool &lt;28°C</div>
             </div>
+          </div>
+
+          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-[11px] font-mono">
+            <span className="flex items-center gap-1.5 text-slate-700 font-bold">
+              <Zap className="w-3.5 h-3.5 text-amber-500" /> Auto-Dispatch Rule Armed
+            </span>
+            <span className="text-emerald-700 font-bold">4-HR SLA</span>
           </div>
         </div>
 
-        <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
-          <span className="text-xs text-slate-500 font-mono">Sub-Minute Polling</span>
+        <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <span className="text-slate-500">Sub-Minute Polling</span>
           <Link
             href="/app/telemetry"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 group"
+            className="inline-flex items-center gap-1.5 font-bold text-emerald-700 hover:text-emerald-800 group"
           >
             View Telemetry <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>
 
-      {/* 5. Zero-License Geospatial Stack (Span 4) */}
-      <div className="lg:col-span-4 bg-white border border-slate-200/90 hover:border-cyan-400 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-xl shadow-slate-200/40 transition-all">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-mono font-bold mb-3">
+      {/* ========================================================== */}
+      {/* 5. ZERO-LICENSE GEOSPATIAL FLEET (SPAN 4 - VISUAL FIRST) */}
+      {/* ========================================================== */}
+      <div className="lg:col-span-4 bg-white border-2 border-slate-200/90 hover:border-cyan-400 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-lg hover:shadow-xl transition-all">
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-mono font-bold">
             <MapPin className="w-3.5 h-3.5 text-cyan-600" />
             <span>ZERO-LICENSE GEOSPATIAL</span>
           </div>
-          <h3 className="text-xl font-black text-slate-950 tracking-tight">
-            Corporate HQs to Remote Project Sites
-          </h3>
-          <p className="text-slate-600 text-xs sm:text-sm mt-2 leading-relaxed">
-            Natively track Corporate HQs, regional branches, and client project sites (e.g. solar farms, marine terminals, transmission substations) with verified street addresses and 100% keyless OpenStreetMap vector clustering.
-          </p>
 
-          <div className="mt-4 p-3.5 rounded-2xl bg-cyan-50/70 border border-cyan-200 space-y-1.5 font-mono text-xs">
-            <div className="flex items-center justify-between text-[11px] font-bold text-cyan-900">
-              <span>Nationwide Locations</span>
-              <span className="text-cyan-700 font-bold">100% KEYLESS OSM</span>
+          <div>
+            <h3 className="text-xl font-black text-slate-950 tracking-tight">
+              Nationwide Fleet GIS
+            </h3>
+            <p className="text-slate-600 text-xs mt-0.5">
+              100% keyless OpenStreetMap vector clustering. Zero API bills.
+            </p>
+          </div>
+
+          {/* Mini Interactive Node Radar Visual */}
+          <div className="p-3.5 rounded-2xl bg-slate-100 border border-slate-200 font-mono space-y-2 relative overflow-hidden">
+            <div className="grid grid-cols-3 gap-1.5 text-center text-xs">
+              <div className="p-2 rounded-xl bg-white border border-slate-200 shadow-sm">
+                <div className="text-[9px] text-slate-500 font-bold">Lagos HQ</div>
+                <div className="font-black text-slate-900 mt-0.5">5,410</div>
+              </div>
+              <div className="p-2 rounded-xl bg-white border border-slate-200 shadow-sm">
+                <div className="text-[9px] text-slate-500 font-bold">Abuja CBD</div>
+                <div className="font-black text-slate-900 mt-0.5">4,120</div>
+              </div>
+              <div className="p-2 rounded-xl bg-white border border-slate-200 shadow-sm">
+                <div className="text-[9px] text-slate-500 font-bold">Epe Solar</div>
+                <div className="font-black text-slate-900 mt-0.5">1,840</div>
+              </div>
             </div>
-            <div className="text-[10.5px] text-slate-600 font-sans">
-              Zero Google Maps or Mapbox monthly API bills
+
+            <div className="p-2 rounded-xl bg-white/90 border border-slate-200 flex items-center justify-between text-[10.5px]">
+              <span className="text-slate-600">Google Maps / Mapbox Invoices:</span>
+              <span className="font-black text-emerald-700">₦0 / MONTH</span>
             </div>
           </div>
         </div>
 
-        <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
-          <span className="text-xs text-slate-500 font-mono">Vector Clustering</span>
+        <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <span className="text-slate-500">Vector Clustering</span>
           <Link
             href="/app/locations"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-700 hover:text-cyan-800 group"
+            className="inline-flex items-center gap-1.5 font-bold text-cyan-700 hover:text-cyan-800 group"
           >
             Inspect Fleet Map <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
