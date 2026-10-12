@@ -51,8 +51,8 @@ export default function FaqAccordion() {
             key={idx}
             className={`border rounded-2xl transition-all ${
               isOpen
-                ? "bg-[#121520] border-cyan-500/50 shadow-lg shadow-cyan-950/20 ring-1 ring-cyan-500/20"
-                : "bg-[#0d0f17]/80 border-white/[0.06] hover:border-white/[0.12] hover:bg-[#121520]/50"
+                ? "bg-white border-cyan-400 shadow-md ring-2 ring-cyan-500/20"
+                : "bg-white/90 border-slate-200/90 hover:border-slate-300 hover:bg-white"
             }`}
           >
             <button
@@ -60,17 +60,17 @@ export default function FaqAccordion() {
               className="w-full py-4 px-5 text-left flex items-center justify-between gap-4 focus:outline-none rounded-2xl"
               aria-expanded={isOpen}
             >
-              <span className="font-bold text-sm sm:text-base text-white tracking-tight">
+              <span className="font-bold text-sm sm:text-base text-slate-900 tracking-tight">
                 {faq.q}
               </span>
               <ChevronDown
-                className={`h-4 w-4 text-cyan-400 shrink-0 transition-transform duration-200 ${
+                className={`h-4 w-4 text-cyan-600 shrink-0 transition-transform duration-200 ${
                   isOpen ? "rotate-180" : ""
                 }`}
               />
             </button>
             {isOpen && (
-              <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-white/[0.06]">
+              <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 font-normal">
                 {faq.a}
               </div>
             )}
