@@ -6,16 +6,16 @@ import { cn, STATUS_LABEL } from "@/lib/utils";
 export function Logo({ className, text = true }: { className?: string; text?: boolean; light?: boolean }) {
   return (
     <span className={cn("inline-flex items-center gap-2.5 font-bold tracking-tight text-slate-900 group", className)}>
-      <div className="relative flex items-center justify-center">
-        <div className="p-1.5 rounded-xl bg-gradient-to-tr from-cyan-500 via-teal-400 to-indigo-600 shadow-sm shadow-cyan-500/30">
+      <span className="relative inline-flex items-center justify-center">
+        <span className="inline-flex p-1.5 rounded-xl bg-gradient-to-tr from-cyan-500 via-teal-400 to-indigo-600 shadow-sm shadow-cyan-500/30">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="M6 17.5 12 6l6 11.5M8.2 13.5h7.6" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
             <circle cx="12" cy="6" r="2.2" fill="#ffffff" />
             <circle cx="6" cy="17.5" r="2.2" fill="#ffffff" />
             <circle cx="18" cy="17.5" r="2.2" fill="#ffffff" />
           </svg>
-        </div>
-      </div>
+        </span>
+      </span>
       {text && (
         <span className="font-mono font-black tracking-wider text-base text-slate-900">
           ASSETOPS
