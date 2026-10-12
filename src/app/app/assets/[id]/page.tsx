@@ -77,9 +77,79 @@ export default async function Passport({ params, searchParams }: { params: Promi
               </dl>
               <Link href={`/app/graph?asset=${a.id}`} className="inline-block mt-3 text-xs text-accent">View relationship graph →</Link>
             </Card>
-            <Card title="Repair vs replace" right={<Source kind="calculated" />}>
-              <div className="grid grid-cols-2 gap-2 text-[13px]"><div><div className="text-dim text-xs">Acquisition</div>{naira(a.acquisitionValue)}</div><div><div className="text-dim text-xs">Lifetime maint.</div>{naira(a.lifetimeCost)}</div><div><div className="text-dim text-xs">Maintenance ratio</div>{(econ.ratio * 100).toFixed(1)}%</div><div><div className="text-dim text-xs">Incidents</div>{a.maintenanceCount}</div></div>
-              {econ.review ? <div className="mt-3"><Badge tone="warn">Review for replacement</Badge><ul className="list-disc ml-4 mt-2 text-xs text-mute">{econ.reasons.map((r) => <li key={r}>{r}</li>)}</ul><p className="text-xs text-dim mt-2">A recommendation for human review. AssetOps never replaces equipment automatically.</p></div> : <p className="text-xs text-mute mt-3">No replacement-review thresholds reached.</p>}
+            {/* Native FinOps Hardware Ledger */}
+            <Card title="FinOps Hardware Ledger" right={<Source kind="calculated" />}>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-2 text-[13px]">
+                  <div>
+                    <div className="text-dim text-[11px] uppercase tracking-wider font-semibold">Acquisition CapEx</div>
+                    <div className="font-medium text-fg">{naira(a.acquisitionValue)}</div>
+                  </div>
+                  <div>
+                    <div className="text-dim text-[11px] uppercase tracking-wider font-semibold">Cumulative OpEx</div>
+                    <div className="font-medium text-fg">{naira(a.lifetimeCost)}</div>
+                  </div>
+                  <div>
+                    <div className="text-dim text-[11px] uppercase tracking-wider font-semibold">True Lifetime TCO</div>
+                    <div className="font-bold text-accent">{naira(a.acquisitionValue + a.lifetimeCost)}</div>
+                  </div>
+                  <div>
+                    <div className="text-dim text-[11px] uppercase tracking-wider font-semibold">Net Book Value (NBV)</div>
+                    <div className="font-mono text-ok text-xs">
+                      {naira(
+                        Math.max(
+                          Math.round(a.acquisitionValue * 0.1),
+                          Math.round(
+                            a.acquisitionValue -
+                              (a.acquisitionValue * 0.9) *
+                                Math.min(1, ageY / Math.max(1, a.type.lifespanYears))
+                          )
+                        )
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-line">
+                  <div className="flex justify-between items-center text-xs mb-1">
+                    <span className="text-dim">OpEx to Replacement Ratio</span>
+                    <span className={`font-bold font-mono ${econ.ratio >= 0.7 ? "text-bad" : econ.ratio >= 0.5 ? "text-warn" : "text-ok"}`}>
+                      {(econ.ratio * 100).toFixed(1)}%
+                    </span>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-raised overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${econ.ratio >= 0.7 ? "bg-bad" : econ.ratio >= 0.5 ? "bg-warn" : "bg-ok"}`}
+                      style={{ width: `${Math.min(100, econ.ratio * 100)}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-line">
+                  {econ.ratio >= 0.7 ? (
+                    <div>
+                      <Badge tone="bad">Economic Crossover Reached</Badge>
+                      <p className="text-xs text-bad mt-1 leading-relaxed">
+                        Cumulative maintenance exceeds 70% of replacement value. Continuing repairs generates negative ROI. Recommend CapEx retirement.
+                      </p>
+                    </div>
+                  ) : econ.ratio >= 0.5 ? (
+                    <div>
+                      <Badge tone="warn">FinOps Watchlist</Badge>
+                      <p className="text-xs text-mute mt-1 leading-relaxed">
+                        Maintenance spend is elevated. Monitor repair frequency closely before committing further part budgets.
+                      </p>
+                    </div>
+                  ) : (
+                    <div>
+                      <Badge tone="ok">Economically Optimal</Badge>
+                      <p className="text-xs text-mute mt-1">
+                        Operating within healthy unit economic parameters.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </Card>
           </div>
           <Card title="Recent maintenance" className="lg:col-span-3" pad={false}><RecordsTable recs={recs} assetId={a.id} canWrite={can(s.role, "maintenance:write")} /></Card>

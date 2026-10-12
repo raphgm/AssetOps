@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { lookups } from "@/lib/lookups";
 import { Card, PageHeader, Status } from "@/components/ui";
 import { WorkOrderActions, MaintenanceForm } from "@/components/forms";
+import SlaCountdownTimer from "@/components/SlaCountdownTimer";
 import { fmtDateTime, naira } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -20,6 +21,21 @@ export default async function WorkOrderPage({ params, searchParams }: { params: 
   return (
     <div>
       <PageHeader title={<span>WO-{w.number}</span>} subtitle={<span className="flex flex-wrap gap-3 items-center"><span className="text-fg">{w.title}</span><Status value={w.priority} /><Status value={w.status} />{late && <span className="text-bad text-xs">Past SLA</span>}</span>} />
+
+      {/* Real-time SLA Countdown & Automated Vendor Dispatch Widget */}
+      <div className="mb-4">
+        <SlaCountdownTimer
+          workOrderId={w.id}
+          status={w.status}
+          priority={w.priority}
+          createdAt={w.createdAt}
+          dueAt={w.dueAt}
+          resolvedAt={w.resolvedAt}
+          slaHours={w.slaHours}
+          vendorName={w.vendor?.name}
+          vendorEmail={w.vendor?.email}
+        />
+      </div>
       {mine && <div className="mb-4"><WorkOrderActions id={w.id} status={w.status} canAssign={can(s.role, "workorder:assign")} canUpdate={can(s.role, "workorder:update")} canVerify={can(s.role, "workorder:verify")} techs={l.techs} resolveHref={`/app/work-orders/${w.id}?resolve=1`} /></div>}
       {sp.resolve === "1" && w.status === "IN_PROGRESS" && mine && (
         <div className="mb-4"><h2 className="text-sm font-medium mb-2">Resolve work order</h2><MaintenanceForm resolve fixed={{ id: w.assetId, label: w.asset.tag }} workOrderId={w.id} cats={l.cats} techs={[]} vendors={[]} defaultCategory={w.categoryId ?? undefined} onDoneHref={`/app/work-orders/${w.id}`} /></div>)}

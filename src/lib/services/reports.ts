@@ -8,7 +8,9 @@ export const REPORTS: Record<string, { title: string; perm: Permission }> = {
   "asset-register": { title: "Asset Register", perm: "report:read" }, maintenance: { title: "Maintenance Report", perm: "report:read" },
   department: { title: "Department Report", perm: "report:read" }, vendor: { title: "Vendor Performance", perm: "report:read" },
   cost: { title: "Maintenance Cost", perm: "report:read" }, risk: { title: "Risk Report", perm: "report:read" },
-  lifecycle: { title: "Lifecycle Report", perm: "report:read" }, audit: { title: "Audit Report", perm: "audit:read" },
+  lifecycle: { title: "Lifecycle Report", perm: "report:read" },
+  "finops-focus": { title: "FinOps FOCUS™ v1.0 Export", perm: "report:read" },
+  audit: { title: "Audit Report", perm: "audit:read" },
 };
 type Cell = string | number | null;
 export async function buildReport(s: Session, kind: string): Promise<{ title: string; headers: string[]; rows: Cell[][] }> {
@@ -23,6 +25,15 @@ export async function buildReport(s: Session, kind: string): Promise<{ title: st
     case "cost": { const r = await A.failurePatterns(s.orgId, 365); return { title: def.title + " by category (12 months)", headers: ["Category", "Events", "Cost ₦"], rows: r.map((x) => [x.name, x.count, x.cost]) }; }
     case "risk": { const r = await db.asset.findMany({ where: assetScope(s, { riskLevel: { in: ["attention", "critical"] } }), orderBy: { riskScore: "desc" }, take: 5000, include: { department: true, location: true } }); return { title: def.title, headers: ["Asset ID", "Device", "Department", "Location", "Risk score", "Level", "Health", "Events", "Lifetime cost ₦"], rows: r.map((a) => [a.tag, `${a.make} ${a.model}`, a.department.name, a.location.name, a.riskScore, a.riskLevel, a.healthScore, a.maintenanceCount, a.lifetimeCost]) }; }
     case "lifecycle": { const r = await db.asset.findMany({ where: assetScope(s, { status: { not: "RETIRED" } }), include: { type: true }, take: 20000 }); const now = Date.now(); const rows = r.map((a) => { const age = (now - a.acquiredAt.getTime()) / (365.25 * 864e5); return [a.tag, a.type.name, Math.round(age * 10) / 10, a.type.lifespanYears, age >= a.type.lifespanYears ? "Past lifespan" : "Within lifespan", a.type.replacementCost] as Cell[]; }).filter((x) => x[4] === "Past lifespan"); return { title: def.title + " (assets past expected lifespan)", headers: ["Asset ID", "Type", "Age (y)", "Lifespan (y)", "Status", "Replacement cost ₦ (estimate)"], rows }; }
+    case "finops-focus": {
+      const { getFinOpsMetrics } = await import("../engines/finops");
+      const { focusSample } = await getFinOpsMetrics(s.orgId);
+      return {
+        title: def.title,
+        headers: ["ResourceId", "ResourceName", "ResourceType", "ProviderName", "ServiceCategory", "SubAccountName", "Region", "ChargeCategory", "BilledCost", "EffectiveCost", "Currency", "ChargePeriodStart"],
+        rows: focusSample.map((f) => [f.ResourceId, f.ResourceName, f.ResourceType, f.ProviderName, f.ServiceCategory, f.SubAccountName, f.Region, f.ChargeCategory, f.BilledCost, f.EffectiveCost, f.Currency, f.ChargePeriodStart] as Cell[]),
+      };
+    }
     default: { const r = await db.auditLog.findMany({ where: { orgId: s.orgId }, orderBy: { at: "desc" }, take: 5000 }); return { title: def.title + " (latest 5,000)", headers: ["Time", "Actor", "Action", "Entity", "ID"], rows: r.map((x) => [x.at.toISOString(), x.actorName, x.action, x.entity, x.entityId]) }; }
   }
 }
