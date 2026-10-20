@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Raphael Gab-Momoh — DevOps Engineer</title>
+<style>
+  @page { size: A4; margin: 14mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; color: #1a1f2b; font-size: 9.6pt; line-height: 1.42; margin: 0; }
+  h1 { font-size: 21pt; letter-spacing: .5px; margin: 0; }
+  .role { font-size: 10.5pt; font-weight: 700; color: #1d4ed8; margin-top: 2px; }
+  .contact { margin-top: 4px; color: #3b4252; }
+  .contact a { color: #3b4252; text-decoration: none; }
+  h2 { font-size: 10pt; text-transform: uppercase; letter-spacing: 1.2px; color: #1d4ed8; border-bottom: 1.5px solid #1d4ed8; padding-bottom: 2px; margin: 13px 0 6px; }
+  p { margin: 0 0 4px; }
+  .skills { display: grid; grid-template-columns: 128px 1fr; gap: 3px 10px; }
+  .skills b { font-weight: 700; }
+  .job { margin-bottom: 8px; page-break-inside: avoid; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .job-head .co { font-weight: 800; font-size: 10.2pt; }
+  .job-head .when { color: #4b5563; font-size: 9pt; white-space: nowrap; }
+  .title { font-style: italic; color: #374151; margin-bottom: 2px; }
+  ul { margin: 2px 0 0 15px; padding: 0; }
+  li { margin-bottom: 2px; }
+  .proj b { font-weight: 700; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+</style>
+</head>
+<body>
+
+<h1>RAPHAEL GAB-MOMOH</h1>
+<div class="role">DevOps Engineer · CI/CD &amp; Release Automation · Infrastructure as Code · Fintech</div>
+<div class="contact">Lagos, Nigeria · Open to 100% remote · <a href="mailto:rdgabmomoh@gmail.com">rdgabmomoh@gmail.com</a> · <a href="https://raphaelgabmomoh.com">raphaelgabmomoh.com</a> · <a href="https://github.com/raphgm">github.com/raphgm</a> · <a href="https://linkedin.com/in/rdgmh">linkedin.com/in/rdgmh</a></div>
+
+<h2>Summary</h2>
+<p>DevOps engineer with 9+ years building and running production cloud platforms, currently delivering CI/CD and infrastructure for PCI-DSS payment platforms. I design GitHub Actions pipelines with automated tests and release gates, containerise services with Docker, and manage infrastructure as code with Terraform across multi-environment Kubernetes clusters on Azure, AWS and GCP. Strong Linux and networking foundation, incident response and root-cause analysis, and a track record of shipping TypeScript and Python tooling. Open-source contributor to Helm and Minikube; 5-time Microsoft MVP and Microsoft Certified Trainer; comfortable working asynchronously in globally distributed teams.</p>
+
+<h2>Technical skills</h2>
+<div class="skills">
+  <b>CI/CD &amp; release</b><span>GitHub Actions, Azure CI/CD pipelines, deployment automation, build workflows, automated test stages, pre-deploy verification checks</span>
+  <b>Containers</b><span>Docker (image builds, container registries), Kubernetes (AKS, EKS, GKE), Helm, containerised microservices</span>
+  <b>Infrastructure as Code</b><span>Terraform (modules, multi-environment state), Bicep; Azure, AWS, GCP</span>
+  <b>Linux &amp; networking</b><span>Linux administration, Bash scripting, debugging and performance troubleshooting, cloud networking</span>
+  <b>Languages &amp; packages</b><span>TypeScript/JavaScript (Node, npm, Vite builds), Python, Go, SQL, YAML/HCL</span>
+  <b>Reliability &amp; observability</b><span>Observability, SLOs, incident management, post-mortems, root-cause analysis</span>
+  <b>Security &amp; fintech</b><span>PCI-DSS, Zero Trust, DevSecOps, secure configuration review, production-readiness reviews</span>
+</div>
+
+<h2>Experience</h2>
+
+<div class="job">
+  <div class="job-head"><span class="co">PAYNAUTIK</span><span class="when">Dec 2025 – Present (full-time from Feb 2026)</span></div>
+  <div class="title">Senior DevOps Engineer · enterprise payment platforms</div>
+  <ul>
+    <li>Build and maintain CI/CD pipelines for containerised payment services, supporting frequent, low-risk releases across multiple environments.</li>
+    <li>Architected PCI-DSS-compliant, multi-region Azure Kubernetes Service (AKS) production clusters.</li>
+    <li>Write and review Terraform modules and Kubernetes configuration; review infrastructure changes for correctness, security and blast radius before release.</li>
+    <li>Implemented automated FinOps policies for Azure Data Lake Storage Gen2 and AKS node autoscaling.</li>
+    <li>Contribute to platform and SRE standards for deployment automation, incident response and production readiness.</li>
+  </ul>
+</div>
+
+<div class="job">
+  <div class="job-head"><span class="co">BAIRNY &amp; CO</span><span class="when">Sep 2017 – Nov 2025</span></div>
+  <div class="title">Cloud Engineer → DevOps &amp; Cloud Architect (three roles: Azure, DevOps, CI/CD and FinOps)</div>
+  <ul>
+    <li>Designed and ran CI/CD pipelines for containerised enterprise applications on Azure, making deployments repeatable across environments.</li>
+    <li>Migrated critical enterprise workloads to Azure PaaS, improving scalability, resilience and reliability.</li>
+    <li>Led incident post-mortems and root-cause analysis; defined reliability standards adopted by engineering teams.</li>
+    <li>Built internal tooling, reporting and a data warehouse for cloud-consumption visibility.</li>
+    <li>Led cost optimisation that cut cloud spend by 20%, with an average 25% monthly reduction.</li>
+  </ul>
+</div>
+
+<div class="job">
+  <div class="job-head"><span class="co">SKILL.SCH</span><span class="when">2025 – Present</span></div>
+  <div class="title">Founder &amp; Cloud/DevOps Engineer · skill-sch.com</div>
+  <ul>
+    <li>Built and operate the SKILL.SCH learning platform (TypeScript/React, Firebase), including its build and release workflow to Firebase Hosting and a Linux web host.</li>
+    <li>Added automated pre-deploy verification that blocks a release if the production build fails key checks, preventing bad deployments from shipping.</li>
+    <li>Design graded hands-on labs in Linux, Terraform, Docker, Kubernetes and CI/CD, and review learners' code and infrastructure for correctness and practice.</li>
+  </ul>
+</div>
+
+<h2>Open source &amp; projects</h2>
+<div class="proj">
+  <p><b>Helm (Go):</b> merged pull request into the Kubernetes package manager, reviewed by core maintainers. <b>Minikube (Go):</b> merged pull request into the Kubernetes local cluster tool.</p>
+  <p><b>Pinpoint Pro (TypeScript):</b> open-source, AI-provider-agnostic workspace built with pull-request-based development and review.</p>
+  <p><b>CloudCost CLI (Python):</b> provider-neutral FinOps data platform with Arrow-based pipelines and SQL policies, tested against a real Azure billing export.</p>
+  <p><b>Container Doctor, RealCloudProjects:</b> open-source learning tools for containers and cloud projects.</p>
+</div>
+
+<div class="two">
+  <div>
+    <h2>Certifications</h2>
+    <p>Microsoft MVP, Azure, 5 times (2020–2026)<br>
+    Microsoft Certified Trainer<br>
+    Azure DevOps Engineer Expert<br>
+    Azure Solutions Architect Expert<br>
+    FinOps Certified Professional</p>
+  </div>
+  <div>
+    <h2>Education</h2>
+    <p>MSc Financial Engineering, WorldQuant University (expected Dec 2026)<br>
+    BSc Information Systems, Middlesex University (2023)<br>
+    Diploma, Electronic Engineering, Swinburne University of Technology (2013)</p>
+    <h2>Writing</h2>
+    <p>Author, <i>The Ultimate Certified FinOps Practitioner Hands-On Guide</i>; 30+ hands-on technical articles at raphaelgabmomoh.com.</p>
+  </div>
+</div>
+
+</body>
+</html>
